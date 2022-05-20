@@ -22,7 +22,6 @@ function NavBar() {
             <Col>
               <Nav className="me-auto" variant="pills" >
                   <Nav.Link as={Link} to={"/"}>Home</Nav.Link>
-                  <Nav.Link as={Link} to={"/features"}>Features</Nav.Link>
                   <Nav.Link as={Link} to={"/about"}>About</Nav.Link>
               </Nav>
             </Col>
@@ -30,10 +29,10 @@ function NavBar() {
           <Col>
               <Nav>
               <Nav.Item>
-                <Nav.Link href="#Login">Login</Nav.Link>
+                <Nav.Link as={Link} to={"/login"}>Login</Nav.Link>
               </Nav.Item>
                 <Nav.Item>
-                <Nav.Link href="#Signup">Signup</Nav.Link>
+                <Nav.Link href="/signup">Signup</Nav.Link>
               </Nav.Item>
               </Nav>
             </Col>
