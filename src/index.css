@@ -14,14 +14,19 @@ code {
 }
 
 .footer{
-  margin-top: 1rem;
   padding: 1rem;
-  background-color: white;
-  position:absolute;
-left:0;
-bottom:0;
-right:0;
-  width: 100%;
+  background-color: #212529;
+  position:static;
   border-top: solid;
-  border-color: #ddd;
+  border-color: gray;
+}
+
+.Login {
+  padding: 60px 0;
+  color: aliceblue;
+}
+
+.Login form {
+  margin: 0 auto;
+  max-width: 320px;
 }
