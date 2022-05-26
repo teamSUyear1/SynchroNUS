@@ -1,5 +1,7 @@
+@import '~antd/dist/antd.css';
 .App {
   text-align: center;
+  color: rgb(0, 0, 0)
 }
 
 .App-logo {
@@ -44,4 +46,12 @@
 
 .backgroud-white {
 background-color: antiquewhite;
+}
+
+.fill-window {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
 }

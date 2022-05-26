@@ -1,53 +1,96 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import {
+  Checkbox,
+  Grid,
+  TextField,
+  FormControlLabel,
+  Button,
+  Typography,
+  Card,
+  CardContent,
+  Stack,
+  Divider,
+  Box,
+} from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
 
-export default function Login() {
+const LoginPage = () => {
+  const [checked, setChecked] = React.useState(true);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-  }
-
   return (
-    <>
-      <div className="App">
-        <h2
-          style={{
-            color: "white",
-          }}
+    <Stack
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      padding={10}
+    >
+      <Box
+        component="span"
+        sx={{ border: "1px solid grey", borderRadius:"10px" , height: "auto", width: "fit-content", backgroundColor:"background.default" }}
+        padding={10}
+      >
+        <Grid
+          container
+          width="auto"
+          spacing={2}
+          direction={"column"}
+          justify={"center"}
+          alignItems={"center"}
         >
-          Login To Your Account
-        </h2>
-      </div>
-      <div className="Login">
-        <Form onSubmit={handleSubmit}>
-          <Form.Group size="lg" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              autoFocus
-              type="email"
-              value={email}
+          <Grid item xs={12}>
+            <Typography>Log in to your account</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Email"
               onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group size="lg" controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
+            ></TextField>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Password"
+              type={"password"}
               onChange={(e) => setPassword(e.target.value)}
+            ></TextField>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checked}
+                  onChange={handleChange}
+                  label={"Keep me logged in"}
+                  inputProps={{ "aria-label": "primary checkbox" }}
+                />
+              }
+              label="Keep me logged in"
             />
-          </Form.Group>
-          <Button block size="lg" type="submit" disabled={!validateForm()}>
-            Login
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" disabled={!validateForm()}>
+              {" "}
+              Login{" "}
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid container xs={12} paddingTop={4} justifyContent="center">
+          <Button variant="contained" color="error" startIcon={<GoogleIcon />}>
+            Sign in with Google
           </Button>
-        </Form>
-      </div>
-    </>
+        </Grid>
+      </Box>
+    </Stack>
   );
-}
+};
+
+export default LoginPage;

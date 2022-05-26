@@ -1,7 +1,14 @@
-import React from 'react'
+import { Grid, Typography } from "@mui/material";
+import React from "react";
 
 export default function Error() {
   return (
-    <div>The page you are looking doesn't exist</div>
-  )
+    <Grid container>
+    <Grid item xs={12}alignItems={'center'}>
+      <Typography variant="h6" color="inherit">
+        The page you are looking doesn't exist
+      </Typography>
+      </Grid>
+    </Grid>
+  );
 }
