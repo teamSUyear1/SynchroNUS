@@ -13,6 +13,7 @@ import {
   Box,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
+import { useAuth } from "../hooks/useAuth";
 
 const LoginPage = () => {
   const [checked, setChecked] = React.useState(true);
@@ -22,6 +23,7 @@ const LoginPage = () => {
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
+  const { signInWithGoogle } = useAuth();
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -84,7 +86,7 @@ const LoginPage = () => {
           </Grid>
         </Grid>
         <Grid container xs={12} paddingTop={4} justifyContent="center">
-          <Button variant="contained" color="error" startIcon={<GoogleIcon />}>
+          <Button variant="contained" color="error" startIcon={<GoogleIcon />} onClick = {signInWithGoogle}>
             Sign in with Google
           </Button>
         </Grid>

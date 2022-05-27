@@ -7,6 +7,7 @@ import {
   createTheme,
   StyledEngineProvider,
 } from "@mui/material/styles";
+import { ProvideAuth } from "./hooks/useAuth";
 
 const darkTheme = createTheme({
   palette: {
@@ -19,7 +20,9 @@ root.render(
   <React.StrictMode>
     <StyledEngineProvider>
       <ThemeProvider theme={darkTheme}>
-        <App />
+        <ProvideAuth>
+          <App />
+        </ProvideAuth>
       </ThemeProvider>
     </StyledEngineProvider>
   </React.StrictMode>

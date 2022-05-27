@@ -10,16 +10,19 @@ import Error from "./pages/Error";
 import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { Divider, Grid, Paper, Stack } from "@mui/material";
-import CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from "@mui/material/CssBaseline";
 import SideBar from "./components/SideBar/SideBar";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
+  const { user } = useAuth();
+
   return (
     <Router>
-    <CssBaseline enableColorScheme />
+      <CssBaseline enableColorScheme />
       <Paper component={Stack} square>
         <Grid container direction="column">
-          <Navbar />      
+          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
@@ -30,7 +33,7 @@ function App() {
         </Grid>
         <Divider variant="middle" />
       </Paper>
-      
+
       <Footer />
     </Router>
   );
