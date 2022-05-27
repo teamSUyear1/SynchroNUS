@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -12,10 +17,10 @@ import Footer from "./components/Footer";
 import { Divider, Grid, Paper, Stack } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import SideBar from "./components/SideBar/SideBar";
-
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
-
+  const { user } = useAuth();
 
   return (
     <Router>
@@ -24,10 +29,23 @@ function App() {
         <Grid container direction="column">
           <Navbar />
           <Routes>
-            <Route exact path="/" element={<Home />}/>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Login />} />
+            <Route exact path="/" element={<Home />} />
+            <Route
+              path="/dashboard"
+              element={
+                user === false ? <Navigate replace to="/" /> : <Dashboard />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                user === false ? <Navigate replace to="/" /> : <Profile />
+              }
+            />
+            <Route
+              path="/login"
+              element={user === false ? <Login /> : <Navigate replace to="/" />}
+            />
             <Route path="*" element={<Error />} />
           </Routes>
         </Grid>

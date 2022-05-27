@@ -14,8 +14,8 @@ import Dashboard from "../../pages/Dashboard";
 import { ButtonBase } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 
-export default function RightWithAuth() {
-  const { user } = useAuth();
+export default function RightWithAuth(props) {
+  const { user, signout } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,16 +24,21 @@ export default function RightWithAuth() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogout = () => {
+    handleClose();
+    signout();
+    window.localStorage.setItem("user", false);
+  };
 
   const [name, setName] = React.useState("...");
   const [avatar, setAvatar] = React.useState("");
 
   React.useEffect(() => {
     if (user?.displayName) {
-    setName(user.displayName);
+      setName(user.displayName);
     }
     if (user?.photoURL) {
-        setAvatar(user.photoURL);
+      setAvatar(user.photoURL);
     }
   }, [user]);
 
@@ -58,7 +63,10 @@ export default function RightWithAuth() {
             aria-expanded={open ? "true" : undefined}
             endIcon={<KeyboardArrowDownIcon />}
           >
-            <Avatar sx={{ width: 32, height: 32, marginRight: 1 }} src={avatar}></Avatar>
+            <Avatar
+              sx={{ width: 32, height: 32, marginRight: 1 }}
+              src={avatar}
+            ></Avatar>
             {name}
           </Button>
         </Tooltip>
@@ -110,7 +118,7 @@ export default function RightWithAuth() {
           </ListItemIcon>
           Profile
         </MenuItem>
-        <MenuItem component={ButtonBase} href="/login">
+        <MenuItem component={ButtonBase} href="/" onClick={handleLogout}>
           <ListItemIcon>
             <Logout color="error" fontSize="small" />
           </ListItemIcon>

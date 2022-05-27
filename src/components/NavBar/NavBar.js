@@ -14,8 +14,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 
 const NavBar = () => {
-  const {user} = useAuth();
-
+const {user} = useAuth();
   return (
     <AppBar
       position="sticky"
@@ -68,7 +67,7 @@ const NavBar = () => {
             <Grid item>
               <LeftComponent />
             </Grid>
-            <Grid item>{user ? <RightWithAuth /> : <RightWihoutAuth />}</Grid>
+            <Grid item>{user ? <RightWithAuth  /> : <RightWihoutAuth />}</Grid>
           </Grid>
         </Toolbar>
       </Grid>

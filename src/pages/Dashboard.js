@@ -9,8 +9,12 @@ import getDaysInMonth from "date-fns/getDaysInMonth";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import { Grid } from "@mui/material";
 import SideBar from "../components/SideBar/SideBar";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Dashboard() {
+
+ 
   const initialValue = new Date();
   const currentYear = new Date().getFullYear();
   const requestAbortController = React.useRef(null);
@@ -79,6 +83,7 @@ export default function Dashboard() {
 
   return (
     <Grid container>
+    
       <SideBar />
       <Grid item>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -102,6 +107,7 @@ export default function Dashboard() {
               const isSelected =
                 !DayComponentProps.outsideCurrentMonth &&
                 highlightedDays.indexOf(day.getDate()) > 0;
+
 
               return (
                 <Badge

@@ -1,13 +1,16 @@
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../config/firebaseConfig";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect, inMemoryPersistence, setPersistence, browserSessionPersistence } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
 
 // Add your Firebase credentials
 const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
-const firebaseAuth = getAuth(app);
+const firebaseAuth = getAuth(app)
+
+
+
 
 // Initialize Google Authentication and get a reference to the service
 const googleAuthProvider = new GoogleAuthProvider();
@@ -70,6 +73,7 @@ function useProvideAuth() {
   useEffect(() => {
     const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user)
         setUser(user);
       } else {
         setUser(false);
