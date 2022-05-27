@@ -24,7 +24,7 @@ function App() {
         <Grid container direction="column">
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route exact path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />

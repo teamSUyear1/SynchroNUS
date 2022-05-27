@@ -40,7 +40,7 @@ function SideBar() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={ButtonBase}>
+            <ListItemButton component={ButtonBase} href='/profile'>
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
