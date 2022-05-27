@@ -27,7 +27,6 @@ export default function RightWithAuth(props) {
   const handleLogout = () => {
     handleClose();
     signout();
-    window.localStorage.setItem("user", false);
   };
 
   const [name, setName] = React.useState("...");

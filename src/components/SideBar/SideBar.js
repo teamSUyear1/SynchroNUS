@@ -16,14 +16,14 @@ import { Avatar, ListItemAvatar } from "@mui/material";
 import Dashboard from "../../pages/Dashboard";
 import { useAuth } from "../../hooks/useAuth";
 
-function SideBar() {
+function SideBar(props) {
   const { user, signout } = useAuth();
   const [avatar, setAvatar] = React.useState("");
   const [name, setName] = React.useState("Loading ...");
+  const select = props.select;
 
   const handleLogout = () => {
     signout();
-    alert(window.localStorage.getItem("user"))
   };
 
   React.useEffect(() => {
@@ -33,7 +33,6 @@ function SideBar() {
     if (user?.photoURL) {
       setAvatar(user.photoURL);
     }
-
   }, [user]);
 
   const drawerWidth = 240;
@@ -48,12 +47,17 @@ function SideBar() {
     >
       <Toolbar />
       <Box justifyContent={"center"} display="flex" padding={3}>
-        <Avatar src={avatar} sx={{ width: 56, height: 56 }}/>
+        <Avatar src={avatar} sx={{ width: 56, height: 56 }} />
       </Box>
       <Box sx={{ overflow: "auto" }}>
         <List>
           <ListItem disablePadding>
-            <ListItemButton component={ButtonBase} href="/dashboard" >
+            <ListItemButton
+              id="1"
+              component={ButtonBase}
+              href="/dashboard"
+              selected={select === 1}
+            >
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
@@ -61,8 +65,12 @@ function SideBar() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={ButtonBase} href="/profile">
-              <ListItemIcon >
+            <ListItemButton
+              component={ButtonBase}
+              href="/profile"
+              selected={select === 2}
+            >
+              <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
               <ListItemText primary="Profile" />
