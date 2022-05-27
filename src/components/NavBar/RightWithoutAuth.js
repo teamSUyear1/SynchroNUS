@@ -1,7 +1,7 @@
 import { Button, Stack } from '@mui/material'
 import React from 'react'
 
-function RightComponent() {
+function RightWithoutAutht() {
   return (
     <Stack direction="row" spacing={1}>
               <Button color="inherit" href="/Login">
@@ -14,4 +14,4 @@ function RightComponent() {
   )
 }
 
-export default RightComponent
+export default RightWithoutAutht

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -13,8 +13,10 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Avatar, ListItemAvatar } from "@mui/material";
+import Dashboard from '../../pages/Dashboard';
 
 function SideBar() {
+
   const drawerWidth = 240;
   return (
     <Drawer
@@ -32,7 +34,10 @@ function SideBar() {
       <Box sx={{ overflow: "auto" }}>
         <List>
           <ListItem disablePadding>
-            <ListItemButton component={ButtonBase} selected>
+            <ListItemButton
+              component={ButtonBase}
+              href="/dashboard"
+            >
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
@@ -40,7 +45,10 @@ function SideBar() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={ButtonBase} href='/profile'>
+            <ListItemButton
+              component={ButtonBase}
+              href="/profile"
+            >
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>

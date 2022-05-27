@@ -10,8 +10,12 @@ import { Avatar, Grid, Stack, Tooltip } from "@mui/material";
 import LeftComponent from "./Left";
 import RightWihoutAuth from "./RightWithoutAuth";
 import RightWithAuth from "./RightWithAuth";
+import { useAuth } from "../../hooks/useAuth";
 
-const NavBar2 = () => {
+
+const NavBar = () => {
+  const {user} = useAuth();
+
   return (
     <AppBar
       position="sticky"
@@ -19,7 +23,7 @@ const NavBar2 = () => {
     >
       <Grid marginLeft={2} direction="column">
         <Toolbar disableGutters>
-          <Stack direction="row">
+          <Stack direction="row" component="a" color="inherit" href="/">
             <Avatar
               src="/favicon.ico"
               alt="Remy Sharp"
@@ -33,32 +37,42 @@ const NavBar2 = () => {
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="/"
+              sx={{
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 500,
+                letterSpacing: ".2rem",
+                color: "#fff",
+                textDecoration: "none",
+              }}
+            >
+              Synchro
+            </Typography>
+            <Typography
+              variant="h6"
+              noWrap
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 500,
                 letterSpacing: ".2rem",
-                color: "inherit",
+                color: "#FF5F1F",
                 textDecoration: "none",
               }}
             >
-              SynchroNUS
+              NUS
             </Typography>
           </Stack>
           <Grid container direction="row" justifyContent="space-between">
             <Grid item>
               <LeftComponent />
             </Grid>
-            <Grid item>
-            {true ? <RightWithAuth />: <RightWihoutAuth />}
-            </Grid>
+            <Grid item>{user ? <RightWithAuth /> : <RightWihoutAuth />}</Grid>
           </Grid>
         </Toolbar>
       </Grid>
     </AppBar>
   );
 };
-export default NavBar2;
+export default NavBar;
