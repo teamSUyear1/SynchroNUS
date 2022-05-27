@@ -5,8 +5,8 @@ import SideBar from '../components/SideBar/SideBar'
 function Profile() {
   return (
       <Grid container>
-          <SideBar />
-          <Grid item height={"30vh"}>
+          <SideBar select = {2} />
+          <Grid item height={"80vh"}>
           <Typography>This is Profile page</Typography>
           </Grid>
       </Grid>

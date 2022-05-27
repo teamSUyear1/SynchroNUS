@@ -14,10 +14,18 @@ import Error from "./pages/Error";
 
 import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
-import { Divider, Grid, Paper, Stack } from "@mui/material";
+import {
+  Backdrop,
+  CircularProgress,
+  Divider,
+  Grid,
+  Paper,
+  Stack,
+} from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import SideBar from "./components/SideBar/SideBar";
 import { useAuth } from "./hooks/useAuth";
+import Signup from "./pages/SignupEmail";
 
 function App() {
   const { user } = useAuth();
@@ -25,34 +33,46 @@ function App() {
   return (
     <Router>
       <CssBaseline enableColorScheme />
-      <Paper component={Stack} square>
-        <Grid container direction="column">
-          <Navbar />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route
-              path="/dashboard"
-              element={
-                user === false ? <Navigate replace to="/" /> : <Dashboard />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                user === false ? <Navigate replace to="/" /> : <Profile />
-              }
-            />
-            <Route
-              path="/login"
-              element={user === false ? <Login /> : <Navigate replace to="/" />}
-            />
-            <Route path="*" element={<Error />} />
-          </Routes>
+      {user === null ? (
+        <Grid>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </Grid>
-        <Divider variant="middle" />
-      </Paper>
-
-      <Footer />
+      ) : (
+        <>
+          <Paper component={Stack} square>
+            <Grid container direction="column">
+              <Navbar />
+              <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route
+                  path="/dashboard"
+                  element={user ? <Dashboard /> : <Navigate replace to="/" />}
+                />
+                <Route
+                  path="/profile"
+                  element={user ? <Profile /> : <Navigate replace to="/" />}
+                />
+                <Route
+                  path="/login"
+                  element={user ? <Navigate replace to="/" /> : <Login />}
+                />
+                <Route
+                  path="/signup"
+                  element={user ? <Navigate replace to="/" /> : <Signup />}
+                />
+                <Route path="*" element={<Error />} />
+              </Routes>
+            </Grid>
+            <Divider variant="middle" />
+          </Paper>
+          <Footer />
+        </>
+      )}
     </Router>
   );
 }

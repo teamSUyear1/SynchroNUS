@@ -15,7 +15,7 @@ import {
 import GoogleIcon from "@mui/icons-material/Google";
 import { useAuth } from "../hooks/useAuth";
 
-const LoginPage = () => {
+const Login = () => {
   const [checked, setChecked] = React.useState(true);
 
   const [email, setEmail] = useState("");
@@ -95,4 +95,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

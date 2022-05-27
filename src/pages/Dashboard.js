@@ -9,8 +9,6 @@ import getDaysInMonth from "date-fns/getDaysInMonth";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import { Grid } from "@mui/material";
 import SideBar from "../components/SideBar/SideBar";
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 
 export default function Dashboard() {
 
@@ -83,9 +81,8 @@ export default function Dashboard() {
 
   return (
     <Grid container>
-    
-      <SideBar />
-      <Grid item>
+      <SideBar select={1}/>
+      <Grid item height={"80vh"}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <StaticDatePicker
             value={value}
