@@ -12,8 +12,10 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import Dashboard from "../../pages/Dashboard";
 import { ButtonBase } from "@mui/material";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function RightWithAuth() {
+  const { user } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -22,6 +24,19 @@ export default function RightWithAuth() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [name, setName] = React.useState("...");
+  const [avatar, setAvatar] = React.useState("");
+
+  React.useEffect(() => {
+    if (user?.displayName) {
+    setName(user.displayName);
+    }
+    if (user?.photoURL) {
+        setAvatar(user.photoURL);
+    }
+  }, [user]);
+
   return (
     <>
       <Box
@@ -43,8 +58,8 @@ export default function RightWithAuth() {
             aria-expanded={open ? "true" : undefined}
             endIcon={<KeyboardArrowDownIcon />}
           >
-            <Avatar sx={{ width: 32, height: 32, marginRight: 1 }}>M</Avatar>
-            Name
+            <Avatar sx={{ width: 32, height: 32, marginRight: 1 }} src={avatar}></Avatar>
+            {name}
           </Button>
         </Tooltip>
       </Box>
@@ -83,19 +98,19 @@ export default function RightWithAuth() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem component={ButtonBase} href='/dashboard'>
+        <MenuItem component={ButtonBase} href="/dashboard">
           <ListItemIcon>
             <DashboardIcon fontSize="small" />
           </ListItemIcon>
           Dashboard
         </MenuItem>
-        <MenuItem component={ButtonBase} href='/profile'>
+        <MenuItem component={ButtonBase} href="/profile">
           <ListItemIcon>
             <PersonIcon fontSize="small" />
           </ListItemIcon>
           Profile
         </MenuItem>
-        <MenuItem component={ButtonBase} href='/login'>
+        <MenuItem component={ButtonBase} href="/login">
           <ListItemIcon>
             <Logout color="error" fontSize="small" />
           </ListItemIcon>

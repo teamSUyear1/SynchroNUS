@@ -14,8 +14,20 @@ import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Avatar, ListItemAvatar } from "@mui/material";
 import Dashboard from '../../pages/Dashboard';
+import { useAuth } from '../../hooks/useAuth';
 
 function SideBar() {
+  const {user} = useAuth();
+  const [avatar, setAvatar] = React.useState("");
+  const [name, setName] = React.useState("Loading ...");
+  React.useEffect(() => {
+    if (user?.displayName) {
+    setName(user.displayName);
+    }
+    if (user?.photoURL) {
+        setAvatar(user.photoURL);
+    }
+  }, [user]);
 
   const drawerWidth = 240;
   return (
@@ -29,7 +41,7 @@ function SideBar() {
     >
       <Toolbar />
       <Box justifyContent={"center"} display="flex" padding={3}>
-        <Avatar src="/broken-image.jpg" sx={{ width: 56, height: 56 }} />
+        <Avatar src={avatar} sx={{ width: 56, height: 56 }} />
       </Box>
       <Box sx={{ overflow: "auto" }}>
         <List>

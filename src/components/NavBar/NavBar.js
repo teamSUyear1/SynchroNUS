@@ -22,8 +22,8 @@ const NavBar = () => {
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Grid marginLeft={2} direction="column">
-        <Toolbar disableGutters>
-          <Stack direction="row" component="a" color="inherit" href="/">
+        <Toolbar disableGutters >
+          <Stack direction="row" color="inherit" >
             <Avatar
               src="/favicon.ico"
               alt="Remy Sharp"
