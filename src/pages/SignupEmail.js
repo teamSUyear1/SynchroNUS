@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import {
-  Checkbox,
   Grid,
   TextField,
-  FormControlLabel,
-  Button,
   Typography,
-  Card,
-  CardContent,
   Stack,
-  Divider,
   Box,
   Link,
-  Paper,
   IconButton,
 } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
@@ -22,7 +15,7 @@ const SignupEmail = () => {
   const [email, setEmail] = useState("");
 
   const emailValid = () => {
-    let regex =
+    const regex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(email);
   };
@@ -60,13 +53,20 @@ const SignupEmail = () => {
               <ArrowRightAltIcon sx={{ fontSize: 35 }} />
               <TextField
                 label="Email"
+                color={
+                  emailValid()
+                    ? "success"
+                    : email.length === 0
+                    ? "warning"
+                    : "error"
+                }
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Stack>
           </Grid>
 
           <Grid item xs={12} alignSelf="flex-end">
-            <IconButton disabled={!emailValid()}>
+            <IconButton disabled={!emailValid()} href="/signup/password">
               <ArrowForwardIosRoundedIcon />
             </IconButton>
           </Grid>

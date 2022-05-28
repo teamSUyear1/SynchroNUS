@@ -25,7 +25,8 @@ import {
 import CssBaseline from "@mui/material/CssBaseline";
 import SideBar from "./components/SideBar/SideBar";
 import { useAuth } from "./hooks/useAuth";
-import Signup from "./pages/SignupEmail";
+import SignupEmail from "./pages/SignupEmail";
+import SignupPw from "./pages/SignupPw";
 
 function App() {
   const { user } = useAuth();
@@ -63,7 +64,11 @@ function App() {
                 />
                 <Route
                   path="/signup"
-                  element={user ? <Navigate replace to="/" /> : <Signup />}
+                  element={user ? <Navigate replace to="/" /> : <SignupEmail />}
+                />
+                <Route
+                  path="/signup/password"
+                  element={user ? <Navigate replace to="/" /> : <SignupPw />}
                 />
                 <Route path="*" element={<Error />} />
               </Routes>
