@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../config/firebaseConfig";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect, inMemoryPersistence, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
 
 // Add your Firebase credentials
@@ -38,15 +38,14 @@ function useProvideAuth() {
       .then((response) => {
         setUser(response.user);
         return response.user;
-      });
+      })
   };
   const signup = (email, password) => {
-    return firebaseAuth
-      .createUserWithEmailAndPassword(email, password)
+    return createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then((response) => {
         setUser(response.user);
         return response.user;
-      });
+      })
   };
   const signout = () => {
     return firebaseAuth.signOut().then(() => {

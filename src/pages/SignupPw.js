@@ -5,7 +5,6 @@ import {
   Typography,
   Stack,
   Box,
-  Link,
   IconButton,
 } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
@@ -14,7 +13,7 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import { useAuth } from "../hooks/useAuth";
 
-const SignupPw = (props) => {
+const SignupPw = () => {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [select, setSelect] = useState(0);
@@ -22,9 +21,10 @@ const SignupPw = (props) => {
   const { signup } = useAuth();
   //Email storage from SignupEmail
   const email = window.localStorage.getItem("email");
-  
+
   const createUserHandler = () => {
-    signup(email, password)
+    window.localStorage.setItem("email", "");
+    signup(email, password);
   };
   const cpasswordValid = () => {
     return cpassword === password;
@@ -114,7 +114,10 @@ const SignupPw = (props) => {
               <IconButton href="/signup">
                 <ArrowBackIosRoundedIcon />
               </IconButton>
-              <IconButton disabled={!(passwordValid() && cpasswordValid())} onClick={createUserHandler}>
+              <IconButton
+                disabled={!(passwordValid() && cpasswordValid())}
+                onClick={createUserHandler}
+              >
                 <ArrowForwardIosRoundedIcon />
               </IconButton>
             </Stack>
