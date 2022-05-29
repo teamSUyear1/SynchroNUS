@@ -1,16 +1,19 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../config/firebaseConfig";
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
 
 // Add your Firebase credentials
 const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
-const firebaseAuth = getAuth(app)
-
-
-
+const firebaseAuth = getAuth(app);
 
 // Initialize Google Authentication and get a reference to the service
 const googleAuthProvider = new GoogleAuthProvider();
@@ -33,19 +36,20 @@ function useProvideAuth() {
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
   const signin = (email, password) => {
-    return firebaseAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
+    return signInWithEmailAndPassword(firebaseAuth, email, password).then(
+      (response) => {
         setUser(response.user);
         return response.user;
-      })
+      }
+    );
   };
   const signup = (email, password) => {
-    return createUserWithEmailAndPassword(firebaseAuth, email, password)
-      .then((response) => {
+    return createUserWithEmailAndPassword(firebaseAuth, email, password).then(
+      (response) => {
         setUser(response.user);
         return response.user;
-      })
+      }
+    );
   };
   const signout = () => {
     return firebaseAuth.signOut().then(() => {
@@ -72,7 +76,7 @@ function useProvideAuth() {
   useEffect(() => {
     const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user)
+        console.log(user);
         setUser(user);
       } else {
         setUser(false);
