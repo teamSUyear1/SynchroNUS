@@ -25,6 +25,8 @@ const Login = () => {
   };
   const { signInWithGoogle } = useAuth();
 
+
+
   function validateForm() {
     return email.length > 0 && password.length > 0;
   }

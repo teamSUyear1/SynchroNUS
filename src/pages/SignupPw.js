@@ -21,7 +21,8 @@ const SignupPw = (props) => {
   //Destructuring of useAuth into signup function (signup defined in useAuth.js)
   const { signup } = useAuth();
   //Email storage from SignupEmail
-  const email = Window.localStorage.getItem("email");
+  const email = window.localStorage.getItem("email");
+  
   const createUserHandler = () => {
     signup(email, password)
   };
