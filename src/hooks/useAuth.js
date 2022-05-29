@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,
+  signInWithRedirect,
 } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
 
@@ -74,7 +75,7 @@ function useProvideAuth() {
     });
   };
   const signInWithGoogle = () => {
-    signInWithPopup(firebaseAuth, googleAuthProvider);
+    signInWithRedirect(firebaseAuth, googleAuthProvider);
     return true;
   };
   // Subscribe to user on mount
