@@ -24,7 +24,7 @@ const Login = () => {
 
   const handleLogin = () => {
     signin(email, password).catch((error) => {
-      alert(error.code.trim);
+      alert(error.code);
     });
   };
 
