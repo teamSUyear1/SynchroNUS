@@ -12,8 +12,9 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
+import { signup } from "../hooks/useAuth";
 
-const SignupPw = () => {
+const SignupPw = (props) => {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [select, setSelect] = useState(0);
