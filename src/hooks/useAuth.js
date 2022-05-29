@@ -6,7 +6,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-sendEmailVerification
+  sendEmailVerification,
 } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
 
@@ -74,7 +74,8 @@ function useProvideAuth() {
     });
   };
   const signInWithGoogle = () => {
-    return signInWithPopup(firebaseAuth, googleAuthProvider);
+    signInWithPopup(firebaseAuth, googleAuthProvider);
+    return true;
   };
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
