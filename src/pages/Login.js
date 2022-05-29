@@ -6,10 +6,7 @@ import {
   FormControlLabel,
   Button,
   Typography,
-  Card,
-  CardContent,
   Stack,
-  Divider,
   Box,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -23,9 +20,13 @@ const Login = () => {
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle, signin } = useAuth();
 
-
+  const handleLogin = () => {
+    signin(email, password).catch((error) => {
+      alert(error.code.trim);
+    });
+  };
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -40,7 +41,13 @@ const Login = () => {
     >
       <Box
         component="span"
-        sx={{ border: "1px solid grey", borderRadius:"10px" , height: "auto", width: "fit-content", backgroundColor:"background.default" }}
+        sx={{
+          border: "1px solid grey",
+          borderRadius: "10px",
+          height: "auto",
+          width: "fit-content",
+          backgroundColor: "background.default",
+        }}
         padding={10}
       >
         <Grid
@@ -81,14 +88,23 @@ const Login = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" disabled={!validateForm()}>
+            <Button
+              variant="contained"
+              onClick={handleLogin}
+              disabled={!validateForm()}
+            >
               {" "}
               Login{" "}
             </Button>
           </Grid>
         </Grid>
         <Grid container xs={12} paddingTop={4} justifyContent="center">
-          <Button variant="contained" color="error" startIcon={<GoogleIcon />} onClick = {signInWithGoogle}>
+          <Button
+            variant="contained"
+            color="error"
+            startIcon={<GoogleIcon />}
+            onClick={signInWithGoogle}
+          >
             Sign in with Google
           </Button>
         </Grid>

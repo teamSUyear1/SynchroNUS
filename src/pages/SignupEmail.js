@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import { useAuth } from "../hooks/useAuth";
+
 
 const SignupEmail = () => {
   const [email, setEmail] = useState("");
@@ -72,7 +74,6 @@ const SignupEmail = () => {
           <Grid item xs={12} alignSelf="flex-end">
             <IconButton
               disabled={!emailValid()}
-              href="/signup/password"
               onClick={emailSaveHandler}
             >
               <ArrowForwardIosRoundedIcon />

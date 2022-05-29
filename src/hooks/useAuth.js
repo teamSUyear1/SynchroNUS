@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+sendEmailVerification
 } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
 
@@ -14,6 +15,11 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
 const firebaseAuth = getAuth(app);
+
+const actionCodeSettings = {
+  handleCodeInApp: true,
+  dynamicLinkDomain: "synchronus.page.link",
+};
 
 // Initialize Google Authentication and get a reference to the service
 const googleAuthProvider = new GoogleAuthProvider();
@@ -35,6 +41,7 @@ function useProvideAuth() {
   const [user, setUser] = useState(null);
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
+
   const signin = (email, password) => {
     return signInWithEmailAndPassword(firebaseAuth, email, password).then(
       (response) => {
@@ -76,7 +83,6 @@ function useProvideAuth() {
   useEffect(() => {
     const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         setUser(user);
       } else {
         setUser(false);
