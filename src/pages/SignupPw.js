@@ -12,13 +12,19 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
-import { signup } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 const SignupPw = (props) => {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [select, setSelect] = useState(0);
-
+  //Destructuring of useAuth into signup function (signup defined in useAuth.js)
+  const { signup } = useAuth();
+  //Email storage from SignupEmail
+  const email = Window.localStorage.getItem("email");
+  const createUserHandler = () => {
+    signup(email, password)
+  };
   const cpasswordValid = () => {
     return cpassword === password;
   };
@@ -107,7 +113,7 @@ const SignupPw = (props) => {
               <IconButton href="/signup">
                 <ArrowBackIosRoundedIcon />
               </IconButton>
-              <IconButton disabled={!(passwordValid() && cpasswordValid())}>
+              <IconButton disabled={!(passwordValid() && cpasswordValid())} onClick={createUserHandler}>
                 <ArrowForwardIosRoundedIcon />
               </IconButton>
             </Stack>

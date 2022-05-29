@@ -13,7 +13,9 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 
 const SignupEmail = () => {
   const [email, setEmail] = useState("");
-
+  const emailSaveHandler = () => {
+    Window.localStorage.setItem("email", email)
+  };
   const emailValid = () => {
     const regex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -66,7 +68,11 @@ const SignupEmail = () => {
           </Grid>
 
           <Grid item xs={12} alignSelf="flex-end">
-            <IconButton disabled={!emailValid()} href="/signup/password">
+            <IconButton
+              disabled={!emailValid()}
+              href="/signup/password"
+              onClick={emailSaveHandler}
+            >
               <ArrowForwardIosRoundedIcon />
             </IconButton>
           </Grid>
