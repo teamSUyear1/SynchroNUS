@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
+import Home from "./pages/homepage/Home";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
