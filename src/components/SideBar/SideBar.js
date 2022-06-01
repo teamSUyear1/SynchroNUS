@@ -128,7 +128,6 @@ function SideBar(props) {
               component={ButtonBase}
               href="/"
               onClick={handleLogout}
-              selected={select === 6}
             >
               <ListItemIcon>
                 <LogoutIcon color="error" />
