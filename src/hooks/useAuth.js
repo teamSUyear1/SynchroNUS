@@ -16,12 +16,6 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
 const firebaseAuth = getAuth(app);
-
-const actionCodeSettings = {
-  handleCodeInApp: true,
-  dynamicLinkDomain: "synchronus.page.link",
-};
-
 // Initialize Google Authentication and get a reference to the service
 const googleAuthProvider = new GoogleAuthProvider();
 
@@ -75,8 +69,7 @@ function useProvideAuth() {
     });
   };
   const signInWithGoogle = () => {
-    signInWithRedirect(firebaseAuth, googleAuthProvider);
-    return true;
+    return signInWithRedirect(firebaseAuth, googleAuthProvider);
   };
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...

@@ -27,6 +27,9 @@ import SideBar from "./components/SideBar/SideBar";
 import { useAuth } from "./hooks/useAuth";
 import SignupEmail from "./pages/SignupEmail";
 import SignupPw from "./pages/SignupPw";
+import Assignment from "./pages/Assignment";
+import StudyTimer from "./pages/StudyTimer";
+import Meeting from "./pages/Meeting";
 
 function App() {
   const { user } = useAuth();
@@ -49,7 +52,7 @@ function App() {
             <Grid container direction="column">
               <Navbar />
               <Routes>
-                <Route exact path="/" element={<Home />} />
+                <Route path="/" element={<Home />} />
                 <Route
                   path="/dashboard"
                   element={user ? <Dashboard /> : <Navigate replace to="/" />}
@@ -57,6 +60,18 @@ function App() {
                 <Route
                   path="/profile"
                   element={user ? <Profile /> : <Navigate replace to="/" />}
+                />
+                <Route
+                  path="/meeting"
+                  element={user ? <Meeting /> : <Navigate replace to="/" />}
+                />
+                <Route
+                  path="/assignment"
+                  element={user ? <Assignment /> : <Navigate replace to="/" />}
+                />
+                <Route
+                  path="/studytimer"
+                  element={user ? <StudyTimer /> : <Navigate replace to="/" />}
                 />
                 <Route
                   path="/login"
