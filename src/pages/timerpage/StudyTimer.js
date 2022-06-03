@@ -4,12 +4,18 @@ import SideBar from "../../components/SideBar/SideBar";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import classes from "./StudyTimer.module.css";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import { IconButton } from "@mui/material";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 
 const percentage = 66;
 const red = "#f54e4e";
 const green = "#4aec8c";
+const debuggy = () => {
+  console.log("hello test");
+};
 
 function StudyTimer() {
   return (
@@ -29,12 +35,15 @@ function StudyTimer() {
           })}
         />
         <div className={classes.content}>
-          <IconButton
-            onClick={() => {
-              console.log("hello");
-            }}
-          >
-            <PlayCircleIcon />
+          <IconButton onClick={debuggy}>
+            <PlayCircleOutlineIcon sx={{ fontSize: 50 }} />
+          </IconButton>
+          <IconButton onClick={debuggy}>
+            {" "}
+            <PauseCircleOutlineIcon sx={{ fontSize: 50 }} />
+          </IconButton>
+          <IconButton onClick={debuggy}>
+            <SettingsApplicationsIcon sx={{ fontSize: 50 }} />
           </IconButton>
         </div>
       </Grid>
