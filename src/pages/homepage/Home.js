@@ -16,6 +16,7 @@ function Home() {
       </Typography> 
       Will be removing this because Typography shifts all texts to the bottom of the video,
       not sure how to fix
+      -> can be used to add content like additional background
       */}
         <div className={classes.content}>
           This is the homepage

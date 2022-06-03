@@ -28,7 +28,7 @@ import { useAuth } from "./hooks/useAuth";
 import SignupEmail from "./pages/SignupEmail";
 import SignupPw from "./pages/SignupPw";
 import Assignment from "./pages/Assignment";
-import StudyTimer from "./pages/StudyTimer";
+import StudyTimer from "./pages/timerpage/StudyTimer";
 import Meeting from "./pages/Meeting";
 
 function App() {
