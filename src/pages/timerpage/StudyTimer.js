@@ -8,7 +8,7 @@ import Timer from "./Timer";
 import Settings from "./Settings";
 
 const StudyTimer = () => {
-  const [showSettings, SetShowSettings] = useState(true);
+  const [showSettings, SetShowSettings] = useState(false);
 
   return (
     <>{showSettings ? <Settings /> : <Timer />}</>

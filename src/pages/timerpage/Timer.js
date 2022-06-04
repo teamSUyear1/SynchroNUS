@@ -2,22 +2,27 @@
   Page that displays when study timer is ongoing.
   Shows a circular progressbar and time remaining.
 */
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, IconButton } from "@mui/material";
 import React from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import classes from "./StudyTimer.module.css";
-import { IconButton } from "@mui/material";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
-import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Settings from "./Settings";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 const percentage = 66;
 const red = "#f54e4e";
 const green = "#4aec8c";
 const debuggy = () => {
   console.log("hello test");
+};
+
+const resetTimerHandler = () => {
+  return <Settings />;
 };
 
 function Timer() {
@@ -46,7 +51,10 @@ function Timer() {
             <PauseCircleOutlineIcon sx={{ fontSize: 50 }} />
           </IconButton>
           <IconButton onClick={debuggy}>
-            <SettingsApplicationsIcon sx={{ fontSize: 50 }} />
+            <SettingsIcon sx={{ fontSize: 45 }} />
+          </IconButton>
+          <IconButton onClick={debuggy}>
+            <RestartAltIcon sx={{ fontSize: 50 }} />
           </IconButton>
         </div>
       </Grid>
