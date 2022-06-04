@@ -1,0 +1,57 @@
+/*
+  Page that displays when study timer is ongoing.
+  Shows a circular progressbar and time remaining.
+*/
+import { Grid, Typography } from "@mui/material";
+import React from "react";
+import SideBar from "../../components/SideBar/SideBar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import classes from "./StudyTimer.module.css";
+import { IconButton } from "@mui/material";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+
+const percentage = 66;
+const red = "#f54e4e";
+const green = "#4aec8c";
+const debuggy = () => {
+  console.log("hello test");
+};
+
+function Timer() {
+  return (
+    <Grid container justifyContent="center" alignItems="center">
+      <SideBar select={4} />
+      <Grid item height={"80vh"}>
+        <div className={classes.title}>
+          <Typography>Study Timer</Typography>
+        </div>
+        <CircularProgressbar
+          value={percentage}
+          text={`${percentage}%`}
+          styles={buildStyles({
+            textColor: "#fff",
+            pathColor: "pink",
+            trailColor: "rgba(255, 255, 255, 0.3)",
+          })}
+        />
+        <div className={classes.content}>
+          <IconButton onClick={debuggy}>
+            <PlayCircleOutlineIcon sx={{ fontSize: 50 }} />
+          </IconButton>
+          <IconButton onClick={debuggy}>
+            {" "}
+            <PauseCircleOutlineIcon sx={{ fontSize: 50 }} />
+          </IconButton>
+          <IconButton onClick={debuggy}>
+            <SettingsApplicationsIcon sx={{ fontSize: 50 }} />
+          </IconButton>
+        </div>
+      </Grid>
+    </Grid>
+  );
+}
+
+export default Timer;

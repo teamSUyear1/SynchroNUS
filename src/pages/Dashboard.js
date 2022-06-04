@@ -11,8 +11,6 @@ import { Grid } from "@mui/material";
 import SideBar from "../components/SideBar/SideBar";
 
 export default function Dashboard() {
-
- 
   const initialValue = new Date();
   const currentYear = new Date().getFullYear();
   const requestAbortController = React.useRef(null);
@@ -81,7 +79,7 @@ export default function Dashboard() {
 
   return (
     <Grid container>
-      <SideBar select={1}/>
+      <SideBar select={1} />
       <Grid item height={"80vh"}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <StaticDatePicker
@@ -104,7 +102,6 @@ export default function Dashboard() {
               const isSelected =
                 !DayComponentProps.outsideCurrentMonth &&
                 highlightedDays.indexOf(day.getDate()) > 0;
-
 
               return (
                 <Badge
