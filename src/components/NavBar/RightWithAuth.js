@@ -10,12 +10,13 @@ import Logout from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
-import Dashboard from "../../pages/Dashboard";
 import { ButtonBase } from "@mui/material";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth, db } from "../../hooks/useAuth";
+import AccountInfo from "../../hooks/AccountInfo";
 
 export default function RightWithAuth(props) {
   const { user, signout } = useAuth();
+  const {name, avatar} = AccountInfo()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -29,17 +30,6 @@ export default function RightWithAuth(props) {
     signout();
   };
 
-  const [name, setName] = React.useState("...");
-  const [avatar, setAvatar] = React.useState("");
-
-  React.useEffect(() => {
-    if (user?.displayName) {
-      setName(user.displayName);
-    }
-    if (user?.photoURL) {
-      setAvatar(user.photoURL);
-    }
-  }, [user]);
 
   return (
     <>

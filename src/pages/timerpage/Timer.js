@@ -27,7 +27,7 @@ const resetTimerHandler = () => {
 
 function Timer() {
   return (
-    <Grid container justifyContent="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center" >
       <SideBar select={4} />
       <Grid item height={"80vh"}>
         <div className={classes.title}>

@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SideBar from './SideBar'
 
 function index() {
-  return (
-   <SideBar />
+  return ({  
+   SideBar}
   )
 }
 

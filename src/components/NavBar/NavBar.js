@@ -12,14 +12,16 @@ import RightWihoutAuth from "./RightWithoutAuth";
 import RightWithAuth from "./RightWithAuth";
 import { useAuth } from "../../hooks/useAuth";
 
+
 const NavBar = () => {
   const { user } = useAuth();
+
   return (
     <AppBar
       position="sticky"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
-      <Grid marginLeft={2} direction="column">
+      <Grid container marginLeft={2} direction="column">
         <Toolbar disableGutters>
           <Stack direction="row" color="inherit">
             <Avatar
@@ -50,7 +52,7 @@ const NavBar = () => {
               variant="h6"
               noWrap
               sx={{
-                mr: 2,
+                mr: 4,
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 500,
@@ -66,7 +68,7 @@ const NavBar = () => {
             <Grid item>
               <LeftComponent />
             </Grid>
-            <Grid item>{user ? <RightWithAuth /> : <RightWihoutAuth />}</Grid>
+            <Grid item>{user ? <RightWithAuth />  : <RightWihoutAuth  />}</Grid>
           </Grid>
         </Toolbar>
       </Grid>

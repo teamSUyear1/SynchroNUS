@@ -4,7 +4,16 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+} from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -33,7 +42,7 @@ function LeftComponent() {
         </IconButton>
       </Tooltip>
       <Tooltip title="Dashboard">
-        <IconButton href="/dashboard">
+        <IconButton href="/dashboard" >
           <DashboardIcon />
         </IconButton>
       </Tooltip>
@@ -53,7 +62,7 @@ function LeftComponent() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button  href="https://nusmods.com/" >Continue</Button>
+          <Button href="https://nusmods.com/">Continue</Button>
         </DialogActions>
       </Dialog>
     </Box>

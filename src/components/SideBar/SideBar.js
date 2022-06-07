@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -12,31 +12,22 @@ import ButtonBase from "@mui/material/ButtonBase";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Avatar, ListItemAvatar } from "@mui/material";
-import Dashboard from "../../pages/Dashboard";
-import { useAuth } from "../../hooks/useAuth";
+import { Avatar } from "@mui/material";
+import { useAuth, db } from "../../hooks/useAuth";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupsIcon from "@mui/icons-material/Groups";
+import AccountInfo from "../../hooks/AccountInfo";
 
 function SideBar(props) {
   const { user, signout } = useAuth();
-  const [avatar, setAvatar] = React.useState("");
-  const [name, setName] = React.useState("Loading ...");
+  const {avatar} = AccountInfo();
   const select = props.select;
 
   const handleLogout = () => {
     signout();
   };
 
-  React.useEffect(() => {
-    if (user?.displayName) {
-      setName(user.displayName);
-    }
-    if (user?.photoURL) {
-      setAvatar(user.photoURL);
-    }
-  }, [user]);
 
   const drawerWidth = 240;
   return (
