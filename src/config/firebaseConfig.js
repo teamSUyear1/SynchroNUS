@@ -1,9 +1,11 @@
+
 export const firebaseConfig = {
-  apiKey: "AIzaSyBIIo2ZwuqfuYfy1hoMlb7JvJgSqJbJqxw",
-  authDomain: "synchronus-138ca.firebaseapp.com",
-  projectId: "synchronus-138ca",
-  storageBucket: "synchronus-138ca.appspot.com",
-  messagingSenderId: "873240114880",
-  appId: "1:873240114880:web:43f7ff3cfa7923995bdf25",
-  measurementId: "G-X3EYBZG8YL",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  projectId:  process.env.REACT_APP_projectId,
+  storageBucket:  process.env.REACT_APP_storageBucket,
+  messagingSenderId:  process.env.REACT_APP_messagingSenderId,
+  appId:  process.env.REACT_APP_appId,
+  measurementId:  process.env.REACT_APP_measurementId
 };
+
