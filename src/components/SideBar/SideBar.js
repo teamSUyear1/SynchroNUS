@@ -34,8 +34,9 @@ function SideBar(props) {
     <Drawer
       variant="permanent"
       sx={{
+        display: { xs: "none", md: "flex" },
         width: drawerWidth,
-        flexShrink: 0,
+        flexShrink:0,
         [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: "border-box" },
       }}
     >

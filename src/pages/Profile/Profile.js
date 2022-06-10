@@ -1,42 +1,39 @@
 import {
   Avatar,
+  Box,
   Button,
   Grid,
   IconButton,
+  LinearProgress,
   Stack,
+  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
-import SideBar from "../components/SideBar/SideBar";
+import React, { useEffect, useState } from "react";
+import SideBar from "../../components/SideBar/SideBar";
 import EditIcon from "@mui/icons-material/Edit";
-import { useAuth, db, storage } from "../hooks/useAuth";
+import { useAuth, db, storage } from "../../hooks/useAuth";
 import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Input from "@mui/material/Input";
-import AccountInfo from "../hooks/AccountInfo";
+import AccountInfo from "../../hooks/AccountInfo";
 import { CircularProgressbar } from "react-circular-progressbar";
+import Popup from "../../components/Popup/Popup";
+import ProfileForm from "./ProfileForm";
 
 function Profile() {
   const { user } = useAuth();
   const { name, avatar } = AccountInfo();
-  const [progress, setProgress] = React.useState(0);
+  const [progress, setProgress] = useState(0);
   const docRef = doc(db, "users", user.email);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
 
   const formHandler = (e) => {
     e.preventDefault();
     const file = e.target[0].files[0];
-    console.log(file);
     uploadFiles(file);
-  };
-
-  const changeNameHandler = () => {
-    const newName = prompt("What is your name?", name);
-    if (newName !== null) {
-      updateDoc(docRef, {
-        name: newName,
-      });
-    }
   };
 
   const uploadFiles = (file) => {
@@ -77,9 +74,15 @@ function Profile() {
               <IconButton onClick={openFile}>
                 <Avatar src={avatar} />
               </IconButton>
-              <div style={{ height: 50, width: 50 }}>
-                <CircularProgressbar value={progress} text={progress + "%"} />
-              </div>
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress variant="determinate" value={progress} />
+              </Box>
+              <form onSubmit={formHandler}>
+                <input id="fileID" type="file" accept="image/*" hidden />
+                <Button type="submit" variant="outlined">
+                  Update
+                </Button>
+              </form>
             </Stack>
           </Grid>
           <Grid item>
@@ -87,24 +90,24 @@ function Profile() {
               <Stack direction="row" spacing={1} alignItems="center">
                 <Typography>{name}</Typography>
                 <Tooltip title="Edit">
-                  <IconButton onClick={changeNameHandler}>
+                  <IconButton onClick={() => setOpenPopup(true)}>
                     <EditIcon />
                   </IconButton>
                 </Tooltip>
               </Stack>
               <Typography>{user.email}</Typography>
-
-              <form onSubmit={formHandler}>
-                <input id="fileID" type="file" accept="image/*" hidden />
-                <Button type="submit" variant="outlined">
-                  Update profile picture
-                </Button>
-              </form>
             </Stack>
           </Grid>
         </Grid>
         <Typography>Zoom</Typography>
       </Grid>
+      <Popup
+        title="What is your name?"
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+      >
+        <ProfileForm name={name} docRef={docRef} setOpenPopup={setOpenPopup} />
+      </Popup>
     </Grid>
   );
 }

@@ -4,9 +4,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import ArticleIcon from "@mui/icons-material/Article";
 import React from "react";
 
-function Footer2() {
+function Footer() {
   return (
-    <AppBar position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <AppBar
+      position="sticky"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Stack
         divider={<Divider orientation="horizontal" flexItem />}
         container
@@ -47,4 +50,4 @@ function Footer2() {
   );
 }
 
-export default Footer2;
+export default Footer;

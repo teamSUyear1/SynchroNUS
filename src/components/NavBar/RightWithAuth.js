@@ -13,10 +13,13 @@ import PersonIcon from "@mui/icons-material/Person";
 import { ButtonBase } from "@mui/material";
 import { useAuth, db } from "../../hooks/useAuth";
 import AccountInfo from "../../hooks/AccountInfo";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import TimerIcon from "@mui/icons-material/Timer";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 export default function RightWithAuth(props) {
   const { user, signout } = useAuth();
-  const {name, avatar} = AccountInfo()
+  const { name, avatar } = AccountInfo();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -29,7 +32,6 @@ export default function RightWithAuth(props) {
     handleClose();
     signout();
   };
-
 
   return (
     <>
@@ -100,6 +102,24 @@ export default function RightWithAuth(props) {
             <DashboardIcon fontSize="small" />
           </ListItemIcon>
           Dashboard
+        </MenuItem>
+        <MenuItem component={ButtonBase} href="/meeting">
+          <ListItemIcon>
+            <GroupsIcon fontSize="small" />
+          </ListItemIcon>
+          Meeting
+        </MenuItem>
+        <MenuItem component={ButtonBase} href="/assignment">
+          <ListItemIcon>
+            <AssignmentIcon fontSize="small" />
+          </ListItemIcon>
+          Assignment
+        </MenuItem>
+        <MenuItem component={ButtonBase} href="/studytimer">
+          <ListItemIcon>
+            <TimerIcon fontSize="small" />
+          </ListItemIcon>
+          Study Timer
         </MenuItem>
         <MenuItem component={ButtonBase} href="/profile">
           <ListItemIcon>

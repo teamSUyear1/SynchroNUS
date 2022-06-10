@@ -8,7 +8,7 @@ import {
 
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/homepage/Home";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
 
@@ -17,24 +17,44 @@ import Footer from "./components/Footer";
 import {
   Backdrop,
   CircularProgress,
+  createTheme,
   Divider,
   Grid,
   Paper,
   Stack,
+  ThemeProvider,
 } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import SideBar from "./components/SideBar/SideBar";
 import { useAuth } from "./hooks/useAuth";
 import SignupEmail from "./pages/SignupEmail";
 import SignupPw from "./pages/SignupPw";
-import Assignment from "./pages/Assignment";
+
 import StudyTimer from "./pages/timerpage/StudyTimer";
 import Meeting from "./pages/Meeting";
+import Assignment from "./pages/assignmentpage";
+import { useState } from "react";
 
 function App() {
   const { user } = useAuth();
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: { main: 'rgb(102, 157, 246)' }
+    },
+  });
+
+  const lightTheme = createTheme({
+    palette: {
+      primary: {
+        main: '#01579b'
+      },
+      mode: 'light',
+    },
+  });
 
   return (
+    <ThemeProvider theme={darkTheme}>
     <Router>
       <CssBaseline enableColorScheme />
       {user === null ? (
@@ -94,6 +114,7 @@ function App() {
         </>
       )}
     </Router>
+    </ThemeProvider>
   );
 }
 

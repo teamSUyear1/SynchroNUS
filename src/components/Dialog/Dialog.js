@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from "./Dialog.module.css"
 
-function Dialog({show}) {
+function Dialog({show, title, description}) {
     if(!show) {
         return <></>
     }
@@ -13,8 +13,8 @@ function Dialog({show}) {
     <div className={classes.dialog}>
 
       <div className={classes.dialog__content}>
-        <h2 className={classes.dialog__title}>Delete a task?</h2>
-        <p className={classes.dialog__description}>Are you sure you want to delete this task?</p>
+        <h2 className={classes.dialog__title}>{title}</h2>
+        <p className={classes.dialog__description}>{description}</p>
       </div>
 
       <hr />

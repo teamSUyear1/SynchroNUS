@@ -15,15 +15,14 @@ import { useAuth } from "../../hooks/useAuth";
 
 const NavBar = () => {
   const { user } = useAuth();
-
   return (
     <AppBar
       position="sticky"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
-      <Grid container marginLeft={2} direction="column">
-        <Toolbar disableGutters>
-          <Stack direction="row" color="inherit">
+      <Grid container  direction="column">
+        <Toolbar disableGutters >
+          <Stack direction="row" color="inherit" marginLeft={2}>
             <Avatar
               src="/favicon.ico"
               alt="Remy Sharp"
