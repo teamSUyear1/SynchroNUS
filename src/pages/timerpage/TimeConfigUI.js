@@ -7,11 +7,11 @@ const TimeConfigUI = (props) => {
   return (
     <React.Fragment>
       <h3 style={{color: "white"}}>{props.title}</h3>
-      <IconButton onClick={() => props.changeTime(-30, props.type)}>
+      <IconButton title="Minus 30 seconds" onClick={() => props.changeTime(-30, props.type)}>
         <IndeterminateCheckBoxOutlinedIcon color="primary" />
       </IconButton>
       <h3 style={{color: "white"}}>{props.formatTime(props.time)}</h3>
-      <IconButton onClick={() => props.changeTime(30, props.type)}>
+      <IconButton title="Add 30 seconds" onClick={() => props.changeTime(30, props.type)}>
         <AddBoxOutlinedIcon color="primary" />
       </IconButton>
     </React.Fragment>
