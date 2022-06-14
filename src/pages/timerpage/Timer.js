@@ -3,7 +3,7 @@
   Shows a circular progressbar and time remaining.
 */
 import { Grid, Typography, IconButton } from "@mui/material";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import classes from "./StudyTimer.module.css";
@@ -13,19 +13,63 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SettingsContext from "./SettingsContext";
 
-const percentage = 66;
-const red = "#f54e4e";
-const green = "#4aec8c";
-const debuggy = () => {
-  console.log("hello test");
-};
-
-function Timer() {
+function Timer(props) {
   const settingsInfo = useContext(SettingsContext);
-  const [isPaused, setIsPaused] = useState(true);
+
+  const [isPaused, setIsPaused] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(settingsInfo.sessionTime);
+  const [mode, setMode] = useState("session");
+
+  const isPausedRef = useRef(isPaused);
+  const secondsLeftRef = useRef(secondsLeft);
+  const modeRef = useRef(mode);
+
+  function tick() {
+    secondsLeftRef.current--;
+    setSecondsLeft(secondsLeftRef.current);
+  }
+
+  function switchMode() {
+    const nextMode = modeRef.current === "session" ? "break" : "settings";
+    if (nextMode === "break") {
+      setMode(nextMode);
+      modeRef.current = nextMode;
+      setSecondsLeft(settingsInfo.breakTime);
+      secondsLeftRef.current = settingsInfo.breakTime;
+    }
+    if (nextMode === "settings") {
+      resetTimerHandler();
+    }
+  }
+
   const resetTimerHandler = () => {
     settingsInfo.setShowSettings(true);
+    setMode("session");
+    modeRef.current = "session";
+    setSecondsLeft(settingsInfo.sessionTime);
+    secondsLeftRef.current = settingsInfo.sessionTime;
+    setIsPaused(true);
+    isPausedRef.current = true;
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (settingsInfo.ShowSettings === false || isPausedRef.current) {
+        return;
+      }
+      if (secondsLeftRef.current === 0) {
+        return switchMode();
+      }
+
+      tick();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [settingsInfo]);
+
+  const totalSeconds = mode === "session" ? settingsInfo.sessionTime : settingsInfo.breakTime;
+  const percentage = Math.round(secondsLeft / totalSeconds * 100);
+
   return (
     <Grid container justifyContent="center" alignItems="center">
       <Grid item height={"80vh"}>
@@ -34,24 +78,24 @@ function Timer() {
         </div>
         <CircularProgressbar
           value={percentage}
-          text={`${percentage}%`}
+          text={props.formatTime(secondsLeft)}
           styles={buildStyles({
             textColor: "#fff",
-            pathColor: "pink",
+            pathColor: mode === "session" ? "pink" : "green",
             trailColor: "rgba(255, 255, 255, 0.3)",
           })}
         />
         <div className={classes.content}>
           {isPaused ? (
-            <IconButton title="Start" onClick={debuggy}>
+            <IconButton title="Start" onClick={() => {setIsPaused(false); isPausedRef.current = false;}}>
               <PlayCircleOutlineIcon sx={{ fontSize: 50 }} />
             </IconButton>
           ) : (
-            <IconButton title="Pause" onClick={debuggy}>
+            <IconButton title="Pause" onClick={() => {setIsPaused(true); isPausedRef.current = true;}}>
               <PauseCircleOutlineIcon sx={{ fontSize: 50 }} />
             </IconButton>
           )}
-          <IconButton title="Settings" onClick={debuggy}>
+          <IconButton title="Configuration">
             <SettingsIcon sx={{ fontSize: 45 }} />
           </IconButton>
           <IconButton title="Reset Timer" onClick={resetTimerHandler}>

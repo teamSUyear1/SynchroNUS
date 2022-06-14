@@ -1,11 +1,10 @@
 /*
   Main page for for study timer -> displays Settings.js if no timer ongoing and vice-versa
   Features to be added (to the cogwheel button as an overlay)
-  -> Total time tracker
+  -> Total time tracker (stat page) -> also to be added to end of session time 
   -> Option to skip break
   -> Option to repeat after break time
 */
-import { Grid, Typography } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import Timer from "./Timer";
@@ -46,6 +45,7 @@ const StudyTimer = () => {
       <SideBar select={4} />
       <SettingsContext.Provider
         value={{
+          showSettings,
           sessionTime,
           breakTime,
           setSessionTime,
@@ -55,7 +55,7 @@ const StudyTimer = () => {
           formatTimeHandler,
         }}
       >
-        {showSettings ? <Settings /> : <Timer />}
+        {showSettings ? <Settings /> : <Timer formatTime={formatTimeHandler}/>}
       </SettingsContext.Provider>
     </Fragment>
   );
