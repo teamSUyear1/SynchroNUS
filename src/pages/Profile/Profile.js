@@ -6,7 +6,6 @@ import {
   IconButton,
   LinearProgress,
   Stack,
-  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -18,7 +17,6 @@ import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Input from "@mui/material/Input";
 import AccountInfo from "../../hooks/AccountInfo";
-import { CircularProgressbar } from "react-circular-progressbar";
 import Popup from "../../components/Popup/Popup";
 import ProfileForm from "./ProfileForm";
 
@@ -28,7 +26,6 @@ function Profile() {
   const [progress, setProgress] = useState(0);
   const docRef = doc(db, "users", user.email);
   const [openPopup, setOpenPopup] = useState(false);
-  const [openProfile, setOpenProfile] = useState(false);
 
   const formHandler = (e) => {
     e.preventDefault();

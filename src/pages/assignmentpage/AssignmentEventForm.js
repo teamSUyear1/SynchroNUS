@@ -3,6 +3,9 @@ import { DatePicker, LocalizationProvider, TimePicker } from "@mui/lab";
 import {
   Button,
   Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
   Rating,
   Select,
   Stack,
@@ -11,6 +14,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { isPast } from "date-fns"
 import React, { useEffect, useState } from "react";
 
 function AssignmentEventForm(props) {
@@ -38,20 +42,20 @@ function AssignmentEventForm(props) {
   const [disable, setDisable] = useState(false);
   const [importance, setImportance] = useState(0);
   const [assignmentTitle, setAssignmentTitle] = useState("");
-  const [module, setModule] = useState("");
+  const [type, setType] = useState("");
 
   function handleAddEvent(e) {
     e.preventDefault();
-    addEvent(assignmentTitle, module, importance, endevent.toISOString());
+    addEvent(assignmentTitle, type, importance, endevent.toISOString());
   }
 
 
-  function addEvent(title, code, importance, date) {
+  function addEvent(title, type, importance, date) {
     const newEvents = [
       ...events,
       {
         title: title,
-        code: code,
+        type: type,
         importance: importance,
         date: date,
         isComplete: false,
@@ -70,17 +74,30 @@ function AssignmentEventForm(props) {
           onChange={(e) => setAssignmentTitle(e.target.value)}
         />
         <Stack direction="row" justifyContent="space-between">
-          <TextField
-            label="Module Code"
-            type="search"
-            onChange={(e) => setModule(e.target.value)}
-          />
+        <Box sx={{ minWidth: 120}}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Type *</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={type}
+          label="Type"
+          onChange={(e) => setType(e.target.value)}
+        >
+          <MenuItem value="Project">Project</MenuItem>
+          <MenuItem value="Homework">Homework</MenuItem>
+          <MenuItem value="Lab">Lab</MenuItem>
+          <MenuItem value="Quiz">Quiz</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              width: 200,
-            }}
+              width: 250,
+              justifyContent: "center"
+            }} 
           >
             <div>
               <Typography component="legend">Level of importance</Typography>
@@ -89,19 +106,21 @@ function AssignmentEventForm(props) {
                 onChange={(event, newValue) => {
                   setImportance(newValue);
                 }}
+                required
               ></Rating>
             </div>
           </Box>
         </Stack>
         <Divider />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <div>
+          <Stack direction="row" spacing={3}>
             <DatePicker
               showToolbar
               label="Due Date"
               openTo="day"
               views={["month", "day"]}
               value={endevent}
+              shouldDisableDate={isPast}
               onChange={(newDate) => {
                 setEndevent(newDate);
               }}
@@ -116,7 +135,7 @@ function AssignmentEventForm(props) {
               }}
               renderInput={(params) => <TextField {...params} />}
             />
-          </div>
+          </Stack>
           <Typography>{endevent.toString()}</Typography>
         </LocalizationProvider>
         <Button variant="contained" type="submit" disabled={disable}>

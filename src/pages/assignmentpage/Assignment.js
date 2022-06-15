@@ -1,13 +1,7 @@
-import {
-  CalendarPicker,
-  CalendarPickerSkeleton,
-  LocalizationProvider,
-  PickersDay,
-} from "@mui/lab";
+import { LocalizationProvider, PickersDay } from "@mui/lab";
 import {
   Badge,
   Button,
-  Divider,
   Grid,
   List,
   ListItem,
@@ -24,12 +18,12 @@ import Popup from "../../components/Popup/Popup";
 import AssignmentEventForm from "./AssignmentEventForm";
 import { Box, Container } from "@mui/system";
 import AssignmentTable from "./AssignmentTable";
+import { formatDistanceToNow } from "date-fns";
 import { useAuth, db } from "../../hooks/useAuth";
 import {
   arrayRemove,
   doc,
   getDoc,
-  onSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -60,7 +54,8 @@ function Assignment() {
   const [openPopup, setOpenPopup] = useState(false);
   const [events, setEventsState] = useState([]);
   const { user } = useAuth();
-  const [highlightedDays, setHighlightedDays] = React.useState([1, 2]);
+  const [highlightedDays, setHighlightedDays] = React.useState([]);
+  const [month, setMonth] = useState(value.getMonth());
 
   function filterDate(task) {
     const taskdate = new Date(task.date).toLocaleDateString();
@@ -68,7 +63,9 @@ function Assignment() {
     return taskdate === selecteddate;
   }
 
-  function filterHighlight(task) {}
+  function filterHighlight(task) {
+    return new Date(task.date).getMonth() === month;
+  }
 
   function setEvents(newTasks) {
     setEventsState(newTasks);
@@ -79,10 +76,11 @@ function Assignment() {
     updateDoc(doc(db, "assignments", user?.uid), {
       tasks: arrayRemove(row),
     });
-    onSnapshot(doc(db, "assignments", user?.uid), (doc) => {
-      setEventsState(doc.data().tasks);
-    });
   }
+
+  const handleMonthChange = (date) => {
+    setMonth(date.getMonth());
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -94,19 +92,27 @@ function Assignment() {
       }
     }
     fetchData();
-  }, [user.uid]);
+
+    const filtered = events
+      .filter(filterHighlight)
+      .map((row) => new Date(row.date).getDate());
+    const daysToHighlight = filtered.filter((c, index) => {
+      return filtered.indexOf(c) === index;
+    });
+    setHighlightedDays(daysToHighlight);
+  }, [user.uid, month, events]);
 
   return (
     <Grid container>
       <SideBar select={3} />
       <Grid item margin={3} minHeight="75vh">
         <Stack spacing={3} direction={{ xs: "column", xl: "row" }}>
-          <Stack justifyContent="flex-start" alignItems="stretch" spacing={2} >
+          <Stack justifyContent="flex-start" alignItems="stretch" spacing={2}>
             <Button variant="contained" onClick={() => setOpenPopup(true)}>
               Add Assignment Event
             </Button>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Box sx={{ borderWidth: 2, borderRadius: 2 }} >
+              <Box sx={{ borderWidth: 2, borderRadius: 2 }}>
                 <StaticDatePicker
                   value={value}
                   views={["year", "month", "day"]}
@@ -114,15 +120,15 @@ function Assignment() {
                   maxDate={new Date(currentYear + 10, 12)}
                   displayStaticWrapperAs="desktop"
                   showDaysOutsideCurrentMonth
+                  renderInput={(params) => <TextField {...params} />}
                   onChange={(newValue) => {
                     setValue(newValue);
                   }}
-                  renderLoading={() => <CalendarPickerSkeleton />}
+                  onMonthChange={handleMonthChange}
                   renderDay={(day, _value, DayComponentProps) => {
                     const isSelected =
                       !DayComponentProps.outsideCurrentMonth &&
                       highlightedDays.indexOf(day.getDate()) >= 0;
-
                     return (
                       <Badge
                         key={day.toString()}
@@ -151,7 +157,7 @@ function Assignment() {
                   <List
                     sx={{
                       width: "100%",
-                      bgcolor: 'background.paper',
+                      bgcolor: "background.paper",
                       position: "relative",
                       overflow: "auto",
                       maxHeight: 200,
@@ -168,12 +174,25 @@ function Assignment() {
                             width="100%"
                             padding={2}
                           >
-                            <p>Assignment Title: {task.title}</p>
-                            <p>Module Code: {task.code}</p>
-                            <p>
+                            <Typography component="p">
+                              Title: {task.title}
+                            </Typography>
+                            <Typography component="p">
+                              Type: {task.type}
+                            </Typography>
+                            <Typography component="p">
                               Time Due:{" "}
-                              {new Date(task.date).toLocaleTimeString()}
-                            </p>
+                              {new Date(task.date).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
+                            </Typography>
+                            <Typography component="p">
+                              Due{" "}
+                              {formatDistanceToNow(new Date(task.date), {
+                                addSuffix: true,
+                              })}
+                            </Typography>
                           </Box>
                         </ListItem>
                       ))
@@ -183,7 +202,14 @@ function Assignment() {
               </Box>
             </LocalizationProvider>
           </Stack>
-          <Box sx={{ width: 1000, height: 704, border: "1px solid", borderRadius: 2 }}>
+          <Box
+            sx={{
+              width: 1000,
+              height: 704,
+              border: "1px solid",
+              borderRadius: 2,
+            }}
+          >
             <AssignmentTable
               events={events}
               setEvents={setEvents}

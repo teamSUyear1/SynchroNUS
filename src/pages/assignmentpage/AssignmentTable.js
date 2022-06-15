@@ -15,10 +15,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tab from "../../components/Tabs/tab";
 import TabPanel from "@mui/lab/TabPanel";
 import DeleteIcon from "@mui/icons-material/Delete";
+import StarRateIcon from "@mui/icons-material/StarRate";
+import {  formatDistanceToNow } from "date-fns";
+import CheckIcon from "@mui/icons-material/Check";
 
 function AssignmentTable(props) {
   const { events, setEvents, delEvent } = props;
@@ -27,6 +30,9 @@ function AssignmentTable(props) {
     return task.importance === index;
   }
 
+  function filterDone(task) {
+    return task.isComplete === true;
+  }
 
   function handleTaskCompletionToggled(toToggleTask, toToggleTaskIndex) {
     const newTasks = [
@@ -34,7 +40,7 @@ function AssignmentTable(props) {
       ...events.slice(0, toToggleTaskIndex),
       {
         title: toToggleTask.title,
-        code: toToggleTask.code,
+        type: toToggleTask.type,
         importance: toToggleTask.importance,
         date: toToggleTask.date,
         isComplete: !toToggleTask.isComplete,
@@ -49,16 +55,25 @@ function AssignmentTable(props) {
   }
 
   return (
-    <Tab label1="All" label2="5" label3="4" label4="3" label5="2" label6="1">
+    <Tab
+      label1="All"
+      label2="5"
+      label3="4"
+      label4="3"
+      label5="2"
+      label6="1"
+      label7="Completed"
+      label8="Overdue"
+    >
       <TabPanel value="1">
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Importance</TableCell>
-                <TableCell align="right">Assignment Title</TableCell>
-                <TableCell align="right">Module Code</TableCell>
-                <TableCell align="right">Due</TableCell>
+                <TableCell align="left">Assignment Title</TableCell>
+                <TableCell align="center">Type</TableCell>
+                <TableCell align="center">Due</TableCell>
                 <TableCell align="right">Done</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
@@ -73,17 +88,33 @@ function AssignmentTable(props) {
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.importance}
+                        <Typography>
+                          {row.importance}
+                          <StarRateIcon fontSize="small"></StarRateIcon>
+                        </Typography>
                       </TableCell>
-                      <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.code}</TableCell>
-                      <TableCell align="right">
-                        <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      <TableCell align="left">{row.title}</TableCell>
+                      <TableCell align="center">{row.type}</TableCell>
+                      <TableCell align="center">
+                        <Typography component="p">
+                          {new Date(row.date).toDateString()}
+                        </Typography>
+                        <Typography component="p">
+                          {new Date(row.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Typography>
+                        <Typography component="p">
+                          {formatDistanceToNow(new Date(row.date), {
+                            addSuffix: true,
+                          })}
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">
                         <Switch
                           size="small"
-                          value={row.isComplete}
+                          checked={row.isComplete}
                           onChange={() =>
                             handleTaskCompletionToggled(row, index)
                           }
@@ -108,9 +139,9 @@ function AssignmentTable(props) {
             <TableHead>
               <TableRow>
                 <TableCell>No.</TableCell>
-                <TableCell align="right">Due</TableCell>
+                <TableCell align="center">Due</TableCell>
                 <TableCell align="right">Assignment Title</TableCell>
-                <TableCell align="right">Module Code</TableCell>
+                <TableCell align="right">Type</TableCell>
                 <TableCell align="right">Done</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
@@ -126,15 +157,28 @@ function AssignmentTable(props) {
                       <TableCell component="th" scope="row">
                         {index + 1}
                       </TableCell>
-                      <TableCell align="right">
-                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      <TableCell align="center">
+                        <Typography component="p">
+                          {new Date(row.date).toDateString()}
+                        </Typography>
+                        <Typography component="p">
+                          {new Date(row.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Typography>
+                        <Typography component="p">
+                          {formatDistanceToNow(new Date(row.date), {
+                            addSuffix: true,
+                          })}
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">{row.type}</TableCell>
                       <TableCell align="right">
                         <Switch
                           size="small"
-                          value={row.isComplete}
+                          checked={row.isComplete}
                           onChange={() =>
                             handleTaskCompletionToggled(row, index)
                           }
@@ -155,12 +199,12 @@ function AssignmentTable(props) {
       <TabPanel value="3">
         <TableContainer component={Paper}>
           <Table>
-          <TableHead>
+            <TableHead>
               <TableRow>
                 <TableCell>No.</TableCell>
-                <TableCell align="right">Due</TableCell>
+                <TableCell align="center">Due</TableCell>
                 <TableCell align="right">Assignment Title</TableCell>
-                <TableCell align="right">Module Code</TableCell>
+                <TableCell align="right">Type</TableCell>
                 <TableCell align="right">Done</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
@@ -176,15 +220,28 @@ function AssignmentTable(props) {
                       <TableCell component="th" scope="row">
                         {index + 1}
                       </TableCell>
-                      <TableCell align="right">
-                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      <TableCell align="center">
+                        <Typography component="p">
+                          {new Date(row.date).toDateString()}
+                        </Typography>
+                        <Typography component="p">
+                          {new Date(row.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Typography>
+                        <Typography component="p">
+                          {formatDistanceToNow(new Date(row.date), {
+                            addSuffix: true,
+                          })}
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">{row.type}</TableCell>
                       <TableCell align="right">
                         <Switch
                           size="small"
-                          value={row.isComplete}
+                          checked={row.isComplete}
                           onChange={() =>
                             handleTaskCompletionToggled(row, index)
                           }
@@ -205,12 +262,12 @@ function AssignmentTable(props) {
       <TabPanel value="4">
         <TableContainer component={Paper}>
           <Table>
-          <TableHead>
+            <TableHead>
               <TableRow>
                 <TableCell>No.</TableCell>
-                <TableCell align="right">Due</TableCell>
+                <TableCell align="center">Due</TableCell>
                 <TableCell align="right">Assignment Title</TableCell>
-                <TableCell align="right">Module Code</TableCell>
+                <TableCell align="right">Type</TableCell>
                 <TableCell align="right">Done</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
@@ -226,15 +283,28 @@ function AssignmentTable(props) {
                       <TableCell component="th" scope="row">
                         {index + 1}
                       </TableCell>
-                      <TableCell align="right">
-                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      <TableCell align="center">
+                        <Typography component="p">
+                          {new Date(row.date).toDateString()}
+                        </Typography>
+                        <Typography component="p">
+                          {new Date(row.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Typography>
+                        <Typography component="p">
+                          {formatDistanceToNow(new Date(row.date), {
+                            addSuffix: true,
+                          })}
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">{row.type}</TableCell>
                       <TableCell align="right">
                         <Switch
                           size="small"
-                          value={row.isComplete}
+                          checked={row.isComplete}
                           onChange={() =>
                             handleTaskCompletionToggled(row, index)
                           }
@@ -255,12 +325,12 @@ function AssignmentTable(props) {
       <TabPanel value="5">
         <TableContainer component={Paper}>
           <Table>
-          <TableHead>
+            <TableHead>
               <TableRow>
                 <TableCell>No.</TableCell>
-                <TableCell align="right">Due</TableCell>
+                <TableCell align="center">Due</TableCell>
                 <TableCell align="right">Assignment Title</TableCell>
-                <TableCell align="right">Module Code</TableCell>
+                <TableCell align="right">Type</TableCell>
                 <TableCell align="right">Done</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
@@ -276,15 +346,28 @@ function AssignmentTable(props) {
                       <TableCell component="th" scope="row">
                         {index + 1}
                       </TableCell>
-                      <TableCell align="right">
-                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      <TableCell align="center">
+                        <Typography component="p">
+                          {new Date(row.date).toDateString()}
+                        </Typography>
+                        <Typography component="p">
+                          {new Date(row.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Typography>
+                        <Typography component="p">
+                          {formatDistanceToNow(new Date(row.date), {
+                            addSuffix: true,
+                          })}
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">{row.type}</TableCell>
                       <TableCell align="right">
                         <Switch
                           size="small"
-                          value={row.isComplete}
+                          checked={row.isComplete}
                           onChange={() =>
                             handleTaskCompletionToggled(row, index)
                           }
@@ -305,12 +388,12 @@ function AssignmentTable(props) {
       <TabPanel value="6">
         <TableContainer component={Paper}>
           <Table>
-          <TableHead>
+            <TableHead>
               <TableRow>
                 <TableCell>No.</TableCell>
-                <TableCell align="right">Due</TableCell>
+                <TableCell align="center">Due</TableCell>
                 <TableCell align="right">Assignment Title</TableCell>
-                <TableCell align="right">Module Code</TableCell>
+                <TableCell align="right">Type</TableCell>
                 <TableCell align="right">Done</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
@@ -326,15 +409,28 @@ function AssignmentTable(props) {
                       <TableCell component="th" scope="row">
                         {index + 1}
                       </TableCell>
-                      <TableCell align="right">
-                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      <TableCell align="center">
+                        <Typography component="p">
+                          {new Date(row.date).toDateString()}
+                        </Typography>
+                        <Typography component="p">
+                          {new Date(row.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Typography>
+                        <Typography component="p">
+                          {formatDistanceToNow(new Date(row.date), {
+                            addSuffix: true,
+                          })}
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">{row.type}</TableCell>
                       <TableCell align="right">
                         <Switch
                           size="small"
-                          value={row.isComplete}
+                          checked={row.isComplete}
                           onChange={() =>
                             handleTaskCompletionToggled(row, index)
                           }
@@ -348,6 +444,65 @@ function AssignmentTable(props) {
                     </TableRow>
                   </>
                 ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TabPanel>
+      <TabPanel value="7">
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>No.</TableCell>
+                <TableCell align="center">Due</TableCell>
+                <TableCell align="right">Assignment Title</TableCell>
+                <TableCell align="right">Type</TableCell>
+                <TableCell align="right">Done</TableCell>
+                <TableCell align="right">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {events.filter(filterDone).map((row, index) => (
+                <>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {index + 1}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography component="p">
+                        {new Date(row.date).toDateString()}
+                      </Typography>
+                      <Typography component="p">
+                        {new Date(row.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                      <Typography component="p">
+                        {formatDistanceToNow(new Date(row.date), {
+                          addSuffix: true,
+                        })}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">{row.title}</TableCell>
+                    <TableCell align="right">{row.type}</TableCell>
+                    <TableCell align="right">
+                      <Switch
+                        size="small"
+                        checked={row.isComplete}
+                        onChange={() => handleTaskCompletionToggled(row, index)}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                </>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
