@@ -15,14 +15,18 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import Tab from "../../components/Tabs/tab";
 import TabPanel from "@mui/lab/TabPanel";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function AssignmentTable(props) {
   const { events, setEvents, delEvent } = props;
-  console.log(events);
+
+  function filterImp(task, index) {
+    return task.importance === index;
+  }
+
 
   function handleTaskCompletionToggled(toToggleTask, toToggleTaskIndex) {
     const newTasks = [
@@ -45,17 +49,7 @@ function AssignmentTable(props) {
   }
 
   return (
-    /* <Stack margin={2}>
-      <div>
-      <Paper elevation={0} variant="outlined">
-        <Typography variant="h8" gutterBottom component="div">
-          Assignment Title.
-        </Typography>
-        <Rating></Rating>
-        </Paper>
-      </div>
-    </Stack> */
-    <Tab label1="All" label2={5} label3="4" label4="3" label5="2" label6="1">
+    <Tab label1="All" label2="5" label3="4" label4="3" label5="2" label6="1">
       <TabPanel value="1">
         <TableContainer component={Paper}>
           <Table>
@@ -70,7 +64,7 @@ function AssignmentTable(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {events === "" ? (
+              {events === undefined || events.length === 0 ? (
                 <Typography>No Assignement</Typography>
               ) : (
                 events.map((row, index) => (
@@ -84,7 +78,7 @@ function AssignmentTable(props) {
                       <TableCell align="right">{row.title}</TableCell>
                       <TableCell align="right">{row.code}</TableCell>
                       <TableCell align="right">
-                        <Typography>{row.date}</Typography>
+                        <Typography>{new Date(row.date).toLocaleString()}</Typography>
                       </TableCell>
                       <TableCell align="right">
                         <Switch
@@ -96,7 +90,7 @@ function AssignmentTable(props) {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        <IconButton>
+                        <IconButton onClick={() => delEvent(row)}>
                           <DeleteIcon />
                         </IconButton>
                       </TableCell>
@@ -113,26 +107,248 @@ function AssignmentTable(props) {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Due</TableCell>
+                <TableCell>No.</TableCell>
+                <TableCell align="right">Due</TableCell>
                 <TableCell align="right">Assignment Title</TableCell>
                 <TableCell align="right">Module Code</TableCell>
                 <TableCell align="right">Done</TableCell>
+                <TableCell align="right">Action</TableCell>
               </TableRow>
             </TableHead>
+            <TableBody>
+              {events
+                .filter((task) => filterImp(task, 5))
+                .map((row, index) => (
+                  <>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell align="right">
+                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      </TableCell>
+                      <TableCell align="right">{row.title}</TableCell>
+                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">
+                        <Switch
+                          size="small"
+                          value={row.isComplete}
+                          onChange={() =>
+                            handleTaskCompletionToggled(row, index)
+                          }
+                        />
+                      </TableCell>
+                      <TableCell align="right">
+                        <IconButton onClick={() => delEvent(row)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </TabPanel>
       <TabPanel value="3">
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
+          <TableHead>
               <TableRow>
-                <TableCell>Due</TableCell>
+                <TableCell>No.</TableCell>
+                <TableCell align="right">Due</TableCell>
                 <TableCell align="right">Assignment Title</TableCell>
                 <TableCell align="right">Module Code</TableCell>
                 <TableCell align="right">Done</TableCell>
+                <TableCell align="right">Action</TableCell>
               </TableRow>
             </TableHead>
+            <TableBody>
+              {events
+                .filter((task) => filterImp(task, 4))
+                .map((row, index) => (
+                  <>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell align="right">
+                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      </TableCell>
+                      <TableCell align="right">{row.title}</TableCell>
+                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">
+                        <Switch
+                          size="small"
+                          value={row.isComplete}
+                          onChange={() =>
+                            handleTaskCompletionToggled(row, index)
+                          }
+                        />
+                      </TableCell>
+                      <TableCell align="right">
+                        <IconButton onClick={() => delEvent(row)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TabPanel>
+      <TabPanel value="4">
+        <TableContainer component={Paper}>
+          <Table>
+          <TableHead>
+              <TableRow>
+                <TableCell>No.</TableCell>
+                <TableCell align="right">Due</TableCell>
+                <TableCell align="right">Assignment Title</TableCell>
+                <TableCell align="right">Module Code</TableCell>
+                <TableCell align="right">Done</TableCell>
+                <TableCell align="right">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {events
+                .filter((task) => filterImp(task, 3))
+                .map((row, index) => (
+                  <>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell align="right">
+                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      </TableCell>
+                      <TableCell align="right">{row.title}</TableCell>
+                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">
+                        <Switch
+                          size="small"
+                          value={row.isComplete}
+                          onChange={() =>
+                            handleTaskCompletionToggled(row, index)
+                          }
+                        />
+                      </TableCell>
+                      <TableCell align="right">
+                        <IconButton onClick={() => delEvent(row)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TabPanel>
+      <TabPanel value="5">
+        <TableContainer component={Paper}>
+          <Table>
+          <TableHead>
+              <TableRow>
+                <TableCell>No.</TableCell>
+                <TableCell align="right">Due</TableCell>
+                <TableCell align="right">Assignment Title</TableCell>
+                <TableCell align="right">Module Code</TableCell>
+                <TableCell align="right">Done</TableCell>
+                <TableCell align="right">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {events
+                .filter((task) => filterImp(task, 2))
+                .map((row, index) => (
+                  <>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell align="right">
+                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      </TableCell>
+                      <TableCell align="right">{row.title}</TableCell>
+                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">
+                        <Switch
+                          size="small"
+                          value={row.isComplete}
+                          onChange={() =>
+                            handleTaskCompletionToggled(row, index)
+                          }
+                        />
+                      </TableCell>
+                      <TableCell align="right">
+                        <IconButton onClick={() => delEvent(row)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TabPanel>
+      <TabPanel value="6">
+        <TableContainer component={Paper}>
+          <Table>
+          <TableHead>
+              <TableRow>
+                <TableCell>No.</TableCell>
+                <TableCell align="right">Due</TableCell>
+                <TableCell align="right">Assignment Title</TableCell>
+                <TableCell align="right">Module Code</TableCell>
+                <TableCell align="right">Done</TableCell>
+                <TableCell align="right">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {events
+                .filter((task) => filterImp(task, 1))
+                .map((row, index) => (
+                  <>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell align="right">
+                      <Typography>{new Date(row.date).toLocaleString()}</Typography>
+                      </TableCell>
+                      <TableCell align="right">{row.title}</TableCell>
+                      <TableCell align="right">{row.code}</TableCell>
+                      <TableCell align="right">
+                        <Switch
+                          size="small"
+                          value={row.isComplete}
+                          onChange={() =>
+                            handleTaskCompletionToggled(row, index)
+                          }
+                        />
+                      </TableCell>
+                      <TableCell align="right">
+                        <IconButton onClick={() => delEvent(row)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </TabPanel>

@@ -26,7 +26,7 @@ export default function Dashboard() {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         const daysInMonth = getDaysInMonth(date);
-        const daysToHighlight = [1, 2, 3].map(() =>
+        const daysToHighlight = [1, 2].map(() =>
           getRandomNumber(1, daysInMonth)
         );
 

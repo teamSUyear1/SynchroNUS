@@ -19,7 +19,7 @@ function AssignmentEventForm(props) {
   const currDate =
     date.getFullYear() +
     "-" +
-    date.getMonth().toLocaleString("en-US", {
+    (date.getMonth() + 1).toLocaleString("en-US", {
       minimumIntegerDigits: 2,
     }) +
     "-" +
@@ -42,8 +42,9 @@ function AssignmentEventForm(props) {
 
   function handleAddEvent(e) {
     e.preventDefault();
-    addEvent(assignmentTitle, module, importance, endevent.toLocaleString());
+    addEvent(assignmentTitle, module, importance, endevent.toISOString());
   }
+
 
   function addEvent(title, code, importance, date) {
     const newEvents = [
