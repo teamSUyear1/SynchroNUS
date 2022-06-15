@@ -82,12 +82,13 @@ function AssignmentEventForm(props) {
           id="demo-simple-select"
           value={type}
           label="Type"
-          onChange={(e) => setType(e.target.value)}
+          onChange={(e) => setType(e.target.value )}
         >
           <MenuItem value="Project">Project</MenuItem>
           <MenuItem value="Homework">Homework</MenuItem>
           <MenuItem value="Lab">Lab</MenuItem>
           <MenuItem value="Quiz">Quiz</MenuItem>
+          <MenuItem value="Others">Others</MenuItem>
         </Select>
       </FormControl>
     </Box>

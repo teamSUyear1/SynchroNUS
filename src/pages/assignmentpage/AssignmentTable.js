@@ -10,7 +10,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -20,11 +22,14 @@ import Tab from "../../components/Tabs/tab";
 import TabPanel from "@mui/lab/TabPanel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import {  formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import CheckIcon from "@mui/icons-material/Check";
+import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 function AssignmentTable(props) {
   const { events, setEvents, delEvent } = props;
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   function filterImp(task, index) {
     return task.importance === index;
@@ -33,6 +38,15 @@ function AssignmentTable(props) {
   function filterDone(task) {
     return task.isComplete === true;
   }
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   function handleTaskCompletionToggled(toToggleTask, toToggleTaskIndex) {
     const newTasks = [
@@ -82,8 +96,9 @@ function AssignmentTable(props) {
               {events === undefined || events.length === 0 ? (
                 <Typography>No Assignement</Typography>
               ) : (
-                events.map((row, index) => (
-                  <>
+                events
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => (
                     <TableRow
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
@@ -126,10 +141,28 @@ function AssignmentTable(props) {
                         </IconButton>
                       </TableCell>
                     </TableRow>
-                  </>
-                ))
+                  ))
               )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                  count={events.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      "aria-label": "rows per page",
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
@@ -149,6 +182,7 @@ function AssignmentTable(props) {
             <TableBody>
               {events
                 .filter((task) => filterImp(task, 5))
+                .filter((task) => task.isComplete !== true)
                 .map((row, index) => (
                   <>
                     <TableRow
@@ -212,6 +246,7 @@ function AssignmentTable(props) {
             <TableBody>
               {events
                 .filter((task) => filterImp(task, 4))
+                .filter((task) => task.isComplete !== true)
                 .map((row, index) => (
                   <>
                     <TableRow
@@ -275,6 +310,7 @@ function AssignmentTable(props) {
             <TableBody>
               {events
                 .filter((task) => filterImp(task, 3))
+                .filter((task) => task.isComplete !== true)
                 .map((row, index) => (
                   <>
                     <TableRow
@@ -338,6 +374,7 @@ function AssignmentTable(props) {
             <TableBody>
               {events
                 .filter((task) => filterImp(task, 2))
+                .filter((task) => task.isComplete !== true)
                 .map((row, index) => (
                   <>
                     <TableRow
@@ -401,6 +438,7 @@ function AssignmentTable(props) {
             <TableBody>
               {events
                 .filter((task) => filterImp(task, 1))
+                .filter((task) => task.isComplete !== true)
                 .map((row, index) => (
                   <>
                     <TableRow
@@ -478,11 +516,6 @@ function AssignmentTable(props) {
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
-                        })}
-                      </Typography>
-                      <Typography component="p">
-                        {formatDistanceToNow(new Date(row.date), {
-                          addSuffix: true,
                         })}
                       </Typography>
                     </TableCell>

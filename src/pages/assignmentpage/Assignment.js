@@ -205,7 +205,7 @@ function Assignment() {
           <Box
             sx={{
               width: 1000,
-              height: 704,
+              height: "auto",
               border: "1px solid",
               borderRadius: 2,
             }}
