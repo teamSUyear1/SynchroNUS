@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { isPast } from "date-fns"
+import { isPast, isAfter } from "date-fns";
 import React, { useEffect, useState } from "react";
 
 function AssignmentEventForm(props) {
@@ -47,8 +47,8 @@ function AssignmentEventForm(props) {
   function handleAddEvent(e) {
     e.preventDefault();
     addEvent(assignmentTitle, type, importance, endevent.toISOString());
+    console.log(events.length);
   }
-
 
   function addEvent(title, type, importance, date) {
     const newEvents = [
@@ -64,6 +64,13 @@ function AssignmentEventForm(props) {
     setEvents(newEvents);
     setOpenPopup(false);
   }
+  useEffect(() => {
+    if (importance === 0 || type === "") {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, [importance, type]);
 
   return (
     <form onSubmit={handleAddEvent}>
@@ -74,31 +81,31 @@ function AssignmentEventForm(props) {
           onChange={(e) => setAssignmentTitle(e.target.value)}
         />
         <Stack direction="row" justifyContent="space-between">
-        <Box sx={{ minWidth: 120}}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Type *</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={type}
-          label="Type"
-          onChange={(e) => setType(e.target.value )}
-        >
-          <MenuItem value="Project">Project</MenuItem>
-          <MenuItem value="Homework">Homework</MenuItem>
-          <MenuItem value="Lab">Lab</MenuItem>
-          <MenuItem value="Quiz">Quiz</MenuItem>
-          <MenuItem value="Others">Others</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Type *</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={type}
+                label="Type"
+                onChange={(e) => setType(e.target.value)}
+              >
+                <MenuItem value="Project">Project</MenuItem>
+                <MenuItem value="Homework">Homework</MenuItem>
+                <MenuItem value="Lab">Lab</MenuItem>
+                <MenuItem value="Quiz">Quiz</MenuItem>
+                <MenuItem value="Others">Others</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               width: 250,
-              justifyContent: "center"
-            }} 
+              justifyContent: "center",
+            }}
           >
             <div>
               <Typography component="legend">Level of importance</Typography>
@@ -121,7 +128,7 @@ function AssignmentEventForm(props) {
               openTo="day"
               views={["month", "day"]}
               value={endevent}
-              shouldDisableDate={isPast}
+              shouldDisableDate={date => isAfter(new Date(currDate), date)}
               onChange={(newDate) => {
                 setEndevent(newDate);
               }}

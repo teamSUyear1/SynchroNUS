@@ -24,8 +24,9 @@ import {
   arrayRemove,
   doc,
   getDoc,
+  onSnapshot,
   setDoc,
-  updateDoc,
+  updateDoc
 } from "firebase/firestore";
 
 function Assignment() {
@@ -76,7 +77,11 @@ function Assignment() {
     updateDoc(doc(db, "assignments", user?.uid), {
       tasks: arrayRemove(row),
     });
+    onSnapshot(doc(db, "assignments", user?.uid), (doc) => {
+      setEventsState(doc.data().tasks);
+    });
   }
+
 
   const handleMonthChange = (date) => {
     setMonth(date.getMonth());
@@ -100,7 +105,7 @@ function Assignment() {
       return filtered.indexOf(c) === index;
     });
     setHighlightedDays(daysToHighlight);
-  }, [user.uid, month, events]);
+  }, [user.uid, month]);
 
   return (
     <Grid container>
