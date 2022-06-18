@@ -13,10 +13,8 @@ import React, { useEffect, useState } from "react";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import SideBar from "../../components/SideBar/SideBar";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
-import Dialog from "../../components/Dialog/Dialog";
 import Popup from "../../components/Popup/Popup";
 import AssignmentEventForm from "./AssignmentEventForm";
-import { Box, Container } from "@mui/system";
 import AssignmentTable from "./AssignmentTable";
 import { formatDistanceToNow } from "date-fns";
 import { useAuth, db } from "../../hooks/useAuth";
@@ -26,8 +24,9 @@ import {
   getDoc,
   onSnapshot,
   setDoc,
-  updateDoc
+  updateDoc,
 } from "firebase/firestore";
+import { Box } from "@mui/system";
 
 function Assignment() {
   const date = new Date();
@@ -55,7 +54,7 @@ function Assignment() {
   const [openPopup, setOpenPopup] = useState(false);
   const [events, setEventsState] = useState([]);
   const { user } = useAuth();
-  const [highlightedDays, setHighlightedDays] = React.useState([]);
+  const [highlightedDays, setHighlightedDays] = useState([]);
   const [month, setMonth] = useState(value.getMonth());
 
   function filterDate(task) {
@@ -82,33 +81,32 @@ function Assignment() {
     });
   }
 
-
   const handleMonthChange = (date) => {
     setMonth(date.getMonth());
   };
+
+  const filtered = events
+    .filter(filterHighlight)
+    .map((row) => new Date(row.date).getDate());
+  const daysToHighlight = filtered.filter((c, index) => {
+    return filtered.indexOf(c) === index;
+  });
 
   useEffect(() => {
     async function fetchData() {
       const docSnapshot = await getDoc(doc(db, "assignments", user?.uid));
       if (docSnapshot.exists()) {
+        setHighlightedDays(daysToHighlight);
         setEventsState(docSnapshot.data().tasks);
       } else {
         setEventsState([]);
       }
     }
     fetchData();
-
-    const filtered = events
-      .filter(filterHighlight)
-      .map((row) => new Date(row.date).getDate());
-    const daysToHighlight = filtered.filter((c, index) => {
-      return filtered.indexOf(c) === index;
-    });
-    setHighlightedDays(daysToHighlight);
-  }, [user.uid, month]);
+  }, [user.uid, month, daysToHighlight]);
 
   return (
-    <Grid container>
+    <Grid container="true">
       <SideBar select={3} />
       <Grid item margin={3} minHeight="75vh">
         <Stack spacing={3} direction={{ xs: "column", xl: "row" }}>
@@ -167,6 +165,7 @@ function Assignment() {
                       overflow: "auto",
                       maxHeight: 200,
                       "& ul": { padding: 0 },
+                      borderRadius: 2,
                     }}
                   >
                     {events.filter(filterDate).length === 0 ? (
