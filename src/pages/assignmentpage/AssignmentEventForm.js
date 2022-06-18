@@ -57,6 +57,7 @@ function AssignmentEventForm(props) {
         title: title,
         type: type,
         importance: importance,
+        Cdate: null,
         date: date,
         isComplete: false,
       },

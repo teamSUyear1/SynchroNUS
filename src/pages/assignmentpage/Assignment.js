@@ -94,9 +94,9 @@ function Assignment() {
 
   useEffect(() => {
     async function fetchData() {
+      setHighlightedDays(daysToHighlight);
       const docSnapshot = await getDoc(doc(db, "assignments", user?.uid));
       if (docSnapshot.exists()) {
-        setHighlightedDays(daysToHighlight);
         setEventsState(docSnapshot.data().tasks);
       } else {
         setEventsState([]);
@@ -115,7 +115,10 @@ function Assignment() {
               Add Assignment Event
             </Button>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Box sx={{ borderWidth: 2, borderRadius: 2 }}>
+              <Box
+                sx={{ border: "1px solid", borderWidth: 1, borderRadius: 2 }}
+                p={1}
+              >
                 <StaticDatePicker
                   value={value}
                   views={["year", "month", "day"]}
@@ -174,7 +177,11 @@ function Assignment() {
                       events.filter(filterDate).map((task) => (
                         <ListItem>
                           <Box
-                            sx={{ borderWidth: 3, borderRadius: 2 }}
+                            sx={{
+                              border: "1px solid",
+                              borderWidth: 2,
+                              borderRadius: 2,
+                            }}
                             width="100%"
                             padding={2}
                           >

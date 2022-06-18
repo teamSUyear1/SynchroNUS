@@ -18,7 +18,7 @@ import Tab from "../../components/Tabs/tab";
 import TabPanel from "@mui/lab/TabPanel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import { formatDistanceToNow, compareAsc } from "date-fns";
+import { formatDistanceToNow, compareAsc, isAfter } from "date-fns";
 import CheckIcon from "@mui/icons-material/Check";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
@@ -52,7 +52,8 @@ function AssignmentTable(props) {
         title: toToggleTask.title,
         type: toToggleTask.type,
         importance: toToggleTask.importance,
-        date: new Date().toISOString(),
+        date: toToggleTask.date,
+        Cdate: new Date().toISOString(),
         isComplete: !toToggleTask.isComplete,
       },
       ...events.slice(toToggleTaskIndex + 1),
@@ -92,67 +93,63 @@ function AssignmentTable(props) {
               {events === undefined || events.length === 0 ? (
                 <Typography>No Assignement</Typography>
               ) : (
-                events
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) =>
-                    row.isComplete !== true ? (
-                      <TableRow
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          <Typography>
-                            {row.importance}
-                            <StarRateIcon fontSize="small"></StarRateIcon>
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="left">{row.title}</TableCell>
-                        <TableCell align="center">{row.type}</TableCell>
-                        <TableCell align="center">
-                          <Typography component="p">
-                            {new Date(row.date).toDateString()}
-                          </Typography>
-                          <Typography component="p">
-                            {new Date(row.date).toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </Typography>
-                          <Typography component="p">
-                            {formatDistanceToNow(new Date(row.date), {
-                              addSuffix: true,
-                            })}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                          <Switch
-                            size="small"
-                            checked={row.isComplete}
-                            onChange={() =>
-                              handleTaskCompletionToggled(row, index)
-                            }
-                          />
-                        </TableCell>
-                        <TableCell align="right">
-                          <IconButton onClick={() => delEvent(row)}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      <></>
+                (rowsPerPage > 0
+                  ? events.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
                     )
-                  )
+                  : events
+                ).map((row, index) => (
+                  <TableRow
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
+                  >
+                    <TableCell component="th" scope="row">
+                      <Typography>
+                        {row.importance}
+                        <StarRateIcon fontSize="small"></StarRateIcon>
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="left">{row.title}</TableCell>
+                    <TableCell align="center">{row.type}</TableCell>
+                    <TableCell align="center">
+                      <Typography component="p">
+                        {new Date(row.date).toDateString()}
+                      </Typography>
+                      <Typography component="p">
+                        {new Date(row.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                      <Typography component="p">
+                        {formatDistanceToNow(new Date(row.date), {
+                          addSuffix: true,
+                        })}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Switch
+                        size="small"
+                        checked={row.isComplete}
+                        onChange={() => handleTaskCompletionToggled(row, index)}
+                      />
+                    </TableCell>git s
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))
               )}
             </TableBody>
             <TableFooter>
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={
-                    events.filter((task) => task.isComplete !== true).length
-                  }
+                  count={events.filter((task) => !filterDone(task)).length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{
@@ -178,59 +175,60 @@ function AssignmentTable(props) {
                 <TableCell>Type</TableCell>
                 <TableCell align="center">Assignment Title</TableCell>
                 <TableCell align="center">Due in</TableCell>
-
                 <TableCell align="right">Done</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {events
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) =>
-                  filterImp(row, 5) && row.isComplete !== true ? (
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.type}
-                      </TableCell>
-                      <TableCell align="center">{row.title}</TableCell>
-                      <TableCell align="center">
-                        <Typography component="p">
-                          {new Date(row.date).toDateString()}
-                        </Typography>
-                        <Typography component="p">
-                          {new Date(row.date).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </Typography>
-                        <Typography component="p">
-                          {formatDistanceToNow(new Date(row.date), {
-                            addSuffix: true,
-                          })}
-                        </Typography>
-                      </TableCell>
-
-                      <TableCell align="right">
-                        <Switch
-                          size="small"
-                          checked={row.isComplete}
-                          onChange={() =>
-                            handleTaskCompletionToggled(row, index)
-                          }
-                        />
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton onClick={() => delEvent(row)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    <></>
+              {(rowsPerPage > 0
+                ? events.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
                   )
-                )}
+                : events
+              ).map((row, index) =>
+                filterImp(row, 5) && !filterDone(row) ? (
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.type}
+                    </TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
+                    <TableCell align="center">
+                      <Typography component="p">
+                        {new Date(row.date).toDateString()}
+                      </Typography>
+                      <Typography component="p">
+                        {new Date(row.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                      <Typography component="p">
+                        {formatDistanceToNow(new Date(row.date), {
+                          addSuffix: true,
+                        })}
+                      </Typography>
+                    </TableCell>
+
+                    <TableCell align="right">
+                      <Switch
+                        size="small"
+                        checked={row.isComplete}
+                        onChange={() => handleTaskCompletionToggled(row, index)}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <></>
+                )
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
@@ -238,7 +236,7 @@ function AssignmentTable(props) {
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                   count={
                     events.filter(
-                      (task) => filterImp(task, 5) && task.isComplete !== true
+                      (task) => filterImp(task, 5) && !filterDone(task)
                     ).length
                   }
                   rowsPerPage={rowsPerPage}
@@ -271,52 +269,54 @@ function AssignmentTable(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {events
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) =>
-                  filterImp(row, 4) && row.isComplete !== true ? (
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.type}
-                      </TableCell>
-                      <TableCell align="center">{row.title}</TableCell>
-                      <TableCell align="center">
-                        <Typography component="p">
-                          {new Date(row.date).toDateString()}
-                        </Typography>
-                        <Typography component="p">
-                          {new Date(row.date).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </Typography>
-                        <Typography component="p">
-                          {formatDistanceToNow(new Date(row.date), {
-                            addSuffix: true,
-                          })}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Switch
-                          size="small"
-                          checked={row.isComplete}
-                          onChange={() =>
-                            handleTaskCompletionToggled(row, index)
-                          }
-                        />
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton onClick={() => delEvent(row)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    <></>
+              {(rowsPerPage > 0
+                ? events.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
                   )
-                )}
+                : events
+              ).map((row, index) =>
+                filterImp(row, 4) && !filterDone(row) ? (
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.type}
+                    </TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
+                    <TableCell align="center">
+                      <Typography component="p">
+                        {new Date(row.date).toDateString()}
+                      </Typography>
+                      <Typography component="p">
+                        {new Date(row.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                      <Typography component="p">
+                        {formatDistanceToNow(new Date(row.date), {
+                          addSuffix: true,
+                        })}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Switch
+                        size="small"
+                        checked={row.isComplete}
+                        onChange={() => handleTaskCompletionToggled(row, index)}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <></>
+                )
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
@@ -324,7 +324,7 @@ function AssignmentTable(props) {
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                   count={
                     events.filter(
-                      (task) => filterImp(task, 4) && task.isComplete !== true
+                      (task) => filterImp(task, 4) && !filterDone(task)
                     ).length
                   }
                   rowsPerPage={rowsPerPage}
@@ -357,52 +357,54 @@ function AssignmentTable(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {events
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) =>
-                  filterImp(row, 3) && row.isComplete !== true ? (
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.type}
-                      </TableCell>
-                      <TableCell align="center">{row.title}</TableCell>
-                      <TableCell align="center">
-                        <Typography component="p">
-                          {new Date(row.date).toDateString()}
-                        </Typography>
-                        <Typography component="p">
-                          {new Date(row.date).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </Typography>
-                        <Typography component="p">
-                          {formatDistanceToNow(new Date(row.date), {
-                            addSuffix: true,
-                          })}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Switch
-                          size="small"
-                          checked={row.isComplete}
-                          onChange={() =>
-                            handleTaskCompletionToggled(row, index)
-                          }
-                        />
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton onClick={() => delEvent(row)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    <></>
+              {(rowsPerPage > 0
+                ? events.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
                   )
-                )}
+                : events
+              ).map((row, index) =>
+                filterImp(row, 3) && !filterDone(row) ? (
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.type}
+                    </TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
+                    <TableCell align="center">
+                      <Typography component="p">
+                        {new Date(row.date).toDateString()}
+                      </Typography>
+                      <Typography component="p">
+                        {new Date(row.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                      <Typography component="p">
+                        {formatDistanceToNow(new Date(row.date), {
+                          addSuffix: true,
+                        })}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Switch
+                        size="small"
+                        checked={row.isComplete}
+                        onChange={() => handleTaskCompletionToggled(row, index)}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <></>
+                )
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
@@ -410,7 +412,7 @@ function AssignmentTable(props) {
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                   count={
                     events.filter(
-                      (task) => filterImp(task, 3) && task.isComplete !== true
+                      (task) => filterImp(task, 3) && !filterDone(task)
                     ).length
                   }
                   rowsPerPage={rowsPerPage}
@@ -443,52 +445,54 @@ function AssignmentTable(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {events
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) =>
-                  filterImp(row, 2) && row.isComplete !== true ? (
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.type}
-                      </TableCell>
-                      <TableCell align="center">{row.title}</TableCell>
-                      <TableCell align="center">
-                        <Typography component="p">
-                          {new Date(row.date).toDateString()}
-                        </Typography>
-                        <Typography component="p">
-                          {new Date(row.date).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </Typography>
-                        <Typography component="p">
-                          {formatDistanceToNow(new Date(row.date), {
-                            addSuffix: true,
-                          })}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Switch
-                          size="small"
-                          checked={row.isComplete}
-                          onChange={() =>
-                            handleTaskCompletionToggled(row, index)
-                          }
-                        />
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton onClick={() => delEvent(row)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    <></>
+              {(rowsPerPage > 0
+                ? events.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
                   )
-                )}
+                : events
+              ).map((row, index) =>
+                filterImp(row, 2) && !filterDone(row) ? (
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.type}
+                    </TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
+                    <TableCell align="center">
+                      <Typography component="p">
+                        {new Date(row.date).toDateString()}
+                      </Typography>
+                      <Typography component="p">
+                        {new Date(row.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                      <Typography component="p">
+                        {formatDistanceToNow(new Date(row.date), {
+                          addSuffix: true,
+                        })}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Switch
+                        size="small"
+                        checked={row.isComplete}
+                        onChange={() => handleTaskCompletionToggled(row, index)}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <></>
+                )
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
@@ -496,7 +500,7 @@ function AssignmentTable(props) {
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                   count={
                     events.filter(
-                      (task) => filterImp(task, 2) && task.isComplete !== true
+                      (task) => filterImp(task, 2) && !filterDone(task)
                     ).length
                   }
                   rowsPerPage={rowsPerPage}
@@ -529,52 +533,54 @@ function AssignmentTable(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {events
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) =>
-                  filterImp(row, 1) && row.isComplete !== true ? (
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.type}
-                      </TableCell>
-                      <TableCell align="center">{row.title}</TableCell>
-                      <TableCell align="center">
-                        <Typography component="p">
-                          {new Date(row.date).toDateString()}
-                        </Typography>
-                        <Typography component="p">
-                          {new Date(row.date).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </Typography>
-                        <Typography component="p">
-                          {formatDistanceToNow(new Date(row.date), {
-                            addSuffix: true,
-                          })}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Switch
-                          size="small"
-                          checked={row.isComplete}
-                          onChange={() =>
-                            handleTaskCompletionToggled(row, index)
-                          }
-                        />
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton onClick={() => delEvent(row)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    <></>
+              {(rowsPerPage > 0
+                ? events.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
                   )
-                )}
+                : events
+              ).map((row, index) =>
+                filterImp(row, 1) && !filterDone(row) ? (
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.type}
+                    </TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
+                    <TableCell align="center">
+                      <Typography component="p">
+                        {new Date(row.date).toDateString()}
+                      </Typography>
+                      <Typography component="p">
+                        {new Date(row.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                      <Typography component="p">
+                        {formatDistanceToNow(new Date(row.date), {
+                          addSuffix: true,
+                        })}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Switch
+                        size="small"
+                        checked={row.isComplete}
+                        onChange={() => handleTaskCompletionToggled(row, index)}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <></>
+                )
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
@@ -582,7 +588,7 @@ function AssignmentTable(props) {
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                   count={
                     events.filter(
-                      (task) => filterImp(task, 1) && task.isComplete !== true
+                      (task) => filterImp(task, 1) && !filterDone(task)
                     ).length
                   }
                   rowsPerPage={rowsPerPage}
@@ -615,7 +621,13 @@ function AssignmentTable(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {events
+              {(rowsPerPage > 0
+                ? events.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : events
+              )
                 .filter(filterDone)
                 .sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)))
                 .map((row, index) => (
@@ -628,10 +640,10 @@ function AssignmentTable(props) {
                       </TableCell>
                       <TableCell align="center">
                         <Typography component="p">
-                          {new Date(row.date).toDateString()}
+                          {new Date(row.Cdate).toDateString()}
                         </Typography>
                         <Typography component="p">
-                          {new Date(row.date).toLocaleTimeString([], {
+                          {new Date(row.Cdate).toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
@@ -652,8 +664,84 @@ function AssignmentTable(props) {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                  count={events.filter(filterDone).length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      "aria-label": "rows per page",
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </TabPanel>
+      <TabPanel value="8">
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>No.</TableCell>
+                <TableCell align="center">Due on</TableCell>
+                <TableCell align="center">Assignement Title</TableCell>
+                <TableCell align="right">Type</TableCell>
+                <TableCell align="right">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? events.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : events
+              )
+                .filter((task) => isAfter(new Date(), new Date(task.date)))
+                .sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)))
+                .map((row, index) => (
+                  <>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography component="p" color="error">
+                          {new Date(row.date).toDateString()}
+                        </Typography>
+                        <Typography component="p" color="error">
+                          {new Date(row.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">{row.title}</TableCell>
+                      <TableCell align="right">{row.type}</TableCell>
+                      <TableCell align="right">
+                        <IconButton onClick={() => delEvent(row)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                   count={
-                    events.filter((task) => task.isComplete === true).length
+                    events.filter((task) =>
+                      isAfter(new Date(), new Date(task.date))
+                    ).length
                   }
                   rowsPerPage={rowsPerPage}
                   page={page}
