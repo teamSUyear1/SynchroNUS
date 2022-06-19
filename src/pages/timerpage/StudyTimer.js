@@ -40,22 +40,22 @@ const StudyTimer = () => {
     }
   };
 
+  const settingsAndTimerContext = {
+    showSettings,
+    sessionTime,
+    breakTime,
+    setSessionTime,
+    setShowSettings,
+    setBreakTime,
+    changeTimeHandler,
+    formatTimeHandler,
+  };
+
   return (
     <Fragment>
       <SideBar select={4} />
-      <SettingsContext.Provider
-        value={{
-          showSettings,
-          sessionTime,
-          breakTime,
-          setSessionTime,
-          setShowSettings,
-          setBreakTime,
-          changeTimeHandler,
-          formatTimeHandler,
-        }}
-      >
-        {showSettings ? <Settings /> : <Timer formatTime={formatTimeHandler}/>}
+      <SettingsContext.Provider value={settingsAndTimerContext}>
+        {showSettings ? <Settings /> : <Timer formatTime={formatTimeHandler} />}
       </SettingsContext.Provider>
     </Fragment>
   );

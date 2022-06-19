@@ -12,6 +12,20 @@ import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 import SettingsIcon from "@mui/icons-material/Settings";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SettingsContext from "./SettingsContext";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 function Timer(props) {
   const settingsInfo = useContext(SettingsContext);
@@ -19,6 +33,9 @@ function Timer(props) {
   const [isPaused, setIsPaused] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(settingsInfo.sessionTime);
   const [mode, setMode] = useState("session");
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const isPausedRef = useRef(isPaused);
   const secondsLeftRef = useRef(secondsLeft);
@@ -67,8 +84,9 @@ function Timer(props) {
     return () => clearInterval(interval);
   }, [settingsInfo]);
 
-  const totalSeconds = mode === "session" ? settingsInfo.sessionTime : settingsInfo.breakTime;
-  const percentage = Math.round(secondsLeft / totalSeconds * 100);
+  const totalSeconds =
+    mode === "session" ? settingsInfo.sessionTime : settingsInfo.breakTime;
+  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
 
   return (
     <Grid container justifyContent="center" alignItems="center">
@@ -87,17 +105,44 @@ function Timer(props) {
         />
         <div className={classes.content}>
           {isPaused ? (
-            <IconButton title="Start" onClick={() => {setIsPaused(false); isPausedRef.current = false;}}>
+            <IconButton
+              title="Start"
+              onClick={() => {
+                setIsPaused(false);
+                isPausedRef.current = false;
+              }}
+            >
               <PlayCircleOutlineIcon sx={{ fontSize: 50 }} />
             </IconButton>
           ) : (
-            <IconButton title="Pause" onClick={() => {setIsPaused(true); isPausedRef.current = true;}}>
+            <IconButton
+              title="Pause"
+              onClick={() => {
+                setIsPaused(true);
+                isPausedRef.current = true;
+              }}
+            >
               <PauseCircleOutlineIcon sx={{ fontSize: 50 }} />
             </IconButton>
           )}
-          <IconButton title="Configuration">
+          <IconButton title="Configuration" onClick={handleOpen}>
             <SettingsIcon sx={{ fontSize: 45 }} />
           </IconButton>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography sx={{color: "white"}} id="modal-modal-title" variant="h6" component="h2">
+                Configuration Menu
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Coming in the near future!
+              </Typography>
+            </Box>
+          </Modal>
           <IconButton title="Reset Timer" onClick={resetTimerHandler}>
             <RestartAltIcon sx={{ fontSize: 50 }} />
           </IconButton>

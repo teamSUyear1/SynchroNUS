@@ -5,7 +5,6 @@
 import { Grid, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Button } from "@mui/material";
-import classes from "./Settings.module.css";
 import TimeConfigUI from "./TimeConfigUI";
 import SettingsContext from "./SettingsContext";
 
