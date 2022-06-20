@@ -20,35 +20,12 @@ const Settings = (props) => {
   };
 
   return (
-<<<<<<< HEAD
     <Fragment>
       <Grid container justifyContent={"center"}>
         <Grid item>
           <Typography variant="h2" color="inherit">
             Pick a Time
           </Typography>
-=======
-    <Grid container justifyContent={"center"} height={"80vh"}>
-      <Grid item>
-        <Typography variant="h2" color="inherit">
-          Pick a Time
-        </Typography>
-        <Grid container justifyContent={"center"}>
-          <TimeConfigUI
-            title={"Break length"}
-            changeTime={settingsInfo.changeTimeHandler}
-            type={"break"}
-            time={settingsInfo.breakTime}
-            formatTime={settingsInfo.formatTimeHandler}
-          />
-          <TimeConfigUI
-            title={"Session length"}
-            changeTime={settingsInfo.changeTimeHandler}
-            type={"session"}
-            time={settingsInfo.sessionTime}
-            formatTime={settingsInfo.formatTimeHandler}
-          />
->>>>>>> c9956b08f547144b81789268924652d97ad7bc83
         </Grid>
       </Grid>
       <Grid
