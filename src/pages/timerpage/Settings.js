@@ -5,12 +5,13 @@
 import { Grid, Typography } from "@mui/material";
 import { useContext, Fragment } from "react";
 import { Button } from "@mui/material";
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
 import TimeConfigUI from "./TimeConfigUI";
 import SettingsContext from "./SettingsContext";
+import SettingsCardUI from "./SettingsCardUI";
 
 const Settings = (props) => {
   const settingsInfo = useContext(SettingsContext);
@@ -61,16 +62,30 @@ const Settings = (props) => {
       </Grid>
       <Grid item height={"10vh"} />
       <Grid container justifyContent={"center"}>
-      <Card variant="outlined" sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography sx={{fontSize: 14}} color={"white"}>Test</Typography>
-          </CardContent>
-        </Card>
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography sx={{fontSize: 14}} color={"white"}>Test</Typography>
-          </CardContent>
-        </Card>
+        <SettingsCardUI
+          title="Template 1"
+          templateSession={60 * 60}
+          templateBreak={15 * 60}
+          formatTime={settingsInfo.formatTimeHandler}
+          setSession={settingsInfo.setSessionTime}
+          setBreak={settingsInfo.setBreakTime}
+        />
+        <SettingsCardUI
+          title="Template 2"
+          templateSession={120 * 60}
+          templateBreak={30 * 60}
+          formatTime={settingsInfo.formatTimeHandler}
+          setSession={settingsInfo.setSessionTime}
+          setBreak={settingsInfo.setBreakTime}
+        />
+        <SettingsCardUI
+          title="Template 3 (Not recommended)"
+          templateSession={180 * 60}
+          templateBreak={45 * 60}
+          formatTime={settingsInfo.formatTimeHandler}
+          setSession={settingsInfo.setSessionTime}
+          setBreak={settingsInfo.setBreakTime}
+        />
       </Grid>
       <Grid item height={"30vh"} />
     </Fragment>

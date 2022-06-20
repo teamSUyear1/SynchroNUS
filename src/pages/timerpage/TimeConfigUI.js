@@ -5,6 +5,10 @@ import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/Indeterminate
 import TextField from "@mui/material/TextField";
 
 const TimeConfigUI = (props) => {
+  const onChangeHandler = (event) => {
+    const colon = ":";
+  };
+
   return (
     <Fragment>
       <IconButton
@@ -16,7 +20,12 @@ const TimeConfigUI = (props) => {
       <h3 style={{ color: "white", marginTop: "11px" }}>
         {props.formatTime(props.time)}
       </h3>
-      <TextField id="outlined-number" label={props.title} defaultValue={props.formatTime(props.time)}/>
+      <TextField
+        id="outlined-number"
+        label={props.title}
+        defaultValue={props.formatTime(props.time)}
+        //value to be changed
+      />
       <IconButton
         title="Add 30 seconds"
         onClick={() => props.changeTime(30, props.type)}
