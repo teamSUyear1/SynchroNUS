@@ -1,4 +1,5 @@
 import {
+  Button,
   IconButton,
   Paper,
   Switch,
@@ -19,7 +20,6 @@ import TabPanel from "@mui/lab/TabPanel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { formatDistanceToNow, compareAsc, isAfter } from "date-fns";
-import CheckIcon from "@mui/icons-material/Check";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 function AssignmentTable(props) {
@@ -62,7 +62,15 @@ function AssignmentTable(props) {
     // Read this article to find out more:
     // https://blog.logrocket.com/immutability-in-react-ebe55253a1cc/
 
-    setEvents(newTasks);
+    handleSort(newTasks)
+  }
+
+
+  function handleSort(events) {
+    const newTasks =[
+      ...events.sort((a, b) => compareAsc(new Date(a.date), new Date(b.date))).sort((a, b) => Number(a.isComplete) - Number(b.isComplete))
+    ];
+    setEvents(newTasks)
   }
 
   return (
@@ -81,7 +89,7 @@ function AssignmentTable(props) {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Importance</TableCell>
+                <TableCell>Importance <Button onClick={handleSort}>Sort</Button></TableCell>
                 <TableCell align="left">Assignment Title</TableCell>
                 <TableCell align="center">Type</TableCell>
                 <TableCell align="center">Due in</TableCell>
@@ -91,7 +99,7 @@ function AssignmentTable(props) {
             </TableHead>
             <TableBody>
               {events === undefined || events.length === 0 ? (
-                <Typography>No Assignement</Typography>
+                <Typography>No Assignment</Typography>
               ) : (
                 (rowsPerPage > 0
                   ? events.slice(
@@ -149,7 +157,7 @@ function AssignmentTable(props) {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={events.filter((task) => !filterDone(task)).length}
+                  count={events.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{
