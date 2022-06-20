@@ -89,7 +89,7 @@ function AssignmentTable(props) {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Importance <Button onClick={handleSort}>Sort</Button></TableCell>
+                <TableCell>Importance</TableCell>
                 <TableCell align="left">Assignment Title</TableCell>
                 <TableCell align="center">Type</TableCell>
                 <TableCell align="center">Due in</TableCell>
@@ -697,7 +697,7 @@ function AssignmentTable(props) {
               <TableRow>
                 <TableCell>No.</TableCell>
                 <TableCell align="center">Due on</TableCell>
-                <TableCell align="center">Assignement Title</TableCell>
+                <TableCell align="center">Assignment Title</TableCell>
                 <TableCell align="right">Type</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
