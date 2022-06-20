@@ -27,13 +27,14 @@ const Settings = (props) => {
           <Typography variant="h2" color="inherit">
             Pick a Time
           </Typography>
+          <Grid item height={"5vh"} />
         </Grid>
       </Grid>
       <Grid
         container
         direction={"row"}
         justifyContent={"center"}
-        sx={{ gap: "5px" }}
+        sx={{ gap: "5px"}}
       >
         <TimeConfigUI
           title={"Session length"}
@@ -42,6 +43,7 @@ const Settings = (props) => {
           time={settingsInfo.sessionTime}
           formatTime={settingsInfo.formatTimeHandler}
         />
+        <Grid item width={"10vh"} />
         <TimeConfigUI
           title={"Break length"}
           changeTime={settingsInfo.changeTimeHandler}
@@ -50,6 +52,7 @@ const Settings = (props) => {
           formatTime={settingsInfo.formatTimeHandler}
         />
       </Grid>
+      <Grid item height={"5vh"} />
       <Grid container justifyContent={"center"}>
         <Button
           title="Start timer"
