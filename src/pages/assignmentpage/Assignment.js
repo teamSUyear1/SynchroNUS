@@ -57,6 +57,7 @@ function Assignment() {
   const [highlightedDays, setHighlightedDays] = useState([]);
   const [month, setMonth] = useState(value.getMonth());
 
+
   function filterDate(task) {
     const taskdate = new Date(task.date).toLocaleDateString();
     const selecteddate = new Date(value).toLocaleDateString();
@@ -106,9 +107,10 @@ function Assignment() {
   }, [user.uid, month, daysToHighlight]);
 
   return (
-    <Grid container="true">
+   <>
       <SideBar select={3} />
-      <Grid item margin={3} minHeight="75vh">
+      <Grid container minHeight="80vh" justifyContent="center" paddingLeft={{xs: 5, md: 30}}>
+      <Grid item margin={3}>
         <Stack spacing={3} direction={{ xs: "column", xl: "row" }}>
           <Stack justifyContent="flex-start" alignItems="stretch" spacing={2}>
             <Button variant="contained" onClick={() => setOpenPopup(true)}>
@@ -204,6 +206,7 @@ function Assignment() {
                                 addSuffix: true,
                               })}
                             </Typography>
+                            <Typography>Status: {task.isComplete ? "Completed" : "In progress"}</Typography>
                           </Box>
                         </ListItem>
                       ))
@@ -229,6 +232,7 @@ function Assignment() {
           </Box>
         </Stack>
       </Grid>
+      </Grid>
 
       <Popup
         title="Add new Assignment"
@@ -241,7 +245,7 @@ function Assignment() {
           setOpenPopup={setOpenPopup}
         />
       </Popup>
-    </Grid>
+    </>
   );
 }
 

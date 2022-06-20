@@ -9,7 +9,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth, db, storage } from "../../hooks/useAuth";
@@ -62,18 +62,19 @@ function Profile() {
   };
 
   return (
-    <Grid container height={"80vh"}>
+    <>
       <SideBar select={5} />
-      <Grid item>
-        <Grid container direction="row" spacing={3} alignItems="center">
-          <Grid item>
-            <Stack alignItems="center" spacing={2}>
+      <Grid container justifyContent={"center"} minHeight="80vh">
+        <Grid item alignSelf={"center"}>
+        <Box border={"1px solid"} borderRadius={3} padding={3} >
+        <Stack direction="row" spacing={3}>
+            <Stack alignItems="center" spacing={3}>
               <IconButton onClick={openFile}>
-                <Avatar src={avatar} />
+                <Avatar src={avatar} sx={{width: 100, height: 100}}/>
               </IconButton>
-              <Box sx={{ width: "100%" }}>
+              <div style={{ width: "100%", height: "100%"}}>
                 <LinearProgress variant="determinate" value={progress} />
-              </Box>
+              </div>
               <form onSubmit={formHandler}>
                 <input id="fileID" type="file" accept="image/*" hidden />
                 <Button type="submit" variant="outlined">
@@ -81,22 +82,20 @@ function Profile() {
                 </Button>
               </form>
             </Stack>
-          </Grid>
-          <Grid item>
-            <Stack>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <Typography>{name}</Typography>
+          <Stack justifyContent="center">
+              <Stack direction="row" spacing={1}>
+                <Typography variant="h4" component={Typography} >{name}</Typography>
                 <Tooltip title="Edit">
                   <IconButton onClick={() => setOpenPopup(true)}>
                     <EditIcon />
                   </IconButton>
                 </Tooltip>
               </Stack>
-              <Typography>{user.email}</Typography>
+              <Typography variant="h5" component={Typography} color="primary">{user.email}</Typography>
             </Stack>
+            </Stack>
+            </Box>
           </Grid>
-        </Grid>
-        <Typography>Zoom</Typography>
       </Grid>
       <Popup
         title="What is your name?"
@@ -105,7 +104,7 @@ function Profile() {
       >
         <ProfileForm name={name} docRef={docRef} setOpenPopup={setOpenPopup} />
       </Popup>
-    </Grid>
+    </>
   );
 }
 
