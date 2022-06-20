@@ -47,7 +47,6 @@ function AssignmentEventForm(props) {
   function handleAddEvent(e) {
     e.preventDefault();
     addEvent(assignmentTitle, type, importance, endevent.toISOString());
-    console.log(events.length);
   }
 
   function addEvent(title, type, importance, date) {
@@ -62,6 +61,7 @@ function AssignmentEventForm(props) {
         isComplete: false,
       },
     ];
+    setDisable(true)
     setEvents(newEvents);
     setOpenPopup(false);
   }
@@ -77,7 +77,7 @@ function AssignmentEventForm(props) {
     <form onSubmit={handleAddEvent}>
       <Stack spacing={3} marginTop={1} marginBottom={1}>
         <TextField
-          label="Assignment Title"
+          label="Event Title"
           required
           onChange={(e) => setAssignmentTitle(e.target.value)}
         />
@@ -93,7 +93,7 @@ function AssignmentEventForm(props) {
                 onChange={(e) => setType(e.target.value)}
               >
                 <MenuItem value="Project">Project</MenuItem>
-                <MenuItem value="Homework">Homework</MenuItem>
+                <MenuItem value="Assignment">Assignment</MenuItem>
                 <MenuItem value="Lab">Lab</MenuItem>
                 <MenuItem value="Quiz">Quiz</MenuItem>
                 <MenuItem value="Others">Others</MenuItem>

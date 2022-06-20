@@ -235,7 +235,7 @@ function Assignment() {
       </Grid>
 
       <Popup
-        title="Add new Assignment"
+        title="Add new Event"
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
