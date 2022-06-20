@@ -16,8 +16,8 @@ const Settings = (props) => {
   }
 
   return (
-    <Grid container justifyContent={"center"}>
-      <Grid item height={"80vh"}>
+    <Grid container justifyContent={"center"} height={"80vh"}>
+      <Grid item>
         <Typography variant="h2" color="inherit">
           Pick a Time
         </Typography>

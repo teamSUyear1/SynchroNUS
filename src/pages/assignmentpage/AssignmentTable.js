@@ -135,7 +135,7 @@ function AssignmentTable(props) {
                         checked={row.isComplete}
                         onChange={() => handleTaskCompletionToggled(row, index)}
                       />
-                    </TableCell>git s
+                    </TableCell>
                     <TableCell align="right">
                       <IconButton onClick={() => delEvent(row)}>
                         <DeleteIcon />
