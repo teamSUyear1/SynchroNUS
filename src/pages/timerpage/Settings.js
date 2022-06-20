@@ -5,9 +5,12 @@
 import { Grid, Typography } from "@mui/material";
 import { useContext, Fragment } from "react";
 import { Button } from "@mui/material";
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 import TimeConfigUI from "./TimeConfigUI";
 import SettingsContext from "./SettingsContext";
-import classes from "./Settings.module.css";
 
 const Settings = (props) => {
   const settingsInfo = useContext(SettingsContext);
@@ -25,19 +28,24 @@ const Settings = (props) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container direction={"row"} justifyContent={"center"} sx={{gap: "5px"}}>
-        <TimeConfigUI
-          title={"Break length"}
-          changeTime={settingsInfo.changeTimeHandler}
-          type={"break"}
-          time={settingsInfo.breakTime}
-          formatTime={settingsInfo.formatTimeHandler}
-        />
+      <Grid
+        container
+        direction={"row"}
+        justifyContent={"center"}
+        sx={{ gap: "5px" }}
+      >
         <TimeConfigUI
           title={"Session length"}
           changeTime={settingsInfo.changeTimeHandler}
           type={"session"}
           time={settingsInfo.sessionTime}
+          formatTime={settingsInfo.formatTimeHandler}
+        />
+        <TimeConfigUI
+          title={"Break length"}
+          changeTime={settingsInfo.changeTimeHandler}
+          type={"break"}
+          time={settingsInfo.breakTime}
           formatTime={settingsInfo.formatTimeHandler}
         />
       </Grid>
@@ -51,7 +59,20 @@ const Settings = (props) => {
           Start!
         </Button>
       </Grid>
-      <Grid item height={"50vh"} />
+      <Grid item height={"10vh"} />
+      <Grid container justifyContent={"center"}>
+      <Card variant="outlined" sx={{ minWidth: 275 }}>
+          <CardContent>
+            <Typography sx={{fontSize: 14}} color={"white"}>Test</Typography>
+          </CardContent>
+        </Card>
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
+          <CardContent>
+            <Typography sx={{fontSize: 14}} color={"white"}>Test</Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item height={"30vh"} />
     </Fragment>
   );
 };

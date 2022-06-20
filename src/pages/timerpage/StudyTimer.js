@@ -28,12 +28,12 @@ const StudyTimer = () => {
 
   const changeTimeHandler = (amount, type) => {
     if (type === "break") {
-      if (breakTime <= 60 && amount < 0) {
+      if (breakTime <= 0 && amount < 0) {
         return;
       }
       setBreakTime((prev) => prev + amount);
     } else {
-      if (sessionTime < 300 && amount < 0) {
+      if (sessionTime <= 300 && amount < 0) {
         return;
       }
       setSessionTime((prev) => prev + amount);
