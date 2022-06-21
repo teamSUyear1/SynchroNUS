@@ -9,7 +9,6 @@ const {value, setValue, month, setMonth} = props
 const currentYear = new Date().getFullYear();
 const [highlightedDays, setHighlightedDays] = useState([]);
 
-
 const filtered = events
     .filter(filterHighlight)
     .map((row) => new Date(row.date).getDate());
@@ -27,7 +26,7 @@ const filtered = events
 
   useEffect(() => {
     setHighlightedDays(daysToHighlight)
-  }, [daysToHighlight]);
+  }, [events, month]);
 
   return (
     <StaticDatePicker

@@ -48,7 +48,7 @@ export default function Dashboard() {
     const selecteddate = new Date(value).toLocaleDateString();
     return taskdate === selecteddate;
   }
-  console.log(events);
+
   return (
     <>
       <SideBar select={1} />

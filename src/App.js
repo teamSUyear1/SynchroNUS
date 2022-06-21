@@ -25,7 +25,6 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import SideBar from "./components/SideBar/SideBar";
 import { useAuth } from "./hooks/useAuth";
 import SignupEmail from "./pages/SignupEmail";
 import SignupPw from "./pages/SignupPw";
@@ -33,7 +32,6 @@ import SignupPw from "./pages/SignupPw";
 import StudyTimer from "./pages/timerpage/StudyTimer";
 import Meeting from "./pages/Meeting";
 import Assignment from "./pages/assignmentpage";
-import { useState } from "react";
 
 function App() {
   const { user } = useAuth();
