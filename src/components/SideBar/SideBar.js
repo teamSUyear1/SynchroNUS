@@ -20,7 +20,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import AccountInfo from "../../hooks/AccountInfo";
 
 function SideBar(props) {
-  const { user, signout } = useAuth();
+  const { signout } = useAuth();
   const {avatar} = AccountInfo();
   const select = props.select;
 

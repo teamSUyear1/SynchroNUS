@@ -1,123 +1,139 @@
 import * as React from "react";
-import Badge from "@mui/material/Badge";
-import TextField from "@mui/material/TextField";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { PickersDay } from "@mui/x-date-pickers/PickersDay";
-import { CalendarPickerSkeleton } from "@mui/x-date-pickers/CalendarPickerSkeleton";
-import getDaysInMonth from "date-fns/getDaysInMonth";
-import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
-import { Grid } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import SideBar from "../components/SideBar/SideBar";
+import { Box } from "@mui/system";
+import AccountInfo from "../hooks/AccountInfo";
+import { formatDistanceToNow, isAfter  } from "date-fns";
+import Event from "../hooks/Event";
+import Calendar from "../components/Calendar/Calendar";
+import { useState } from "react";
+import { LocalizationProvider } from "@mui/lab";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 export default function Dashboard() {
-  const initialValue = new Date();
-  const currentYear = new Date().getFullYear();
-  const requestAbortController = React.useRef(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
-  const [value, setValue] = React.useState(initialValue);
-
-  function getRandomNumber(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
-  }
-
-  function fakeFetch(date, { signal }) {
-    return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        const daysInMonth = getDaysInMonth(date);
-        const daysToHighlight = [1, 2].map(() =>
-          getRandomNumber(1, daysInMonth)
-        );
-
-        resolve({ daysToHighlight });
-      }, 500);
-
-      signal.onabort = () => {
-        clearTimeout(timeout);
-        reject(new DOMException("aborted", "AbortError"));
-      };
+  var tmpDate = new Date();
+  const date = new Date();
+  const currDate =
+    date.getFullYear() +
+    "-" +
+    (date.getMonth() + 1).toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+    }) +
+    "-" +
+    date.getDate().toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+    }) +
+    "T" +
+    date.getHours().toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+    }) +
+    ":" +
+    date.getMinutes().toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
     });
+  const [value, setValue] = useState(new Date(currDate));
+  const [month, setMonth] = useState(value.getMonth());
+  const { events } = Event();
+  const { name} = AccountInfo();
+
+  function filterDate(task) {
+    const taskdate = new Date(task.date).toLocaleDateString();
+    const selecteddate = new Date(value).toLocaleDateString();
+    return taskdate === selecteddate;
   }
-
-  const fetchHighlightedDays = (date) => {
-    const controller = new AbortController();
-    fakeFetch(date, {
-      signal: controller.signal,
-    })
-      .then(({ daysToHighlight }) => {
-        setHighlightedDays(daysToHighlight);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        // ignore the error if it's caused by `controller.abort`
-        if (error.name !== "AbortError") {
-          throw error;
-        }
-      });
-
-    requestAbortController.current = controller;
-  };
-
-  React.useEffect(() => {
-    fetchHighlightedDays(initialValue);
-    // abort request on unmount
-    return () => requestAbortController.current?.abort();
-  }, []);
-
-  const handleMonthChange = (date) => {
-    if (requestAbortController.current) {
-      // make sure that you are aborting useless requests
-      // because it is possible to switch between months pretty quickly
-      requestAbortController.current.abort();
-    }
-
-    setIsLoading(true);
-    setHighlightedDays([]);
-    fetchHighlightedDays(date);
-  };
-
+  console.log(events);
   return (
-    <Grid container>
+    <>
       <SideBar select={1} />
-      <Grid item height={"80vh"}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <StaticDatePicker
-            value={value}
-            views={["year", "month", "day"]}
-            orientation="landscape"
-            minDate={new Date(currentYear - 10, 0)}
-            maxDate={new Date(currentYear + 10, 12)}
-            displayStaticWrapperAs="desktop"
-            showToolbar
-            showDaysOutsideCurrentMonth
-            renderInput={(params) => <TextField {...params} />}
-            loading={isLoading}
-            onChange={(newValue) => {
-              setValue(newValue);
+      <Grid
+        container
+        minHeight="80vh"
+        paddingLeft={{ xs: 5, md: 40 }}
+        paddingTop={2}
+        paddingRight={{ xs: 5, md: 10 }}
+        direction="column"
+        spacing={2}
+      >
+        <Grid item>
+          <Typography variant="h4" color="inherit">
+            Welcome, {name}!
+          </Typography>
+        </Grid>
+        <Grid item>
+        <Stack direction="row" spacing={3}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Box
+              sx={{ border: "1px solid", borderWidth: 1, borderRadius: 2 }}
+              p={1}
+            >
+              <Calendar
+                value={value}
+                setValue={setValue}
+                month={month}
+                setMonth={setMonth}
+              />
+            </Box>
+          </LocalizationProvider>
+          <Box
+            sx={{
+              border: "1px solid",
+              borderRadius: 3,
+              padding: 2,
+              maxWidth: 1120,
+              alignSelf: 'start',
             }}
-            onMonthChange={handleMonthChange}
-            renderLoading={() => <CalendarPickerSkeleton />}
-            renderDay={(day, _value, DayComponentProps) => {
-              const isSelected =
-                !DayComponentProps.outsideCurrentMonth &&
-                highlightedDays.indexOf(day.getDate()) > 0;
-
-              return (
-                <Badge
-                  key={day.toString()}
-                  overlap="circular"
-                  color="secondary"
-                  variant="dot"
-                  invisible={isSelected ? false : true}
-                >
-                  <PickersDay {...DayComponentProps} />
-                </Badge>
-              );
-            }}
-          />
-        </LocalizationProvider>
+          >
+          <Stack direction="row" justifyContent="space-between" marginBottom={2}>
+            <Typography variant="h5" color="inherit">
+              Deadline Assignment
+            </Typography>
+            <Button color="primary" href="/assignment">View All</Button>
+            </Stack>
+            <Stack direction="row" spacing={2} sx={{ overflow: "scroll", minWidth:1120, minHeight: 215}}>
+              {
+                events.filter(filterDate)
+                .filter((task) => task.isComplete !== true)
+                .map((task) => (
+                  <Card variant="outlined" sx={{ minWidth: 200, background: isAfter(new Date(), new Date(task.date))? "#f44336": isAfter( tmpDate.setDate(tmpDate.getDate() + 1), new Date(task.date)) ? "#ffa726" : ""}}>
+                    <CardContent>
+                      <Typography sx={{ fontSize: 14 }} gutterBottom>
+                        {task.importance} ⭐️
+                      </Typography>
+                      <Typography variant="h5" component="div">
+                        {task.title}
+                      </Typography>
+                      <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        {task.type}
+                      </Typography>
+                      <Typography variant="body2">
+                        {new Date(task.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                        <br />
+                        {new Date(task.date).toDateString()}
+                        <br />
+                        Due{" "}
+                        {formatDistanceToNow(new Date(task.date), {
+                          addSuffix: true,
+                        })}
+                      </Typography>
+                    </CardContent>
+                    
+                  </Card>
+                ))}
+            </Stack>
+          </Box>
+          </Stack>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }

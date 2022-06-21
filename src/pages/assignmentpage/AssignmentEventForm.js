@@ -18,7 +18,7 @@ import { isPast, isAfter } from "date-fns";
 import React, { useEffect, useState } from "react";
 
 function AssignmentEventForm(props) {
-  const { events, setEvents, setOpenPopup } = props;
+  const { events, setOpenPopup, handleSort } = props;
   const date = new Date();
   const currDate =
     date.getFullYear() +
@@ -62,7 +62,7 @@ function AssignmentEventForm(props) {
       },
     ];
     setDisable(true)
-    setEvents(newEvents);
+    handleSort(newEvents)
     setOpenPopup(false);
   }
   useEffect(() => {

@@ -17,8 +17,8 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupsIcon from "@mui/icons-material/Groups";
 
-export default function RightWithAuth(props) {
-  const { user, signout } = useAuth();
+export default function RightWithAuth() {
+  const { signout } = useAuth();
   const { name, avatar } = AccountInfo();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

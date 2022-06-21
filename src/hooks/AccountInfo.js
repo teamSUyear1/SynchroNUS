@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuth, db } from "./useAuth";
@@ -18,7 +18,7 @@ function AccountInfo() {
         return () => {
             unsubscribe();
         }
-    }, [])
+    }, [docRef])
   return  {name,avatar};
 }
 

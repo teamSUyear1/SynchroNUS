@@ -1,5 +1,6 @@
 import {
   Button,
+  Collapse,
   IconButton,
   Paper,
   Switch,
@@ -13,8 +14,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Tab from "../../components/Tabs/tab";
 import TabPanel from "@mui/lab/TabPanel";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,7 +23,7 @@ import { formatDistanceToNow, compareAsc, isAfter } from "date-fns";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 function AssignmentTable(props) {
-  const { events, setEvents, delEvent } = props;
+  const { events, delEvent, handleSort } = props;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -62,16 +62,32 @@ function AssignmentTable(props) {
     // Read this article to find out more:
     // https://blog.logrocket.com/immutability-in-react-ebe55253a1cc/
 
-    handleSort(newTasks)
+    handleSort(newTasks);
   }
 
-
-  function handleSort(events) {
-    const newTasks =[
-      ...events.sort((a, b) => compareAsc(new Date(a.date), new Date(b.date))).sort((a, b) => Number(a.isComplete) - Number(b.isComplete))
-    ];
-    setEvents(newTasks)
-  }
+  const tablehead1 = (
+    <TableHead>
+      <TableRow>
+        <TableCell>Type</TableCell>
+        <TableCell align="center">Assignment Title</TableCell>
+        <TableCell align="center">Due</TableCell>
+        <TableCell align="right">Done</TableCell>
+        <TableCell align="right">Action</TableCell>
+      </TableRow>
+    </TableHead>
+  );
+const tablehead2 = (e) => (
+  <TableHead>
+              <TableRow>
+                <TableCell>No.</TableCell>
+                <TableCell align="center">{e} on</TableCell>
+                <TableCell align="center">Assignment Title</TableCell>
+                <TableCell align="center">Type</TableCell>
+                <TableCell align="right">Action</TableCell>
+              </TableRow>
+            </TableHead>
+)
+  
 
   return (
     <Tab
@@ -92,7 +108,7 @@ function AssignmentTable(props) {
                 <TableCell>Importance</TableCell>
                 <TableCell align="left">Assignment Title</TableCell>
                 <TableCell align="center">Type</TableCell>
-                <TableCell align="center">Due in</TableCell>
+                <TableCell align="center">Due</TableCell>
                 <TableCell align="right">Done</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
@@ -109,6 +125,7 @@ function AssignmentTable(props) {
                   : events
                 ).map((row, index) => (
                   <TableRow
+                    key={index}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
@@ -178,15 +195,7 @@ function AssignmentTable(props) {
       <TabPanel value="2">
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell align="center">Assignment Title</TableCell>
-                <TableCell align="center">Due in</TableCell>
-                <TableCell align="right">Done</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
+            {tablehead1}
             <TableBody>
               {(rowsPerPage > 0
                 ? events.slice(
@@ -197,6 +206,7 @@ function AssignmentTable(props) {
               ).map((row, index) =>
                 filterImp(row, 5) && !filterDone(row) ? (
                   <TableRow
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
@@ -267,15 +277,7 @@ function AssignmentTable(props) {
       <TabPanel value="3">
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell align="center">Assignment Title</TableCell>
-                <TableCell align="center">Due in</TableCell>
-                <TableCell align="right">Done</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
+            {tablehead1}
             <TableBody>
               {(rowsPerPage > 0
                 ? events.slice(
@@ -286,6 +288,7 @@ function AssignmentTable(props) {
               ).map((row, index) =>
                 filterImp(row, 4) && !filterDone(row) ? (
                   <TableRow
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
@@ -355,15 +358,7 @@ function AssignmentTable(props) {
       <TabPanel value="4">
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell align="center">Assignment Title</TableCell>
-                <TableCell align="center">Due in</TableCell>
-                <TableCell align="right">Done</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
+            {tablehead1}
             <TableBody>
               {(rowsPerPage > 0
                 ? events.slice(
@@ -374,6 +369,7 @@ function AssignmentTable(props) {
               ).map((row, index) =>
                 filterImp(row, 3) && !filterDone(row) ? (
                   <TableRow
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
@@ -443,15 +439,7 @@ function AssignmentTable(props) {
       <TabPanel value="5">
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell align="center">Assignment Title</TableCell>
-                <TableCell align="center">Due in</TableCell>
-                <TableCell align="right">Done</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
+            {tablehead1}
             <TableBody>
               {(rowsPerPage > 0
                 ? events.slice(
@@ -462,6 +450,7 @@ function AssignmentTable(props) {
               ).map((row, index) =>
                 filterImp(row, 2) && !filterDone(row) ? (
                   <TableRow
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
@@ -531,15 +520,7 @@ function AssignmentTable(props) {
       <TabPanel value="6">
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell align="center">Assignment Title</TableCell>
-                <TableCell align="center">Due</TableCell>
-                <TableCell align="right">Done</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
+            {tablehead1}
             <TableBody>
               {(rowsPerPage > 0
                 ? events.slice(
@@ -550,6 +531,7 @@ function AssignmentTable(props) {
               ).map((row, index) =>
                 filterImp(row, 1) && !filterDone(row) ? (
                   <TableRow
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
@@ -619,15 +601,7 @@ function AssignmentTable(props) {
       <TabPanel value="7">
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>No.</TableCell>
-                <TableCell align="center">Completed on</TableCell>
-                <TableCell align="right">Assignment Title</TableCell>
-                <TableCell align="right">Type</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
+            {tablehead2("Completed")}
             <TableBody>
               {(rowsPerPage > 0
                 ? events.slice(
@@ -639,33 +613,32 @@ function AssignmentTable(props) {
                 .filter(filterDone)
                 .sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)))
                 .map((row, index) => (
-                  <>
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {index + 1}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography component="p">
-                          {new Date(row.Cdate).toDateString()}
-                        </Typography>
-                        <Typography component="p">
-                          {new Date(row.Cdate).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.type}</TableCell>
-                      <TableCell align="right">
-                        <IconButton onClick={() => delEvent(row)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  </>
+                  <TableRow
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {index + 1}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography component="p">
+                        {new Date(row.Cdate).toDateString()}
+                      </Typography>
+                      <Typography component="p">
+                        {new Date(row.Cdate).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
+                    <TableCell align="center">{row.type}</TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
                 ))}
             </TableBody>
             <TableFooter>
@@ -693,15 +666,7 @@ function AssignmentTable(props) {
       <TabPanel value="8">
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>No.</TableCell>
-                <TableCell align="center">Due on</TableCell>
-                <TableCell align="center">Assignment Title</TableCell>
-                <TableCell align="right">Type</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
+          {tablehead2("Due")}
             <TableBody>
               {(rowsPerPage > 0
                 ? events.slice(
@@ -710,36 +675,39 @@ function AssignmentTable(props) {
                   )
                 : events
               )
-                .filter((task) => isAfter(new Date(), new Date(task.date)))
+                .filter(
+                  (task) =>
+                    isAfter(new Date(), new Date(task.date)) &&
+                    !filterDone(task)
+                )
                 .sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)))
                 .map((row, index) => (
-                  <>
-                    <TableRow
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {index + 1}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography component="p" color="error">
-                          {new Date(row.date).toDateString()}
-                        </Typography>
-                        <Typography component="p" color="error">
-                          {new Date(row.date).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">{row.title}</TableCell>
-                      <TableCell align="right">{row.type}</TableCell>
-                      <TableCell align="right">
-                        <IconButton onClick={() => delEvent(row)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  </>
+                  <TableRow
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {index + 1}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography component="p" color="error">
+                        {new Date(row.date).toDateString()}
+                      </Typography>
+                      <Typography component="p" color="error">
+                        {new Date(row.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
+                    <TableCell align="center">{row.type}</TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => delEvent(row)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
                 ))}
             </TableBody>
             <TableFooter>
@@ -748,7 +716,10 @@ function AssignmentTable(props) {
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                   count={
                     events.filter((task) =>
-                      isAfter(new Date(), new Date(task.date))
+                      isAfter(
+                        new Date(),
+                        new Date(task.date) && !filterDone(task)
+                      )
                     ).length
                   }
                   rowsPerPage={rowsPerPage}
