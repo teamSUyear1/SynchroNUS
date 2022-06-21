@@ -3,9 +3,10 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
+import { useState } from "react";
 
 export default function Tabs(props) {
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = useState("1");
   const { children, label1, label2, label3, label4, label5, label6, label7, label8 } = props;
 
   const handleChange = (event, newValue) => {
@@ -13,10 +14,10 @@ export default function Tabs(props) {
   };
 
   return (
-    <Box sx={{ width: "100%", typography: "body1" }}>
+    <Box sx={{ width: "100%", typography: "body1"}}>
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider"}}>
+          <TabList onChange={handleChange} variant="scrollable">
             <Tab label={label1} value="1" />
             <Tab label={label2} value="2" />
             <Tab label={label3} value="3" />

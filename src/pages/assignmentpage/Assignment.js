@@ -181,11 +181,11 @@ const {events, setEventsState} = Event();
             </Stack>
             <Box
               sx={{
-                width: 1000,
                 height: "auto",
                 border: "1px solid",
                 borderRadius: 2,
               }}
+              width={{xs: 500, xl: 1000}}
             >
               <AssignmentTable
                 events={events}

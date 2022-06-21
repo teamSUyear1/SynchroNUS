@@ -81,6 +81,7 @@ export default function Dashboard() {
               />
             </Box>
           </LocalizationProvider>
+          <Stack spacing={1.5}>
           <Box
             sx={{
               border: "1px solid",
@@ -96,12 +97,11 @@ export default function Dashboard() {
             </Typography>
             <Button color="primary" href="/assignment">View All</Button>
             </Stack>
-            <Stack direction="row" spacing={2} sx={{ overflow: "scroll", minWidth:1120, minHeight: 215}}>
+            <Stack direction="row" spacing={2} sx={{ overflow: "scroll", width: "50vw", minHeight: 232, margin:'auto'}}>
               {
                 events.filter(filterDate)
-                .filter((task) => task.isComplete !== true)
                 .map((task) => (
-                  <Card variant="outlined" sx={{ minWidth: 200, background: isAfter(new Date(), new Date(task.date))? "#f44336": isAfter( tmpDate.setDate(tmpDate.getDate() + 1), new Date(task.date)) ? "#ffa726" : ""}}>
+                  <Card variant="outlined" sx={{ minWidth: 200, background:  task.isComplete ? "#66bb6a" : isAfter(new Date(), new Date(task.date))? "#f44336": isAfter( tmpDate.setDate(tmpDate.getDate() + 1), new Date(task.date)) ? "#ffa726" : ""}}>
                     <CardContent>
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
                         {task.importance} ⭐️
@@ -120,8 +120,10 @@ export default function Dashboard() {
                         <br />
                         {new Date(task.date).toDateString()}
                         <br />
-                        Due{" "}
-                        {formatDistanceToNow(new Date(task.date), {
+                        {task.isComplete ? "Completed " + formatDistanceToNow(new Date(task.Cdate), {
+                          addSuffix: true,
+                        }) : "Due " +
+                        formatDistanceToNow(new Date(task.date), {
                           addSuffix: true,
                         })}
                       </Typography>
@@ -131,6 +133,23 @@ export default function Dashboard() {
                 ))}
             </Stack>
           </Box>
+          <Box sx={{
+              border: "1px solid",
+              borderRadius: 3,
+              padding: 1,
+              width:"100%",
+            }}>
+          <Stack direction="row" spacing={0.5} justifyContent="center">
+          <Typography noWrap>You have  </Typography>
+          {events.filter(task => !task.isComplete).length === 0 ? <Typography>completed all the tasks</Typography> :
+          <>
+          <Typography fontWeight={600}>{events.filter(task => !task.isComplete).length}</Typography>
+          <Typography noWrap> tasks that are not complete.</Typography>
+          </>
+          }
+          </Stack>
+          </Box>
+          </Stack>
           </Stack>
         </Grid>
       </Grid>

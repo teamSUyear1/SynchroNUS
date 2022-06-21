@@ -76,18 +76,17 @@ function AssignmentTable(props) {
       </TableRow>
     </TableHead>
   );
-const tablehead2 = (e) => (
-  <TableHead>
-              <TableRow>
-                <TableCell>No.</TableCell>
-                <TableCell align="center">{e} on</TableCell>
-                <TableCell align="center">Assignment Title</TableCell>
-                <TableCell align="center">Type</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
-)
-  
+  const tablehead2 = (e) => (
+    <TableHead>
+      <TableRow>
+        <TableCell>No.</TableCell>
+        <TableCell align="center">{e} on</TableCell>
+        <TableCell align="center">Assignment Title</TableCell>
+        <TableCell align="center">Type</TableCell>
+        <TableCell align="right">Action</TableCell>
+      </TableRow>
+    </TableHead>
+  );
 
   return (
     <Tab
@@ -101,7 +100,7 @@ const tablehead2 = (e) => (
       label8="Overdue"
     >
       <TabPanel value="1">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -117,13 +116,7 @@ const tablehead2 = (e) => (
               {events === undefined || events.length === 0 ? (
                 <Typography>No Assignment</Typography>
               ) : (
-                (rowsPerPage > 0
-                  ? events.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : events
-                ).map((row, index) => (
+                events.map((row, index) => (
                   <TableRow
                     key={index}
                     sx={{
@@ -170,40 +163,15 @@ const tablehead2 = (e) => (
                 ))
               )}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={events.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
       <TabPanel value="2">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
-              {(rowsPerPage > 0
-                ? events.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : events
-              ).map((row, index) =>
+              {events.map((row, index) =>
                 filterImp(row, 5) && !filterDone(row) ? (
                   <TableRow
                     key={index}
@@ -248,44 +216,15 @@ const tablehead2 = (e) => (
                 )
               )}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={
-                    events.filter(
-                      (task) => filterImp(task, 5) && !filterDone(task)
-                    ).length
-                  }
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
       <TabPanel value="3">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
-              {(rowsPerPage > 0
-                ? events.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : events
-              ).map((row, index) =>
+              {events.map((row, index) =>
                 filterImp(row, 4) && !filterDone(row) ? (
                   <TableRow
                     key={index}
@@ -329,44 +268,15 @@ const tablehead2 = (e) => (
                 )
               )}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={
-                    events.filter(
-                      (task) => filterImp(task, 4) && !filterDone(task)
-                    ).length
-                  }
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
       <TabPanel value="4">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
-              {(rowsPerPage > 0
-                ? events.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : events
-              ).map((row, index) =>
+              {events.map((row, index) =>
                 filterImp(row, 3) && !filterDone(row) ? (
                   <TableRow
                     key={index}
@@ -410,44 +320,15 @@ const tablehead2 = (e) => (
                 )
               )}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={
-                    events.filter(
-                      (task) => filterImp(task, 3) && !filterDone(task)
-                    ).length
-                  }
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
       <TabPanel value="5">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
-              {(rowsPerPage > 0
-                ? events.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : events
-              ).map((row, index) =>
+              {events.map((row, index) =>
                 filterImp(row, 2) && !filterDone(row) ? (
                   <TableRow
                     key={index}
@@ -491,44 +372,15 @@ const tablehead2 = (e) => (
                 )
               )}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={
-                    events.filter(
-                      (task) => filterImp(task, 2) && !filterDone(task)
-                    ).length
-                  }
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
       <TabPanel value="6">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
-              {(rowsPerPage > 0
-                ? events.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : events
-              ).map((row, index) =>
+              {events.map((row, index) =>
                 filterImp(row, 1) && !filterDone(row) ? (
                   <TableRow
                     key={index}
@@ -572,44 +424,15 @@ const tablehead2 = (e) => (
                 )
               )}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={
-                    events.filter(
-                      (task) => filterImp(task, 1) && !filterDone(task)
-                    ).length
-                  }
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
       <TabPanel value="7">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
           <Table>
             {tablehead2("Completed")}
             <TableBody>
-              {(rowsPerPage > 0
-                ? events.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : events
-              )
+              {events
                 .filter(filterDone)
                 .sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)))
                 .map((row, index) => (
@@ -641,40 +464,15 @@ const tablehead2 = (e) => (
                   </TableRow>
                 ))}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={events.filter(filterDone).length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
       <TabPanel value="8">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
           <Table>
-          {tablehead2("Due")}
+            {tablehead2("Due")}
             <TableBody>
-              {(rowsPerPage > 0
-                ? events.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : events
-              )
+              {events
                 .filter(
                   (task) =>
                     isAfter(new Date(), new Date(task.date)) &&
@@ -683,7 +481,6 @@ const tablehead2 = (e) => (
                 .sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)))
                 .map((row, index) => (
                   <TableRow
-                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
@@ -710,32 +507,6 @@ const tablehead2 = (e) => (
                   </TableRow>
                 ))}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  count={
-                    events.filter((task) =>
-                      isAfter(
-                        new Date(),
-                        new Date(task.date) && !filterDone(task)
-                      )
-                    ).length
-                  }
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page",
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         </TableContainer>
       </TabPanel>
