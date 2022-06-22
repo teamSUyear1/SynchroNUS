@@ -11,7 +11,7 @@ import SideBar from "../components/SideBar/SideBar";
 import { Box } from "@mui/system";
 import AccountInfo from "../hooks/AccountInfo";
 import { formatDistanceToNow, isAfter  } from "date-fns";
-import Event from "../hooks/Event";
+import useAssignment from "../hooks/useAssignment";
 import Calendar from "../components/Calendar/Calendar";
 import { useState } from "react";
 import { LocalizationProvider } from "@mui/lab";
@@ -41,7 +41,7 @@ export default function Dashboard() {
     });
   const [value, setValue] = useState(new Date(currDate));
   const [month, setMonth] = useState(value.getMonth());
-  const { events } = Event();
+  const { events } = useAssignment();
   const { name} = AccountInfo();
 
   function filterDate(task) {

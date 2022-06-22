@@ -2,7 +2,7 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useAuth, db } from './useAuth'
 
-function Event() {
+function UseAssignment() {
     const [events, setEventsState] = useState([])
     const {user} = useAuth();
     const assignmentRef = doc(db, "assignments", user?.uid)
@@ -19,8 +19,8 @@ function Event() {
 
   return {
     events,
-    setEventsState
+    setEventsState,
   }
 }
 
-export default Event
+export default UseAssignment

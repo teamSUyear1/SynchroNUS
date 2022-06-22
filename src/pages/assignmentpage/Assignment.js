@@ -8,24 +8,23 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import SideBar from "../../components/SideBar/SideBar";
 import Popup from "../../components/Popup/Popup";
 import AssignmentEventForm from "./AssignmentEventForm";
 import AssignmentTable from "./AssignmentTable";
-import { formatDistanceToNow, compareAsc } from "date-fns";
+import { formatDistanceToNow, compareAsc , parseISO} from "date-fns";
 import { useAuth, db } from "../../hooks/useAuth";
 import {
   arrayRemove,
   doc,
-  getDoc,
   onSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { Box } from "@mui/system";
-import Event from "../../hooks/Event";
+import useAssignment from "../../hooks/useAssignment";
 import Calendar from "../../components/Calendar/Calendar";
 import { TransitionGroup } from 'react-transition-group';
 
@@ -49,7 +48,7 @@ function Assignment() {
     date.getMinutes().toLocaleString("en-US", {
       minimumIntegerDigits: 2,
     });
-const {events, setEventsState} = Event();
+const {events, setEventsState} = useAssignment();
   const [value, setValue] = useState(new Date(currDate));
   const [openPopup, setOpenPopup] = useState(false);
   const { user } = useAuth();

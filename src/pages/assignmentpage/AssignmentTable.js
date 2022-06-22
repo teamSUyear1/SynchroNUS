@@ -24,8 +24,6 @@ import TablePaginationActions from "@mui/material/TablePagination/TablePaginatio
 
 function AssignmentTable(props) {
   const { events, delEvent, handleSort } = props;
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   function filterImp(task, index) {
     return task.importance === index;
@@ -34,15 +32,6 @@ function AssignmentTable(props) {
   function filterDone(task) {
     return task.isComplete === true;
   }
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   function handleTaskCompletionToggled(toToggleTask, toToggleTaskIndex) {
     const newTasks = [
