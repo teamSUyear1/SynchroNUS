@@ -16,6 +16,7 @@ import Calendar from "../components/Calendar/Calendar";
 import { useState } from "react";
 import { LocalizationProvider } from "@mui/lab";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export default function Dashboard() {
   var tmpDate = new Date();
@@ -92,7 +93,9 @@ export default function Dashboard() {
             }}
           >
           <Stack direction="row" justifyContent="space-between" marginBottom={2}>
+          <AssignmentIcon />
             <Typography variant="h5" color="inherit">
+            
               Deadline Assignment
             </Typography>
             <Button color="primary" href="/assignment">View All</Button>

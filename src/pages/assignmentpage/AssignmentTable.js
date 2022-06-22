@@ -100,12 +100,12 @@ function AssignmentTable(props) {
       label8="Overdue"
     >
       <TabPanel value="1">
-        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
+        <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Importance</TableCell>
-                <TableCell align="left">Assignment Title</TableCell>
+                <TableCell align="center">Assignment Title</TableCell>
                 <TableCell align="center">Type</TableCell>
                 <TableCell align="center">Due</TableCell>
                 <TableCell align="right">Done</TableCell>
@@ -129,7 +129,7 @@ function AssignmentTable(props) {
                         <StarRateIcon fontSize="small"></StarRateIcon>
                       </Typography>
                     </TableCell>
-                    <TableCell align="left">{row.title}</TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
                     <TableCell align="center">{row.type}</TableCell>
                     <TableCell align="center">
                       <Typography component="p">
@@ -167,7 +167,7 @@ function AssignmentTable(props) {
         </TableContainer>
       </TabPanel>
       <TabPanel value="2">
-        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
+        <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
@@ -220,7 +220,7 @@ function AssignmentTable(props) {
         </TableContainer>
       </TabPanel>
       <TabPanel value="3">
-        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
+        <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
@@ -272,7 +272,7 @@ function AssignmentTable(props) {
         </TableContainer>
       </TabPanel>
       <TabPanel value="4">
-        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
+        <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
@@ -324,7 +324,7 @@ function AssignmentTable(props) {
         </TableContainer>
       </TabPanel>
       <TabPanel value="5">
-        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
+        <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
@@ -376,7 +376,7 @@ function AssignmentTable(props) {
         </TableContainer>
       </TabPanel>
       <TabPanel value="6">
-        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
+        <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
           <Table>
             {tablehead1}
             <TableBody>
@@ -428,7 +428,7 @@ function AssignmentTable(props) {
         </TableContainer>
       </TabPanel>
       <TabPanel value="7">
-        <TableContainer component={Paper} sx={{ maxHeight: "65vh" }}>
+        <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
           <Table>
             {tablehead2("Completed")}
             <TableBody>
