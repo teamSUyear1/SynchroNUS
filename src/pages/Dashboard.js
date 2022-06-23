@@ -241,7 +241,7 @@ export default function Dashboard() {
                       classes.dtstart.length !== 0
                   )
                   .map((task) => (
-                    <Card variant="outlined" sx={{ minWidth: 200, width: "auto"}} key={task}>
+                    <Card variant="outlined" sx={{ minWidth: 200, width: "auto", background: "#29b6f6"}} key={task}>
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} gutterBottom>
                           {task.summary}
