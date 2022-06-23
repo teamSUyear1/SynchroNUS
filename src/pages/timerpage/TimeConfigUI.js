@@ -40,7 +40,7 @@ const TimeConfigUI = (props) => {
             Set a {props.type} length
           </Typography>
           {props.type === "break" && <Typography sx={{fontStyle: "italic", mb: "10px"}} fontSize="15px">Leave it empty for no breaks</Typography>}
-          {props.type === "session" && <Grid item height={"33px"} />}
+          {props.type === "session" && <Typography sx={{fontStyle: "italic", mb: "10px"}} fontSize="15px">Default length is 25 minutes</Typography>}
           <TextField
             color="secondary"
             type="number"
