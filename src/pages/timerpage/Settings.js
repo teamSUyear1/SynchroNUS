@@ -5,10 +5,6 @@
 import { Grid, Typography } from "@mui/material";
 import { useContext, Fragment } from "react";
 import { Button } from "@mui/material";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import TimeConfigUI from "./TimeConfigUI";
 import SettingsContext from "./SettingsContext";
 import SettingsCardUI from "./SettingsCardUI";
@@ -24,7 +20,7 @@ const Settings = (props) => {
     <Fragment>
       <Grid container justifyContent={"center"}>
         <Grid item>
-          <Typography variant="h2" color="inherit">
+          <Typography variant="h2" color="inherit" sx={{ mt: "3vh" }}>
             Pick a Time
           </Typography>
           <Grid item height={"5vh"} />
@@ -34,7 +30,7 @@ const Settings = (props) => {
         container
         direction={"row"}
         justifyContent={"center"}
-        sx={{ gap: "5px"}}
+        sx={{ gap: "5px" }}
       >
         <TimeConfigUI
           title={"Session length"}
@@ -42,6 +38,8 @@ const Settings = (props) => {
           type={"session"}
           time={settingsInfo.sessionTime}
           formatTime={settingsInfo.formatTimeHandler}
+          //take note same attribute name different attributes
+          timeSet={settingsInfo.setSessionTime}
         />
         <Grid item width={"10vh"} />
         <TimeConfigUI
@@ -50,6 +48,8 @@ const Settings = (props) => {
           type={"break"}
           time={settingsInfo.breakTime}
           formatTime={settingsInfo.formatTimeHandler}
+          //take note same attribute name different attributes
+          timeSet={settingsInfo.setBreakTime}
         />
       </Grid>
       <Grid item height={"5vh"} />
@@ -63,7 +63,7 @@ const Settings = (props) => {
           Start!
         </Button>
       </Grid>
-      <Grid item height={"10vh"} />
+      <Grid item height={"5vh"} />
       <Grid container justifyContent={"center"}>
         <SettingsCardUI
           title="Template 1"
@@ -90,7 +90,7 @@ const Settings = (props) => {
           setBreak={settingsInfo.setBreakTime}
         />
       </Grid>
-      <Grid item height={"30vh"} />
+      <Grid item height={"5vh"} />
     </Fragment>
   );
 };
