@@ -73,7 +73,7 @@ export default function Dashboard() {
         <Grid item>
           <Stack spacing={1} padding={1}>
             <Typography variant="h4" color="inherit">
-              Welcome, {name}!
+              Welcome, {name === undefined ? "User" : name }!
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Box

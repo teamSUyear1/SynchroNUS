@@ -24,7 +24,17 @@ const Login = () => {
 
   const handleLogin = () => {
     signin(email, password).catch((error) => {
-      alert(error.code);
+      console.log(error.code)
+      if (error.code.includes("invalid-email")){
+        alert("Please enter correct email");
+      } else if (error.code.includes("user-not-found")){
+        alert("Not registered, please sign up")
+      } else if (error.code.includes("wrong-password")){
+        alert("Wrong password! Please try agin")
+      } else{
+        alert(error.code)
+      }
+     
     });
   };
 
