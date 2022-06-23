@@ -11,10 +11,16 @@ function Calendar(props) {
   const currentYear = new Date().getFullYear();
   const [highlightedDays, setHighlightedDays] = useState([]);
 
-  function highlightAss() {
-    const filtered = events
+  function highlight() {
+    const filteredAss = events
       .filter(filterHighlight)
       .map((row) => new Date(row.date).getDate());
+    const filteredClass = timetable
+      .flatMap((task) =>
+        task.dtstart.filter((time) => new Date(time).getMonth() === month)
+      )
+      .map((time) => new Date(time).getDate());
+    const filtered = filteredAss.concat(filteredClass);
     const daysToHighlight = filtered.filter((c, index) => {
       return filtered.indexOf(c) === index;
     });
@@ -30,7 +36,7 @@ function Calendar(props) {
   };
 
   useEffect(() => {
-    highlightAss();
+    highlight();
   }, [events, month]);
 
   return (

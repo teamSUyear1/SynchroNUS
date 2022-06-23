@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -13,7 +14,7 @@ import React, { useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth, db, storage } from "../../hooks/useAuth";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import AccountInfo from "../../hooks/AccountInfo";
 import Popup from "../../components/Popup/Popup";
@@ -30,13 +31,13 @@ function Profile() {
   const docRef = doc(db, "users", user.email);
   const [openPopup, setOpenPopup] = useState(false);
   const { setTimetableState } = useClasses();
+  const [disabledButt, setDisabledButt] = useState(false)
 
   let fileReader;
 
   const handleFileRead = (e) => {
     const content = fileReader.result;
     const parsed = ICalParser.toJSON(content);
-    console.log(parsed.events.map(allday))
     setTimetable(parsed.events.map(allday));
   };
 
@@ -84,8 +85,8 @@ function Profile() {
       type: "timetable",
       description: description,
       summary: summary,
-      dtstart: dtstart,
-      dtend: dtend,
+      dtstart: dtstart.toString().split(","),
+      dtend: dtend.toString().split(","),
       location: location,
     };
     return newTimetable;
@@ -93,7 +94,15 @@ function Profile() {
 
   function setTimetable(newClass) {
     setTimetableState(newClass);
-    setDoc(doc(db, "timetable", user?.uid), { classes: newClass });
+    setDoc(doc(db, "timetable", user?.uid), { classes: newClass }).then(() => { setDisabledButt(true); alert("Uploaded sucessfully!")} ).catch(e => {
+      alert(e.code);
+    });
+  }
+
+  function deleteTimetable() {
+    deleteDoc(doc(db, "timetable", user?.uid))
+    alert("Reset successfully!")
+    setDisabledButt(false);
   }
 
   const uploadFiles = (file) => {
@@ -124,10 +133,14 @@ function Profile() {
     setProgress(0);
   };
 
+  const openICS = () => {
+    document.getElementById("icsID").click();
+  };
+
   return (
     <>
       <SideBar select={5} />
-      <Grid container justifyContent={"center"} minHeight="80vh">
+      <Grid container justifyContent={"center"} minHeight="80vh" spacing={3}>
         <Grid item alignSelf={"center"}>
           <Box border={"1px solid"} borderRadius={3} padding={3}>
             <Stack direction="row" spacing={3}>
@@ -162,12 +175,19 @@ function Profile() {
               </Stack>
             </Stack>
           </Box>
+          </Grid>
+          <Grid item alignSelf={"center"}>
+          <Stack>
+          <Button onClick={openICS} variant="outlined" disabled={disabledButt}>Upload ics file</Button>
+          <Button onClick={deleteTimetable}>Reset timetable</Button>
           <input
-            id="fileID"
+            id="icsID"
             type="file"
             accept="text/calendar"
             onChange={(e) => handleFileChosen(e.target.files[0])}
+            hidden
           />
+          </Stack>
         </Grid>
       </Grid>
       <Popup
