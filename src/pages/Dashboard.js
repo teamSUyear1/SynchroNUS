@@ -17,6 +17,7 @@ import { useState } from "react";
 import { LocalizationProvider } from "@mui/lab";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import AddTaskIcon from '@mui/icons-material/AddTask';
 import useClasses from "../hooks/useClasses";
 
 export default function Dashboard() {
@@ -106,9 +107,9 @@ export default function Dashboard() {
               <Stack
                 direction="row"
                 justifyContent="space-between"
-                marginBottom={2}
+                marginBottom={1}
               >
-                <AssignmentIcon />
+                <AddTaskIcon />
                 <Typography variant="h5" color="inherit">
                   Deadline Assignment
                 </Typography>
@@ -211,10 +212,17 @@ export default function Dashboard() {
                 alignSelf: "start",
               }}
             >
-              <Stack direction="row" justifyContent="center" marginBottom={2}>
-                <Typography variant="h5" color="inherit">
+              <Stack direction="row" justifyContent="space-between" marginBottom={2}>
+              <AssignmentIcon />
+                <Typography variant="h5" color="inherit" marginLeft={10}>
                   Today's class
                 </Typography>
+                <div>
+                <Typography variant="caption" color="inherit" >
+                  haven't import timetable?
+                </Typography>
+                <Button href="/profile">Click here</Button>
+                </div>
               </Stack>
               <Stack
                 direction="row"
@@ -222,7 +230,7 @@ export default function Dashboard() {
                 sx={{
                   overflow: "scroll",
                   width: "55vw",
-                  minHeight: 232,
+                  minHeight: 240,
                   maxHeight: 200,
                   margin: "auto",
                 }}
@@ -244,31 +252,33 @@ export default function Dashboard() {
                     <Card variant="outlined" sx={{ minWidth: 200, width: "auto", background: "#29b6f6"}} key={task}>
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} gutterBottom>
-                          {task.summary}
+                          {task?.summary}
                         </Typography>
-                        <Typography variant="h7" component="div" sx={{ mb: 2 }}>
-                          {task.description.split("\\n")[0]}
+                        <Typography variant="h7" component="div" >
+                          {task?.description.split("\\n")[0]}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                          {task.description.split("\\n")[1]}
+                          {task?.description.split("\\n")[1]}
+                          <br />
+                          {task?.location}
                         </Typography>
                         <Typography variant="body2">
                           Start:{" "}
-                          {new Date(task.dtstart).toLocaleTimeString([], {
+                          {new Date(task?.dtstart).toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
                           <br />
                           End:{" "}
-                          {new Date(task.dtend).toLocaleTimeString([], {
+                          {new Date(task?.dtend).toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
                           <br />
                           Duration:{" "}
                           {formatDistanceStrict(
-                            new Date(task.dtstart),
-                            new Date(task.dtend),
+                            new Date(task?.dtstart),
+                            new Date(task?.dtend),
                             {unit: 'hour'}
                           )}
                         </Typography>

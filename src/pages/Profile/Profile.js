@@ -31,7 +31,7 @@ function Profile() {
   const docRef = doc(db, "users", user.email);
   const [openPopup, setOpenPopup] = useState(false);
   const { setTimetableState } = useClasses();
-  const [disabledButt, setDisabledButt] = useState(false)
+  const [disabledButt, setDisabledButt] = useState(false);
 
   let fileReader;
 
@@ -94,14 +94,19 @@ function Profile() {
 
   function setTimetable(newClass) {
     setTimetableState(newClass);
-    setDoc(doc(db, "timetable", user?.uid), { classes: newClass }).then(() => { setDisabledButt(true); alert("Uploaded sucessfully!")} ).catch(e => {
-      alert(e.code);
-    });
+    setDoc(doc(db, "timetable", user?.uid), { classes: newClass })
+      .then(() => {
+        setDisabledButt(true);
+        alert("Uploaded sucessfully!");
+      })
+      .catch((e) => {
+        alert(e.code);
+      });
   }
 
   function deleteTimetable() {
-    deleteDoc(doc(db, "timetable", user?.uid))
-    alert("Reset successfully!")
+    deleteDoc(doc(db, "timetable", user?.uid));
+    alert("Reset successfully!");
     setDisabledButt(false);
   }
 
@@ -175,18 +180,24 @@ function Profile() {
               </Stack>
             </Stack>
           </Box>
-          </Grid>
-          <Grid item alignSelf={"center"}>
+        </Grid>
+        <Grid item alignSelf={"center"}>
           <Stack>
-          <Button onClick={openICS} variant="outlined" disabled={disabledButt}>Upload ics file</Button>
-          <Button onClick={deleteTimetable}>Reset timetable</Button>
-          <input
-            id="icsID"
-            type="file"
-            accept="text/calendar"
-            onChange={(e) => handleFileChosen(e.target.files[0])}
-            hidden
-          />
+            <Button
+              onClick={openICS}
+              variant="outlined"
+              disabled={disabledButt}
+            >
+              Upload ics file
+            </Button>
+            <Button onClick={deleteTimetable}>Reset timetable</Button>
+            <input
+              id="icsID"
+              type="file"
+              accept="text/calendar"
+              onChange={(e) => handleFileChosen(e.target.files[0])}
+              hidden
+            />
           </Stack>
         </Grid>
       </Grid>
