@@ -1,6 +1,4 @@
 import {
-  Button,
-  Collapse,
   IconButton,
   Paper,
   Switch,
@@ -8,9 +6,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -20,7 +16,6 @@ import TabPanel from "@mui/lab/TabPanel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { formatDistanceToNow, compareAsc, isAfter } from "date-fns";
-import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 function AssignmentTable(props) {
   const { events, delEvent, handleSort } = props;
@@ -433,10 +428,10 @@ function AssignmentTable(props) {
                       {index + 1}
                     </TableCell>
                     <TableCell align="center">
-                      <Typography component="p">
+                      <Typography varient="p" color="#81c784">
                         {new Date(row.Cdate).toDateString()}
                       </Typography>
-                      <Typography component="p">
+                      <Typography varient="p" color="#81c784">
                         {new Date(row.Cdate).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -476,10 +471,10 @@ function AssignmentTable(props) {
                       {index + 1}
                     </TableCell>
                     <TableCell align="center">
-                      <Typography component="p" color="error">
+                      <Typography component="p" color="error.light">
                         {new Date(row.date).toDateString()}
                       </Typography>
-                      <Typography component="p" color="error">
+                      <Typography component="p" color="error.light">
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",

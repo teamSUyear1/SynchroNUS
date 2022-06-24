@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   Grid,
+  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -17,8 +18,9 @@ import { useState } from "react";
 import { LocalizationProvider } from "@mui/lab";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import AddTaskIcon from '@mui/icons-material/AddTask';
+import AddTaskIcon from "@mui/icons-material/AddTask";
 import useClasses from "../hooks/useClasses";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 export default function Dashboard() {
   var tmpDate = new Date();
@@ -73,7 +75,7 @@ export default function Dashboard() {
         <Grid item>
           <Stack spacing={1} padding={1}>
             <Typography variant="h4" color="inherit">
-              Welcome, {name === undefined ? "User" : name }!
+              Welcome, {name === undefined ? "User" : name}!
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Box
@@ -88,8 +90,9 @@ export default function Dashboard() {
                 />
               </Box>
             </LocalizationProvider>
-            <Box width="20vw" height="28vh" border={1} borderRadius={2}>
-              This is for timer
+
+            <Box height="28vh" border={1} borderRadius={2}>
+              <Stack alignItems="center">This is for timer</Stack>
             </Box>
           </Stack>
         </Grid>
@@ -141,7 +144,7 @@ export default function Dashboard() {
                             new Date(task.date)
                           )
                         ? "#ffa726"
-                        : "",
+                        : "#ce93d8",
                     }}
                   >
                     <CardContent>
@@ -212,16 +215,22 @@ export default function Dashboard() {
                 alignSelf: "start",
               }}
             >
-              <Stack direction="row" justifyContent="space-between" marginBottom={2}>
-              <AssignmentIcon />
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                marginBottom={2}
+              >
+                <AssignmentIcon />
                 <Typography variant="h5" color="inherit" marginLeft={10}>
                   Today's class
                 </Typography>
                 <div>
-                <Typography variant="caption" color="inherit" >
-                  haven't import timetable?
-                </Typography>
-                <Button href="/profile">Click here</Button>
+                  <Typography variant="caption" color="inherit">
+                    haven't import timetable?
+                  </Typography>
+                  <IconButton href="/profile">
+                    <AddCircleIcon />
+                  </IconButton>
                 </div>
               </Stack>
               <Stack
@@ -249,12 +258,20 @@ export default function Dashboard() {
                       classes.dtstart.length !== 0
                   )
                   .map((task) => (
-                    <Card variant="outlined" sx={{ minWidth: 200, width: "auto", background: "#29b6f6"}} key={task}>
+                    <Card
+                      variant="outlined"
+                      sx={{
+                        minWidth: 200,
+                        width: "auto",
+                        background: "#29b6f6",
+                      }}
+                      key={task}
+                    >
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} gutterBottom>
                           {task?.summary}
                         </Typography>
-                        <Typography variant="h7" component="div" >
+                        <Typography variant="h7" component="div">
                           {task?.description.split("\\n")[0]}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -279,7 +296,7 @@ export default function Dashboard() {
                           {formatDistanceStrict(
                             new Date(task?.dtstart),
                             new Date(task?.dtend),
-                            {unit: 'hour'}
+                            { unit: "hour" }
                           )}
                         </Typography>
                       </CardContent>

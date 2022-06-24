@@ -1,5 +1,4 @@
 import {
-  Alert,
   Avatar,
   Box,
   Button,
@@ -21,7 +20,7 @@ import Popup from "../../components/Popup/Popup";
 import ProfileForm from "./ProfileForm";
 import useClasses from "../../hooks/useClasses";
 import ICalParser from "ical-js-parser";
-import { parseISO, formatISO } from "date-fns";
+import { parseISO } from "date-fns";
 import { RRule } from "rrule";
 
 function Profile() {
@@ -107,6 +106,7 @@ function Profile() {
   function deleteTimetable() {
     deleteDoc(doc(db, "timetable", user?.uid));
     alert("Reset successfully!");
+    document.getElementById("icsID").value='';
     setDisabledButt(false);
   }
 
@@ -185,7 +185,7 @@ function Profile() {
           <Stack>
             <Button
               onClick={openICS}
-              variant="outlined"
+              variant="contained"
               disabled={disabledButt}
             >
               Upload ics file
@@ -196,7 +196,7 @@ function Profile() {
               type="file"
               accept="text/calendar"
               onChange={(e) => handleFileChosen(e.target.files[0])}
-              hidden
+             hidden
             />
           </Stack>
         </Grid>
