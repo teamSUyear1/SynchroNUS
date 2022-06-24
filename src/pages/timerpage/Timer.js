@@ -36,6 +36,7 @@ console.log(expiryTime);
 */
 
 function Timer(props) {
+  //PAUSED AND START BUTTONS NOT SYNCED WITH LOCALSTORAGE, TO BE FIXED
   let checkBreakRunning = window.localStorage.getItem("break-running") != null;
   let checkIsNotPaused = window.localStorage.getItem("paused") != null;
   let timeDiff;
