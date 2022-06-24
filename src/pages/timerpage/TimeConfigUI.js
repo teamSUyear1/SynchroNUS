@@ -1,3 +1,6 @@
+/*
+  UI for inputting a time in the textfields.
+*/
 import { Fragment } from "react";
 import { IconButton, Typography, Button, Grid } from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -9,38 +12,32 @@ import CardContent from "@mui/material/CardContent";
 
 const TimeConfigUI = (props) => {
   const onTimeChangeHandler = (event) => {
-    props.timeSet(event.target.valueAsNumber * 60);
+    props.timeSet(event.target.valueAsNumber);
   };
 
   return (
     <Fragment>
-      <Card variant="outlined" sx={{ minWidth: 200, mr: "20px" }}>
-        {/* 
-          <CardContent sx={{ display: "flex", direction: "column" }}>
-          UI for click to add time buttons
-
-          <IconButton
-            title="Minus 30 seconds"
-            onClick={() => props.changeTime(-30, props.type)}
-          >
-            <IndeterminateCheckBoxOutlinedIcon color="primary" />
-          </IconButton>
-          <h3 style={{ color: "white", marginTop: "11px" }}>
-            {props.formatTime(props.time)}
-          </h3>
-          <IconButton
-            title="Add 30 seconds"
-            onClick={() => props.changeTime(30, props.type)}
-          >
-            <AddBoxOutlinedIcon color="primary" />
-          </IconButton> 
-        </CardContent> */}
+      <Card variant="outlined" sx={{ minWidth: 200, mr: "20px" }}> 
         <CardContent>
           <Typography sx={{ fontWeight: "bold" }}>
             Set a {props.type} length
           </Typography>
-          {props.type === "break" && <Typography sx={{fontStyle: "italic", mb: "10px"}} fontSize="15px">Leave it empty for no breaks</Typography>}
-          {props.type === "session" && <Typography sx={{fontStyle: "italic", mb: "10px"}} fontSize="15px">Default length is 25 minutes</Typography>}
+          {props.type === "break" && (
+            <Typography
+              sx={{ fontStyle: "italic", mb: "10px" }}
+              fontSize="15px"
+            >
+              Leave it empty for no breaks
+            </Typography>
+          )}
+          {props.type === "session" && (
+            <Typography
+              sx={{ fontStyle: "italic", mb: "10px" }}
+              fontSize="15px"
+            >
+              Default length is 25 minutes
+            </Typography>
+          )}
           <TextField
             color="secondary"
             type="number"
@@ -53,9 +50,6 @@ const TimeConfigUI = (props) => {
             }}
             onChange={onTimeChangeHandler}
           />
-          {/* <Button variant="outlined" sx={{ mt: "1vh", ml: "1vh" }} onClick={}>
-            Set
-          </Button> */}
         </CardContent>
       </Card>
     </Fragment>

@@ -12,9 +12,23 @@ import Settings from "./Settings";
 import SettingsContext from "./SettingsContext";
 
 const StudyTimer = () => {
+  const [existingSessionRunning, setSessionRunning] = useState(
+    window.localStorage.getItem("test") != null
+  );
+  const [existingBreakRunning, setBreakRunning] = useState(
+    window.localStorage.getItem("test123") != null
+  );
   const [showSettings, setShowSettings] = useState(true);
-  const [sessionTime, setSessionTime] = useState(25 * 60);
-  const [breakTime, setBreakTime] = useState(5 * 60);
+  const [sessionTime, setSessionTime] = useState(
+    //hacky way, experimental
+    existingSessionRunning
+      ? parseInt(window.localStorage.getItem("test"))
+      : 25 * 60
+  );
+  const [breakTime, setBreakTime] = useState(
+    //hacky way, experimental
+    existingBreakRunning ? parseInt(window.localStorage.getItem("test123")) : 0
+  );
 
   const formatTimeHandler = (time) => {
     let minutes = Math.floor(time / 60);
@@ -41,6 +55,8 @@ const StudyTimer = () => {
   };
 
   const settingsAndTimerContext = {
+    setSessionRunning,
+    setBreakRunning,
     showSettings,
     sessionTime,
     breakTime,
@@ -55,7 +71,11 @@ const StudyTimer = () => {
     <Fragment>
       <SideBar select={4} />
       <SettingsContext.Provider value={settingsAndTimerContext}>
-        {showSettings ? <Settings /> : <Timer formatTime={formatTimeHandler} />}
+        {showSettings && !existingSessionRunning && !existingBreakRunning ? (
+          <Settings />
+        ) : (
+          <Timer formatTime={formatTimeHandler} />
+        )}
       </SettingsContext.Provider>
     </Fragment>
   );

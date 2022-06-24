@@ -2,12 +2,14 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { Typography, Button } from "@mui/material";
+import React from "react";
 
 const SettingsCardUI = (props) => {
-    const timeConfigHandler = () => {
-        props.setSession(props.templateSession);
-        props.setBreak(props.templateBreak);
-    }
+  const timeConfigHandler = () => {
+    props.setSession(props.templateSession);
+    props.setBreak(props.templateBreak);
+    alert("Template time set successfully!");
+  };
 
   return (
     <Card variant="outlined" sx={{ minWidth: 200, mr: "20px" }}>

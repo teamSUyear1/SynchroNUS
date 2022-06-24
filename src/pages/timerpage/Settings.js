@@ -1,6 +1,13 @@
 /*
   The page you'll see if timer isn't started, 
   allows users to config break and session time
+
+  // Test for converting localStorage's date string and get it back as object
+  window.localStorage.setItem("t", new Date());
+  const test = Date.parse(window.localStorage.getItem("t"));
+  console.log(typeof test); //Number
+  console.log(test);
+
 */
 import { Grid, Typography } from "@mui/material";
 import { useContext, Fragment } from "react";
@@ -11,8 +18,20 @@ import SettingsCardUI from "./SettingsCardUI";
 
 const Settings = (props) => {
   const settingsInfo = useContext(SettingsContext);
-
+   
   const sessionStartHandler = () => {
+    window.localStorage.setItem("test", settingsInfo.sessionTime);
+    window.localStorage.setItem("test123", settingsInfo.breakTime);
+
+    //initialising start and endTime
+    let startTime = new Date();
+    const sessionMinutes = settingsInfo.sessionTime * 1000;
+    const breakMinutes = settingsInfo.breakTime * 1000;
+    let sessionEndTime = new Date(startTime.getTime() + sessionMinutes);
+    
+    let breakEndTime = new Date(sessionEndTime.getTime() + breakMinutes);
+    window.localStorage.setItem("sessionEndTime", sessionEndTime);
+    window.localStorage.setItem("breakEndTime", breakEndTime);
     return settingsInfo.setShowSettings(false);
   };
 

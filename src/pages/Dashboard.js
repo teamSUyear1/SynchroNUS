@@ -21,6 +21,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import useClasses from "../hooks/useClasses";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import SettingsContext from "./timerpage/SettingsContext";
 
 export default function Dashboard() {
   var tmpDate = new Date();
