@@ -36,22 +36,23 @@ console.log(expiryTime);
 */
 
 function Timer(props) {
-  //PAUSED AND START BUTTONS NOT SYNCED WITH LOCALSTORAGE, TO BE FIXED
+  //PAUSED AND START BUTTONS NOT SYNCED WITH LOCALSTORAGE WHEN REFRESHED, TO BE FIXED
   let checkBreakRunning = window.localStorage.getItem("break-running") != null;
   let checkIsNotPaused = window.localStorage.getItem("paused") != null;
   let timeDiff;
 
   function timeDiffHandler(timetype) {
     let now = new Date().getTime();
+    if (window.localStorage.getItem('paused') != null) {
+      return parseInt(window.localStorage.getItem('paused'));
+    }
     if (timetype === "break") {
       const getDate = Date.parse(window.localStorage.getItem("breakEndTime"));
-      timeDiff =
-        (getDate - now) / 1000;
+      timeDiff = (getDate - now) / 1000;
     }
     if (timetype === "session") {
       const getDate = Date.parse(window.localStorage.getItem("sessionEndTime"));
-      timeDiff =
-        (getDate - now) / 1000;
+      timeDiff = (getDate - now) / 1000;
     }
     //TEST
     return Math.round(timeDiff);
@@ -71,6 +72,26 @@ function Timer(props) {
   const isPausedRef = useRef(isPaused);
   const secondsLeftRef = useRef(secondsLeft);
   const modeRef = useRef(mode);
+
+  function onContinueHandler() {
+    let now = new Date().getTime();
+    const seconds = parseInt(window.localStorage.getItem("paused"));
+    if (mode === "break") {
+      window.localStorage.setItem(
+        "breakEndTime",
+        new Date(now + seconds * 1000)
+      );
+    }
+    if (mode === "session") {
+      window.localStorage.setItem(
+        "sessionEndTime",
+        new Date(now + seconds * 1000)
+      );
+    }
+    window.localStorage.removeItem("paused");
+    setIsPaused(false);
+    isPausedRef.current = false;
+  }
 
   function tick() {
     secondsLeftRef.current--;
@@ -97,8 +118,8 @@ function Timer(props) {
     window.localStorage.removeItem("break-running");
     window.localStorage.removeItem("paused");
     //TBD
-    window.localStorage.removeItem("sessionEndTime")
-    window.localStorage.removeItem("breakEndTime")
+    window.localStorage.removeItem("sessionEndTime");
+    window.localStorage.removeItem("breakEndTime");
     settingsInfo.setShowSettings(true);
     settingsInfo.setSessionRunning(false);
     settingsInfo.setBreakRunning(false);
@@ -146,24 +167,14 @@ function Timer(props) {
         />
         <div className={classes.content}>
           {isPaused ? (
-            <IconButton
-              title="Start"
-              onClick={() => {
-                window.localStorage.removeItem("paused");
-                setSecondsLeft(Math.round(timeDiff));
-                secondsLeftRef.current = Math.round(timeDiff);
-                setIsPaused(false);
-                isPausedRef.current = false;
-              }}
-            >
+            <IconButton title="Start" onClick={onContinueHandler}>
               <PlayCircleOutlineIcon sx={{ fontSize: 50 }} />
             </IconButton>
           ) : (
             <IconButton
               title="Pause"
               onClick={() => {
-                window.localStorage.setItem("paused", "true");
-                timeDiff = Math.round(timeDiffHandler(mode));
+                window.localStorage.setItem("paused", secondsLeft);
                 setIsPaused(true);
                 isPausedRef.current = true;
               }}
