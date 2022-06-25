@@ -62,6 +62,23 @@ export default function Dashboard() {
     return classdate === selecteddate;
   }
 
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  
+  function getDarkColor() {
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += Math.floor(Math.random() * 10);
+    }
+    return color;
+}
+
   return (
     <>
       <SideBar select={1} />
@@ -264,7 +281,7 @@ export default function Dashboard() {
                       sx={{
                         minWidth: 200,
                         width: "auto",
-                        background: "#29b6f6",
+                        background: getDarkColor(),
                         overflow:'auto'
                       }}
                       key={task}
