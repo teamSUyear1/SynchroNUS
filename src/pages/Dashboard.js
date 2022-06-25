@@ -11,7 +11,7 @@ import {
 import SideBar from "../components/SideBar/SideBar";
 import { Box } from "@mui/system";
 import AccountInfo from "../hooks/AccountInfo";
-import { formatDistanceToNow, isAfter, formatDistanceStrict } from "date-fns";
+import { formatDistanceToNow, isAfter, formatDistanceStrict,compareAsc } from "date-fns";
 import useAssignment from "../hooks/useAssignment";
 import Calendar from "../components/Calendar/Calendar";
 import { useState } from "react";
@@ -125,7 +125,7 @@ export default function Dashboard() {
                 direction="row"
                 spacing={2}
                 sx={{
-                  overflow: "scroll",
+                  overflow: "auto",
                   width: "55vw",
                   minHeight: 232,
                   margin: "auto",
@@ -238,7 +238,7 @@ export default function Dashboard() {
                 direction="row"
                 spacing={2}
                 sx={{
-                  overflow: "scroll",
+                  overflow: "auto",
                   width: "55vw",
                   minHeight: 240,
                   maxHeight: 200,
@@ -257,7 +257,7 @@ export default function Dashboard() {
                     (classes) =>
                       classes.dtstart.length !== 0 &&
                       classes.dtstart.length !== 0
-                  )
+                  ).sort((a, b) => compareAsc(new Date(a?.dtstart), new Date(b?.dtstart)))
                   .map((task) => (
                     <Card
                       variant="outlined"
@@ -265,6 +265,7 @@ export default function Dashboard() {
                         minWidth: 200,
                         width: "auto",
                         background: "#29b6f6",
+                        overflow:'auto'
                       }}
                       key={task}
                     >
@@ -272,7 +273,7 @@ export default function Dashboard() {
                         <Typography sx={{ fontSize: 14 }} gutterBottom>
                           {task?.summary}
                         </Typography>
-                        <Typography variant="h7" component="div">
+                        <Typography variant="h7" sx={{fontSize: 15}} component="div">
                           {task?.description.split("\\n")[0]}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
