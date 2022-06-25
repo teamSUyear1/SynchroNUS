@@ -18,6 +18,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AccountInfo from "../../hooks/AccountInfo";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 
 function SideBar(props) {
   const { signout } = useAuth();
@@ -81,7 +82,7 @@ function SideBar(props) {
               selected={select === 3}
             >
               <ListItemIcon>
-                <AssignmentIcon />
+                <AddTaskIcon />
               </ListItemIcon>
               <ListItemText primary="Assignment" />
             </ListItemButton>

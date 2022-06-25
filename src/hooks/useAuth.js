@@ -96,6 +96,7 @@ function useProvideAuth() {
           await setDoc(docRef, {
             name: user?.displayName,
             avatar: user?.photoURL,
+            uid: user?.uid
           });
         }
         setUser(user);
