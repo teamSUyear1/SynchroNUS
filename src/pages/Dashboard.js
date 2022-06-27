@@ -11,7 +11,12 @@ import {
 import SideBar from "../components/SideBar/SideBar";
 import { Box } from "@mui/system";
 import AccountInfo from "../hooks/AccountInfo";
-import { formatDistanceToNow, isAfter, formatDistanceStrict,compareAsc } from "date-fns";
+import {
+  formatDistanceToNow,
+  isAfter,
+  formatDistanceStrict,
+  compareAsc,
+} from "date-fns";
 import useAssignment from "../hooks/useAssignment";
 import Calendar from "../components/Calendar/Calendar";
 import { useState } from "react";
@@ -63,21 +68,21 @@ export default function Dashboard() {
   }
 
   function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
+    var letters = "0123456789ABCDEF";
+    var color = "#";
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
   }
-  
+
   function getDarkColor() {
-    var color = '#';
+    var color = "#";
     for (var i = 0; i < 6; i++) {
-        color += Math.floor(Math.random() * 10);
+      color += Math.floor(Math.random() * 10);
     }
     return color;
-}
+  }
 
   return (
     <>
@@ -97,7 +102,7 @@ export default function Dashboard() {
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Box
-                sx={{ border: "1px solid", borderWidth: 1, borderRadius: 2 }}
+                sx={{  backgroundColor: "background.default", boxShadow: 2, borderWidth: 1, borderRadius: 2 }}
                 p={1}
               >
                 <Calendar
@@ -109,7 +114,7 @@ export default function Dashboard() {
               </Box>
             </LocalizationProvider>
 
-            <Box height="28vh" border={1} borderRadius={2}>
+            <Box height="28vh" sx={{ backgroundColor: "background.default", boxShadow: 2}} borderRadius={3}>
               <Stack alignItems="center">This is for timer</Stack>
             </Box>
           </Stack>
@@ -118,11 +123,12 @@ export default function Dashboard() {
           <Stack spacing={2}>
             <Box
               sx={{
-                border: "1px solid",
                 borderRadius: 3,
                 padding: 2,
                 maxWidth: 1200,
                 alignSelf: "start",
+                backgroundColor: "background.default",
+                boxShadow: 2
               }}
             >
               <Stack
@@ -163,6 +169,7 @@ export default function Dashboard() {
                           )
                         ? "#ffa726"
                         : "#ce93d8",
+                      boxShadow: 4,
                     }}
                   >
                     <CardContent>
@@ -200,10 +207,11 @@ export default function Dashboard() {
             </Box>
             <Box
               sx={{
-                border: "1px solid",
                 borderRadius: 3,
                 padding: 1,
                 width: "100%",
+                backgroundColor: "background.default",
+                boxShadow: 2
               }}
             >
               <Stack direction="row" spacing={0.5} justifyContent="center">
@@ -226,11 +234,12 @@ export default function Dashboard() {
 
             <Box
               sx={{
-                border: "1px solid",
+                backgroundColor: "background.default",
                 borderRadius: 3,
                 padding: 2,
                 maxWidth: 1120,
                 alignSelf: "start",
+                boxShadow: 2
               }}
             >
               <Stack
@@ -246,7 +255,7 @@ export default function Dashboard() {
                   <Typography variant="caption" color="inherit">
                     haven't import timetable?
                   </Typography>
-                  <IconButton href="/profile">
+                  <IconButton href="/profile" size="small">
                     <AddCircleIcon />
                   </IconButton>
                 </div>
@@ -274,7 +283,10 @@ export default function Dashboard() {
                     (classes) =>
                       classes.dtstart.length !== 0 &&
                       classes.dtstart.length !== 0
-                  ).sort((a, b) => compareAsc(new Date(a?.dtstart), new Date(b?.dtstart)))
+                  )
+                  .sort((a, b) =>
+                    compareAsc(new Date(a?.dtstart), new Date(b?.dtstart))
+                  )
                   .map((task) => (
                     <Card
                       variant="outlined"
@@ -282,7 +294,8 @@ export default function Dashboard() {
                         minWidth: 200,
                         width: "auto",
                         background: getDarkColor(),
-                        overflow:'auto'
+                        overflow: "auto",
+                        boxShadow: 4,
                       }}
                       key={task}
                     >
@@ -290,7 +303,11 @@ export default function Dashboard() {
                         <Typography sx={{ fontSize: 14 }} gutterBottom>
                           {task?.summary}
                         </Typography>
-                        <Typography variant="h7" sx={{fontSize: 15}} component="div">
+                        <Typography
+                          variant="h7"
+                          sx={{ fontSize: 15 }}
+                          component="div"
+                        >
                           {task?.description.split("\\n")[0]}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">

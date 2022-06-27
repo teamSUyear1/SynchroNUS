@@ -9,11 +9,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth, db, storage } from "../../hooks/useAuth";
-import { deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import AccountInfo from "../../hooks/AccountInfo";
 import Popup from "../../components/Popup/Popup";
@@ -95,8 +95,8 @@ function Profile() {
     setTimetableState(newClass);
     setDoc(doc(db, "timetable", user?.uid), { classes: newClass })
       .then(() => {
-        setDisabledButt(true);
         alert("Uploaded sucessfully!");
+        setDisabledButt(true);
       })
       .catch((e) => {
         alert(e.code);
@@ -106,7 +106,7 @@ function Profile() {
   function deleteTimetable() {
     deleteDoc(doc(db, "timetable", user?.uid));
     alert("Reset successfully!");
-    document.getElementById("icsID").value='';
+    document.getElementById("icsID").value = "";
     setDisabledButt(false);
   }
 
@@ -141,6 +141,19 @@ function Profile() {
   const openICS = () => {
     document.getElementById("icsID").click();
   };
+
+  useEffect(() => {
+    const unsubscribe = async () => {
+      const ref = doc(db, "timetable", user?.uid);
+      const docSnap = await getDoc(ref);
+      if (docSnap.exists()) {
+        setDisabledButt(true);
+      } else {
+        setDisabledButt(false);
+      }
+    };
+    unsubscribe();
+  }, [user?.uid]);
 
   return (
     <>
@@ -196,7 +209,7 @@ function Profile() {
               type="file"
               accept="text/calendar"
               onChange={(e) => handleFileChosen(e.target.files[0])}
-             hidden
+              hidden
             />
           </Stack>
         </Grid>
