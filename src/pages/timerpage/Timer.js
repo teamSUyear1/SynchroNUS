@@ -14,6 +14,16 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SettingsContext from "./SettingsContext";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import BellSound from "../../components/Assets/BellSound.wav";
+import { useAuth, db } from "../../hooks/useAuth";
+import {
+  arrayRemove,
+  doc,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import useTimer from "../../hooks/useTimer";
 
 const style = {
   position: "absolute",
@@ -36,15 +46,19 @@ console.log(expiryTime);
 */
 
 function Timer(props) {
-  //PAUSED AND START BUTTONS NOT SYNCED WITH LOCALSTORAGE WHEN REFRESHED, TO BE FIXED
   let checkBreakRunning = window.localStorage.getItem("break-running") != null;
   let checkIsNotPaused = window.localStorage.getItem("paused") != null;
+  let audioAlert = new Audio(BellSound);
   let timeDiff;
+
+  function playAlert() {
+    audioAlert.play();
+  }
 
   function timeDiffHandler(timetype) {
     let now = new Date().getTime();
-    if (window.localStorage.getItem('paused') != null) {
-      return parseInt(window.localStorage.getItem('paused'));
+    if (window.localStorage.getItem("paused") != null) {
+      return parseInt(window.localStorage.getItem("paused"));
     }
     if (timetype === "break") {
       const getDate = Date.parse(window.localStorage.getItem("breakEndTime"));
@@ -54,7 +68,6 @@ function Timer(props) {
       const getDate = Date.parse(window.localStorage.getItem("sessionEndTime"));
       timeDiff = (getDate - now) / 1000;
     }
-    //TEST
     return Math.round(timeDiff);
   }
 
@@ -66,12 +79,22 @@ function Timer(props) {
   );
   const [mode, setMode] = useState(checkBreakRunning ? "break" : "session");
   const [open, setOpen] = useState(false);
+  // const [events, setEventsState] = useTimer();
+  const { user } = useAuth();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const isPausedRef = useRef(isPaused);
   const secondsLeftRef = useRef(secondsLeft);
   const modeRef = useRef(mode);
+
+  // function timeSpentUpdate() {
+  //   let newSessionTime =
+  //     events.timeSpent + parseInt(window.localStorage.getItem("sessionSet"));
+  //   console.log(newSessionTime);
+  //   setEventsState(newSessionTime);
+  //   setDoc(doc(db, "timer", user?.uid), { timeSpent: newSessionTime });
+  // }
 
   function onContinueHandler() {
     let now = new Date().getTime();
@@ -100,7 +123,9 @@ function Timer(props) {
 
   function switchMode() {
     const nextMode = modeRef.current === "session" ? "break" : "settings";
+    playAlert();
     if (nextMode === "break") {
+      // to be added: get time from doc then update it
       window.localStorage.setItem("break-running", "true");
       setMode(nextMode);
       modeRef.current = nextMode;
@@ -108,13 +133,14 @@ function Timer(props) {
       secondsLeftRef.current = settingsInfo.breakTime;
     }
     if (nextMode === "settings") {
+      // timeSpentUpdate();
       resetTimerHandler();
     }
   }
 
   const resetTimerHandler = () => {
-    window.localStorage.removeItem("test");
-    window.localStorage.removeItem("test123");
+    window.localStorage.removeItem("sessionSet");
+    window.localStorage.removeItem("breakSet");
     window.localStorage.removeItem("break-running");
     window.localStorage.removeItem("paused");
     //TBD

@@ -16,12 +16,14 @@ import TimeConfigUI from "./TimeConfigUI";
 import SettingsContext from "./SettingsContext";
 import SettingsCardUI from "./SettingsCardUI";
 
+
 const Settings = (props) => {
   const settingsInfo = useContext(SettingsContext);
-   
   const sessionStartHandler = () => {
-    window.localStorage.setItem("test", settingsInfo.sessionTime);
-    window.localStorage.setItem("test123", settingsInfo.breakTime);
+    //user's session time 
+    //user's break time
+    window.localStorage.setItem("sessionSet", settingsInfo.sessionTime);
+    window.localStorage.setItem("breakSet", settingsInfo.breakTime);
 
     //initialising start and endTime
     let startTime = new Date();
