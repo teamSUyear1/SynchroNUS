@@ -104,6 +104,12 @@ export default function RightWithAuth() {
           </ListItemIcon>
           Dashboard
         </MenuItem>
+         <MenuItem component={ButtonBase} href="/timetable">
+          <ListItemIcon>
+            <AssignmentIcon fontSize="small" />
+          </ListItemIcon>
+          Timetable
+        </MenuItem>
         <MenuItem component={ButtonBase} href="/meeting">
           <ListItemIcon>
             <GroupsIcon fontSize="small" />

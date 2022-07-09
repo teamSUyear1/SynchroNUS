@@ -5,7 +5,7 @@ import SideBar from '../components/SideBar/SideBar'
 function Meeting() {
     return (
         <Grid container>
-            <SideBar select = {2} />
+            <SideBar select = {3} />
             <Grid item height={"80vh"}>
             <Typography>This is meeting page</Typography>
             </Grid>

@@ -22,13 +22,12 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 
 function SideBar(props) {
   const { signout } = useAuth();
-  const {avatar} = AccountInfo();
+  const { avatar } = AccountInfo();
   const select = props.select;
 
   const handleLogout = () => {
     signout();
   };
-
 
   const drawerWidth = 240;
   return (
@@ -37,7 +36,7 @@ function SideBar(props) {
       sx={{
         display: { xs: "none", md: "flex" },
         width: drawerWidth,
-        flexShrink:0,
+        flexShrink: 0,
         [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: "border-box" },
       }}
     >
@@ -61,12 +60,25 @@ function SideBar(props) {
           </ListItem>
         </List>
         <Divider variant="middle">Events</Divider>
+
         <List>
           <ListItem disablePadding>
             <ListItemButton
               component={ButtonBase}
-              href="/meeting"
+              href="/timetable"
               selected={select === 2}
+            >
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <ListItemText primary="Timetable" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              component={ButtonBase}
+              href="/meeting"
+              selected={select === 3}
             >
               <ListItemIcon>
                 <GroupsIcon />
@@ -74,12 +86,11 @@ function SideBar(props) {
               <ListItemText primary="Meeting" />
             </ListItemButton>
           </ListItem>
-
           <ListItem disablePadding>
             <ListItemButton
               component={ButtonBase}
               href="/assignment"
-              selected={select === 3}
+              selected={select === 4}
             >
               <ListItemIcon>
                 <AddTaskIcon />
@@ -92,7 +103,7 @@ function SideBar(props) {
             <ListItemButton
               component={ButtonBase}
               href="/studytimer"
-              selected={select === 4}
+              selected={select === 5}
             >
               <ListItemIcon>
                 <TimerIcon />
@@ -107,7 +118,7 @@ function SideBar(props) {
             <ListItemButton
               component={ButtonBase}
               href="/profile"
-              selected={select === 5}
+              selected={select === 6}
             >
               <ListItemIcon>
                 <PersonIcon />

@@ -32,6 +32,7 @@ import SignupPw from "./pages/SignupPw";
 import StudyTimer from "./pages/timerpage/StudyTimer";
 import Meeting from "./pages/Meeting";
 import Assignment from "./pages/assignmentpage";
+import Timetable from "./pages/Timetable";
 
 function App() {
   const { user } = useAuth();
@@ -78,6 +79,10 @@ function App() {
                   <Route
                     path="/profile"
                     element={user ? <Profile /> : <Navigate replace to="/" />}
+                  />
+                   <Route
+                    path="/timetable"
+                    element={user ? <Timetable /> : <Navigate replace to="/" />}
                   />
                   <Route
                     path="/meeting"

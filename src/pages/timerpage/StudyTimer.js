@@ -69,7 +69,7 @@ const StudyTimer = () => {
 
   return (
     <Fragment>
-      <SideBar select={4} />
+      <SideBar select={5} />
       <SettingsContext.Provider value={settingsAndTimerContext}>
         {showSettings && !existingSessionRunning && !existingBreakRunning ? (
           <Settings />

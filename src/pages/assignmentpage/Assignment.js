@@ -85,7 +85,7 @@ function Assignment() {
 
   return (
     <>
-      <SideBar select={3} />
+      <SideBar select={4} />
       <Grid
         container
         minHeight="80vh"
@@ -100,7 +100,7 @@ function Assignment() {
               </Button>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <Box
-                  sx={{ border: "1px solid", borderWidth: 1, borderRadius: 2 }}
+                  sx={{backgroundColor: "background.default", boxShadow: 2, borderRadius: 2 }}
                   p={1}
                 >
                   <Calendar
@@ -111,7 +111,7 @@ function Assignment() {
                   />
                 </Box>
 
-                <Box sx={{ border: "1px solid", borderRadius: 2 }}>
+                <Box sx={{backgroundColor: "background.default", boxShadow: 2, borderRadius: 2 }}>
                   <Stack
                     direction="column"
                     justifyContent="center"
@@ -124,7 +124,7 @@ function Assignment() {
                     <List
                       sx={{
                         width: "100%",
-                        bgcolor: "background.paper",
+                        bgcolor: "background.default",
                         position: "relative",
                         overflow: "auto",
                         maxHeight: 215,
@@ -190,7 +190,7 @@ function Assignment() {
             <Box
               sx={{
                 height: "auto",
-                border: "1px solid",
+                backgroundColor: "background.default", boxShadow: 2,
                 borderRadius: 2,
               }}
               width={{ xs: 500, xl: 1000 }}
