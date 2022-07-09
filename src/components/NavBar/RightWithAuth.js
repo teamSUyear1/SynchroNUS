@@ -13,7 +13,6 @@ import PersonIcon from "@mui/icons-material/Person";
 import { ButtonBase } from "@mui/material";
 import { useAuth, db } from "../../hooks/useAuth";
 import AccountInfo from "../../hooks/AccountInfo";
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AddTaskIcon from "@mui/icons-material/AddTask";
@@ -103,12 +102,6 @@ export default function RightWithAuth() {
             <DashboardIcon fontSize="small" />
           </ListItemIcon>
           Dashboard
-        </MenuItem>
-         <MenuItem component={ButtonBase} href="/timetable">
-          <ListItemIcon>
-            <AssignmentIcon fontSize="small" />
-          </ListItemIcon>
-          Timetable
         </MenuItem>
         <MenuItem component={ButtonBase} href="/meeting">
           <ListItemIcon>

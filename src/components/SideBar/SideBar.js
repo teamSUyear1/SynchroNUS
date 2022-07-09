@@ -65,18 +65,6 @@ function SideBar(props) {
           <ListItem disablePadding>
             <ListItemButton
               component={ButtonBase}
-              href="/timetable"
-              selected={select === 2}
-            >
-              <ListItemIcon>
-                <AssignmentIcon />
-              </ListItemIcon>
-              <ListItemText primary="Timetable" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton
-              component={ButtonBase}
               href="/meeting"
               selected={select === 3}
             >
