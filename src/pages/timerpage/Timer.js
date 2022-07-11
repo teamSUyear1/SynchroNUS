@@ -16,13 +16,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import BellSound from "../../components/Assets/BellSound.wav";
 import { useAuth, db } from "../../hooks/useAuth";
-import {
-  arrayRemove,
-  doc,
-  onSnapshot,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 import useTimer from "../../hooks/useTimer";
 
 const style = {
@@ -79,7 +73,7 @@ function Timer(props) {
   );
   const [mode, setMode] = useState(checkBreakRunning ? "break" : "session");
   const [open, setOpen] = useState(false);
-  // const [events, setEventsState] = useTimer();
+  const { events, setEventsState } = useTimer();
   const { user } = useAuth();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -88,13 +82,18 @@ function Timer(props) {
   const secondsLeftRef = useRef(secondsLeft);
   const modeRef = useRef(mode);
 
-  // function timeSpentUpdate() {
-  //   let newSessionTime =
-  //     events.timeSpent + parseInt(window.localStorage.getItem("sessionSet"));
-  //   console.log(newSessionTime);
-  //   setEventsState(newSessionTime);
-  //   setDoc(doc(db, "timer", user?.uid), { timeSpent: newSessionTime });
-  // }
+  async function timeSpentUpdate() {
+    const docRef = doc(db, "timer", user?.uid);
+    const docSnap = await getDoc(docRef);
+    let newSessionTime = parseInt(window.localStorage.getItem("sessionSet"));
+    console.log("newSessionTime:", newSessionTime);
+    if (!docSnap.exists()) {
+      setDoc(doc(db, "timer", user?.uid), { timeSpent: 0 });
+    }
+    newSessionTime += docSnap.data().timeSpent;
+    setEventsState(newSessionTime);
+    setDoc(doc(db, "timer", user?.uid), { timeSpent: newSessionTime });
+  }
 
   function onContinueHandler() {
     let now = new Date().getTime();
@@ -133,14 +132,14 @@ function Timer(props) {
       secondsLeftRef.current = settingsInfo.breakTime;
     }
     if (nextMode === "settings") {
-      // timeSpentUpdate();
+      timeSpentUpdate();
       resetTimerHandler();
     }
   }
 
   const resetTimerHandler = () => {
-    window.localStorage.removeItem("sessionSet");
-    window.localStorage.removeItem("breakSet");
+    // window.localStorage.removeItem("sessionSet");
+    // window.localStorage.removeItem("breakSet");
     window.localStorage.removeItem("break-running");
     window.localStorage.removeItem("paused");
     //TBD
