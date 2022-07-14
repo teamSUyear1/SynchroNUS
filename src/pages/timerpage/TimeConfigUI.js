@@ -12,7 +12,7 @@ import CardContent from "@mui/material/CardContent";
 
 const TimeConfigUI = (props) => {
   const onTimeChangeHandler = (event) => {
-    props.timeSet(event.target.valueAsNumber * 60);
+    props.timeSet(event.target.valueAsNumber);
   };
 
   return (

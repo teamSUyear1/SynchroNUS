@@ -24,7 +24,8 @@ const Settings = (props) => {
     //user's break time
     window.localStorage.setItem("sessionSet", settingsInfo.sessionTime);
     window.localStorage.setItem("breakSet", settingsInfo.breakTime);
-
+    // Loop toggling off
+    window.localStorage.setItem("loopToggle", false);
     //initialising start and endTime
     let startTime = new Date();
     const sessionMinutes = settingsInfo.sessionTime * 1000;
