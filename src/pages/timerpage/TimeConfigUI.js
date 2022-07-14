@@ -27,7 +27,7 @@ const TimeConfigUI = (props) => {
               sx={{ fontStyle: "italic", mb: "10px" }}
               fontSize="15px"
             >
-              Leave it empty for no breaks
+              Set to 0 for no breaks. 
             </Typography>
           )}
           {props.type === "session" && (

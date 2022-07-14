@@ -89,15 +89,18 @@ function Timer(props) {
     if (loopToggle) {
       window.localStorage.setItem("loopToggle", false);
       setLoopToggle(false);
+      loopToggleRef.current = false;
     } else {
       window.localStorage.setItem("loopToggle", true);
       setLoopToggle(true);
+      loopToggleRef = true;
     }
   };
 
   const isPausedRef = useRef(isPaused);
   const secondsLeftRef = useRef(secondsLeft);
   const modeRef = useRef(mode);
+  const loopToggleRef = useRef(loopToggle);
 
   async function timeSpentUpdate() {
     const docRef = doc(db, "timer", user?.uid);
@@ -109,6 +112,20 @@ function Timer(props) {
     sessionTimeSet += docSnap.data().timeSpent;
     setEventsState(sessionTimeSet);
     setDoc(doc(db, "timer", user?.uid), { timeSpent: sessionTimeSet });
+  }
+
+  function sessionLoop() {
+    window.localStorage.setItem("sessionSet", settingsInfo.sessionTime);
+    window.localStorage.setItem("breakSet", settingsInfo.breakTime);
+    //initialising start and endTime
+    let startTime = new Date();
+    const sessionMinutes = settingsInfo.sessionTime * 1000;
+    const breakMinutes = settingsInfo.breakTime * 1000;
+    let sessionEndTime = new Date(startTime.getTime() + sessionMinutes);
+    
+    let breakEndTime = new Date(sessionEndTime.getTime() + breakMinutes);
+    window.localStorage.setItem("sessionEndTime", sessionEndTime);
+    window.localStorage.setItem("breakEndTime", breakEndTime);
   }
 
   function onContinueHandler() {
@@ -146,12 +163,21 @@ function Timer(props) {
       setSecondsLeft(settingsInfo.breakTime);
       secondsLeftRef.current = settingsInfo.breakTime;
     }
-    // if (nextMode === "settings" && loopToggle) {
-
+    // !!!!!!!!!!1 BUGGY CODE HERE!
+    // if (nextMode === "settings" && loopToggle.current) {
+    //   console.log("switchMode 2nd Condition");
+    //   // timeSpentUpdate();
+    //   sessionLoop();
+    //   window.localStorage.removeItem("break-running");
+    //   setMode("break");
+    //   modeRef.current = "session";
+    //   setSecondsLeft(settingsInfo.sessionTime);
+    //   secondsLeftRef.current = settingsInfo.sessionTime;
     // }
-    if (nextMode === "settings") {
+    if (nextMode === "settings" && !loopToggle.current) {
+      console.log("switchMode 3rd Condition");
       // Session and break time ending
-      timeSpentUpdate();
+      // timeSpentUpdate();
       resetTimerHandler();
     }
   }
