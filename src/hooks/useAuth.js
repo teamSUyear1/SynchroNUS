@@ -10,7 +10,7 @@ import {
   signInWithRedirect,
 } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { getFirestore, doc, setDoc, getDoc } from "@firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc, onSnapshot   } from "@firebase/firestore";
 import {getStorage} from "firebase/storage"
 
 // Add your Firebase credentials
@@ -45,7 +45,6 @@ function useProvideAuth() {
   const [name, setName] = useState("Not set");
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
-
   const signin = (email, password) => {
     return signInWithEmailAndPassword(firebaseAuth, email, password).then(
       (response) => {
@@ -80,7 +79,22 @@ function useProvideAuth() {
   const signInWithGoogle = () => {
     return signInWithRedirect(firebaseAuth, googleAuthProvider);
   };
+  async function setAllUser(newUser) {
+    await setDoc(doc(db, "users", "alluser"), {users: newUser})
+    console.log("Add...")
+  }
 
+  async function AddAllUser(user) {
+    const alluserRef = doc(db, "users", "alluser");
+    const alluserSnap = await getDoc(alluserRef)
+    const newUser = [
+        ...alluserSnap.data().users, {
+          email: user
+        },
+      ]
+      setAllUser(newUser)
+  }
+  
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
   // ... component that utilizes this hook to re-render with the ...
@@ -94,18 +108,25 @@ function useProvideAuth() {
         if (!docSnap.exists()) {
           console.log("Add information to database");
           await setDoc(docRef, {
-            name: user?.displayName,
+            name: user.displayName !== null ? user.displayName : "User",
             avatar: user?.photoURL,
             uid: user?.uid
           });
+          AddAllUser(user.email)
         }
         setUser(user);
+        
       } else {
         setUser(false);
       }
     });
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
+
+// Cleanup subscription on unmount
+    return () => {
+      unsubscribe();
+      
+    };
+    
   }, []);
   // Return the user object and auth methods
   return {

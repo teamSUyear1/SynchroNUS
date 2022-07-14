@@ -157,7 +157,7 @@ function Profile() {
 
   return (
     <>
-      <SideBar select={6} />
+      <SideBar select={5} />
       <Grid container justifyContent={"center"} minHeight="80vh" spacing={3}>
         <Grid item alignSelf={"center"}>
           <Box border={"1px solid"} borderRadius={3} padding={3}>

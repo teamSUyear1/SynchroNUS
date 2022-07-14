@@ -66,7 +66,7 @@ function SideBar(props) {
             <ListItemButton
               component={ButtonBase}
               href="/meeting"
-              selected={select === 3}
+              selected={select === 2}
             >
               <ListItemIcon>
                 <GroupsIcon />
@@ -78,7 +78,7 @@ function SideBar(props) {
             <ListItemButton
               component={ButtonBase}
               href="/assignment"
-              selected={select === 4}
+              selected={select === 3}
             >
               <ListItemIcon>
                 <AddTaskIcon />
@@ -91,7 +91,7 @@ function SideBar(props) {
             <ListItemButton
               component={ButtonBase}
               href="/studytimer"
-              selected={select === 5}
+              selected={select === 4}
             >
               <ListItemIcon>
                 <TimerIcon />
@@ -106,7 +106,7 @@ function SideBar(props) {
             <ListItemButton
               component={ButtonBase}
               href="/profile"
-              selected={select === 6}
+              selected={select === 5}
             >
               <ListItemIcon>
                 <PersonIcon />

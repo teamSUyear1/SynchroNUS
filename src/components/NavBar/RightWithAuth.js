@@ -32,6 +32,7 @@ export default function RightWithAuth() {
     handleClose();
     signout();
   };
+  
 
   return (
     <>

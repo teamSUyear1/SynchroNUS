@@ -8,7 +8,7 @@ import {
 
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/homepage/Home";
-import Profile from "./pages/Profile/Profile";
+import Profile from "./pages/profilepage/Profile";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
 
@@ -30,8 +30,8 @@ import SignupEmail from "./pages/SignupEmail";
 import SignupPw from "./pages/SignupPw";
 
 import StudyTimer from "./pages/timerpage/StudyTimer";
-import Meeting from "./pages/Meeting";
 import Assignment from "./pages/assignmentpage";
+import Meeting from "./pages/meetingpage/Meeting";
 
 function App() {
   const { user } = useAuth();

@@ -24,7 +24,13 @@ const SignupPw = () => {
 
   const createUserHandler = () => {
     window.localStorage.setItem("email", "");
-    signup(email, password);
+    signup(email, password).catch(error => {
+      if (error.code.includes("email-already-in-use")){
+        alert("Email had registered, please log in")
+      } else {
+        alert(error.code)
+      }
+    });
   };
   const cpasswordValid = () => {
     return cpassword === password;

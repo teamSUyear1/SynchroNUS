@@ -85,7 +85,7 @@ function Assignment() {
 
   return (
     <>
-      <SideBar select={4} />
+      <SideBar select={3} />
       <Grid
         container
         minHeight="80vh"

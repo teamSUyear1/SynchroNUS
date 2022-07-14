@@ -9,7 +9,8 @@ function Calendar(props) {
   const { timetable } = useClasses();
   const { value, setValue, month, setMonth } = props;
   const currentYear = new Date().getFullYear();
-  const [highlightedDays, setHighlightedDays] = useState([]);
+  const [highlightedAssDays, setHighlightedAssDays] = useState([]);
+  const [highlightedClassDays, setHighlightedClassDays] = useState([]);
 
   function highlight() {
     const filteredAss = events
@@ -20,11 +21,15 @@ function Calendar(props) {
         task.dtstart.filter((time) => new Date(time).getMonth() === month)
       )
       .map((time) => new Date(time).getDate());
-    const filtered = filteredAss.concat(filteredClass);
-    const daysToHighlight = filtered.filter((c, index) => {
-      return filtered.indexOf(c) === index;
+ 
+    const daysToHighlightAss = filteredAss.filter((c, index) => {
+      return filteredAss.indexOf(c) === index;
     });
-    setHighlightedDays(daysToHighlight);
+    const daysToHighlightClass = filteredClass.filter((c, index) => {
+      return filteredClass.indexOf(c) === index;
+    });
+    setHighlightedAssDays(daysToHighlightAss);
+    setHighlightedClassDays(daysToHighlightClass)
   }
 
   function filterHighlight(task) {
@@ -52,19 +57,33 @@ function Calendar(props) {
       }}
       onMonthChange={handleMonthChange}
       renderDay={(day, _value, DayComponentProps) => {
-        const isSelected =
+        const isAssSelected =
           !DayComponentProps.outsideCurrentMonth &&
-          highlightedDays.indexOf(day.getDate()) >= 0;
+          highlightedAssDays.indexOf(day.getDate()) >= 0;
+
+          const isClassSelected =
+          !DayComponentProps.outsideCurrentMonth &&
+          highlightedClassDays.indexOf(day.getDate()) >= 0;
         return (
+          <>
           <Badge
-            key={day.toString()}
+            //key={day.toString()}
             overlap="circular"
             color="secondary"
             variant="dot"
-            invisible={isSelected ? false : true}
+            invisible={isAssSelected ? false : true}
           >
             <PickersDay {...DayComponentProps} />
           </Badge>
+          <Badge
+            //key={day.toString()}
+            overlap="circular"
+            color="primary"
+            variant="dot"
+            invisible={isClassSelected ? false : true}
+          >
+          </Badge>
+          </>
         );
       }}
     />
