@@ -11,12 +11,14 @@ import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 import SettingsIcon from "@mui/icons-material/Settings";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import ToggleButton from "@mui/material/ToggleButton";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import SettingsContext from "./SettingsContext";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import BellSound from "../../components/Assets/BellSound.wav";
 import { useAuth, db } from "../../hooks/useAuth";
-import { getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 import useTimer from "../../hooks/useTimer";
 
 const style = {
@@ -42,8 +44,11 @@ console.log(expiryTime);
 function Timer(props) {
   let checkBreakRunning = window.localStorage.getItem("break-running") != null;
   let checkIsNotPaused = window.localStorage.getItem("paused") != null;
+  let checkLoopNotToggled =
+    window.localStorage.getItem("loopToggle") === "false";
   let audioAlert = new Audio(BellSound);
   let timeDiff;
+  let sessionTimeSet = parseInt(window.localStorage.getItem("sessionSet"));
 
   function playAlert() {
     audioAlert.play();
@@ -72,27 +77,55 @@ function Timer(props) {
     checkBreakRunning ? timeDiffHandler("break") : timeDiffHandler("session")
   );
   const [mode, setMode] = useState(checkBreakRunning ? "break" : "session");
-  const [open, setOpen] = useState(false);
+  const [configOpen, setConfigOpen] = useState(false);
+  const [loopToggle, setLoopToggle] = useState(
+    checkLoopNotToggled ? false : true
+  );
   const { events, setEventsState } = useTimer();
   const { user } = useAuth();
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setConfigOpen(true);
+  const handleClose = () => setConfigOpen(false);
+  const handleLoopToggle = () => {
+    if (loopToggle) {
+      window.localStorage.setItem("loopToggle", false);
+      setLoopToggle(false);
+      loopToggleRef.current = false;
+    } else {
+      window.localStorage.setItem("loopToggle", true);
+      setLoopToggle(true);
+      loopToggleRef = true;
+    }
+  };
 
   const isPausedRef = useRef(isPaused);
   const secondsLeftRef = useRef(secondsLeft);
   const modeRef = useRef(mode);
+  const loopToggleRef = useRef(loopToggle);
 
   async function timeSpentUpdate() {
     const docRef = doc(db, "timer", user?.uid);
     const docSnap = await getDoc(docRef);
-    let newSessionTime = parseInt(window.localStorage.getItem("sessionSet"));
-    console.log("newSessionTime:", newSessionTime);
+    console.log("sessionTimeSet:", sessionTimeSet);
     if (!docSnap.exists()) {
       setDoc(doc(db, "timer", user?.uid), { timeSpent: 0 });
     }
-    newSessionTime += docSnap.data().timeSpent;
-    setEventsState(newSessionTime);
-    setDoc(doc(db, "timer", user?.uid), { timeSpent: newSessionTime });
+    sessionTimeSet += docSnap.data().timeSpent;
+    setEventsState(sessionTimeSet);
+    setDoc(doc(db, "timer", user?.uid), { timeSpent: sessionTimeSet });
+  }
+
+  function sessionLoop() {
+    window.localStorage.setItem("sessionSet", settingsInfo.sessionTime);
+    window.localStorage.setItem("breakSet", settingsInfo.breakTime);
+    //initialising start and endTime
+    let startTime = new Date();
+    const sessionMinutes = settingsInfo.sessionTime * 1000;
+    const breakMinutes = settingsInfo.breakTime * 1000;
+    let sessionEndTime = new Date(startTime.getTime() + sessionMinutes);
+    
+    let breakEndTime = new Date(sessionEndTime.getTime() + breakMinutes);
+    window.localStorage.setItem("sessionEndTime", sessionEndTime);
+    window.localStorage.setItem("breakEndTime", breakEndTime);
   }
 
   function onContinueHandler() {
@@ -124,25 +157,34 @@ function Timer(props) {
     const nextMode = modeRef.current === "session" ? "break" : "settings";
     playAlert();
     if (nextMode === "break") {
-      // to be added: get time from doc then update it
       window.localStorage.setItem("break-running", "true");
       setMode(nextMode);
       modeRef.current = nextMode;
       setSecondsLeft(settingsInfo.breakTime);
       secondsLeftRef.current = settingsInfo.breakTime;
     }
-    if (nextMode === "settings") {
-      timeSpentUpdate();
+    // !!!!!!!!!!1 BUGGY CODE HERE!
+    // if (nextMode === "settings" && loopToggle.current) {
+    //   console.log("switchMode 2nd Condition");
+    //   // timeSpentUpdate();
+    //   sessionLoop();
+    //   window.localStorage.removeItem("break-running");
+    //   setMode("break");
+    //   modeRef.current = "session";
+    //   setSecondsLeft(settingsInfo.sessionTime);
+    //   secondsLeftRef.current = settingsInfo.sessionTime;
+    // }
+    if (nextMode === "settings" && !loopToggle.current) {
+      console.log("switchMode 3rd Condition");
+      // Session and break time ending
+      // timeSpentUpdate();
       resetTimerHandler();
     }
   }
 
   const resetTimerHandler = () => {
-    // window.localStorage.removeItem("sessionSet");
-    // window.localStorage.removeItem("breakSet");
     window.localStorage.removeItem("break-running");
     window.localStorage.removeItem("paused");
-    //TBD
     window.localStorage.removeItem("sessionEndTime");
     window.localStorage.removeItem("breakEndTime");
     settingsInfo.setShowSettings(true);
@@ -154,6 +196,8 @@ function Timer(props) {
     secondsLeftRef.current = settingsInfo.sessionTime;
     setIsPaused(true);
     isPausedRef.current = true;
+    window.localStorage.removeItem("sessionSet");
+    window.localStorage.removeItem("breakSet");
   };
 
   useEffect(() => {
@@ -211,7 +255,7 @@ function Timer(props) {
             <SettingsIcon sx={{ fontSize: 45 }} />
           </IconButton>
           <Modal
-            open={open}
+            open={configOpen}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
@@ -228,6 +272,25 @@ function Timer(props) {
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 Coming in the near future!
               </Typography>
+              <ToggleButton
+                selected={loopToggle}
+                onClick={handleLoopToggle}
+                sx={{ borderStyle: "none" }}
+              >
+                {loopToggle ? (
+                  <AllInclusiveIcon
+                    title="Loop on"
+                    color="primary"
+                    sx={{ fontSize: 40 }}
+                  />
+                ) : (
+                  <AllInclusiveIcon
+                    title="Loop off"
+                    sx={{ fontSize: 40 }}
+                    style={{ color: "grey" }}
+                  />
+                )}
+              </ToggleButton>
             </Box>
           </Modal>
           <IconButton title="Reset Timer" onClick={resetTimerHandler}>

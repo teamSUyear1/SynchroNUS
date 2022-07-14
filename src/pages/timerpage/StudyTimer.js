@@ -13,21 +13,21 @@ import SettingsContext from "./SettingsContext";
 
 const StudyTimer = () => {
   const [existingSessionRunning, setSessionRunning] = useState(
-    window.localStorage.getItem("test") != null
+    window.localStorage.getItem("sessionSet") != null
   );
   const [existingBreakRunning, setBreakRunning] = useState(
-    window.localStorage.getItem("test123") != null
+    window.localStorage.getItem("breakSet") != null
   );
   const [showSettings, setShowSettings] = useState(true);
   const [sessionTime, setSessionTime] = useState(
     //hacky way, experimental
     existingSessionRunning
-      ? parseInt(window.localStorage.getItem("test"))
+      ? parseInt(window.localStorage.getItem("sessionSet"))
       : 25 * 60
   );
   const [breakTime, setBreakTime] = useState(
     //hacky way, experimental
-    existingBreakRunning ? parseInt(window.localStorage.getItem("test123")) : 0
+    existingBreakRunning ? parseInt(window.localStorage.getItem("breakSet")) : 0
   );
 
   const formatTimeHandler = (time) => {

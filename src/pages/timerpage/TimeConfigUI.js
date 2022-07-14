@@ -12,7 +12,7 @@ import CardContent from "@mui/material/CardContent";
 
 const TimeConfigUI = (props) => {
   const onTimeChangeHandler = (event) => {
-    props.timeSet(event.target.valueAsNumber * 60);
+    props.timeSet(event.target.valueAsNumber);
   };
 
   return (
@@ -27,7 +27,7 @@ const TimeConfigUI = (props) => {
               sx={{ fontStyle: "italic", mb: "10px" }}
               fontSize="15px"
             >
-              Leave it empty for no breaks
+              Set to 0 for no breaks. 
             </Typography>
           )}
           {props.type === "session" && (
