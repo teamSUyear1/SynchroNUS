@@ -93,7 +93,7 @@ function Timer(props) {
     } else {
       window.localStorage.setItem("loopToggle", true);
       setLoopToggle(true);
-      loopToggleRef = true;
+      loopToggleRef.current = true;
     }
   };
 
@@ -163,21 +163,21 @@ function Timer(props) {
       setSecondsLeft(settingsInfo.breakTime);
       secondsLeftRef.current = settingsInfo.breakTime;
     }
-    // !!!!!!!!!!1 BUGGY CODE HERE!
-    // if (nextMode === "settings" && loopToggle.current) {
-    //   console.log("switchMode 2nd Condition");
-    //   // timeSpentUpdate();
-    //   sessionLoop();
-    //   window.localStorage.removeItem("break-running");
-    //   setMode("break");
-    //   modeRef.current = "session";
-    //   setSecondsLeft(settingsInfo.sessionTime);
-    //   secondsLeftRef.current = settingsInfo.sessionTime;
-    // }
-    if (nextMode === "settings" && !loopToggle.current) {
-      console.log("switchMode 3rd Condition");
+    if (nextMode === "settings" && loopToggleRef.current) {
+      // console.log("switchMode 2nd Condition");
+      timeSpentUpdate();
+      sessionLoop();
+      window.localStorage.removeItem("break-running");
+      setMode("session");
+      modeRef.current = "session";
+      setSecondsLeft(settingsInfo.sessionTime);
+      secondsLeftRef.current = settingsInfo.sessionTime;
+    }
+    if (nextMode === "settings" && !loopToggleRef.current) {
+      // console.log(loopToggleRef.current);
+      // console.log("switchMode 3rd Condition");
       // Session and break time ending
-      // timeSpentUpdate();
+      timeSpentUpdate();
       resetTimerHandler();
     }
   }

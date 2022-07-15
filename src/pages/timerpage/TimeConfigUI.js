@@ -12,7 +12,7 @@ import CardContent from "@mui/material/CardContent";
 
 const TimeConfigUI = (props) => {
   const onTimeChangeHandler = (event) => {
-    props.timeSet(event.target.valueAsNumber);
+    props.timeSet(event.target.valueAsNumber * 60);
   };
 
   return (
@@ -39,7 +39,7 @@ const TimeConfigUI = (props) => {
             </Typography>
           )}
           <TextField
-            color="secondary"
+            color="primary"
             type="number"
             placeholder="up to 3 digits"
             label={props.title + " (in minutes)"}
