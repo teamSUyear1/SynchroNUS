@@ -13,7 +13,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -80,7 +80,7 @@ const Login = () => {
           <Grid item xs={12}>
             <TextField
               label="Password"
-              type={"password"}
+              type={checked ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
             ></TextField>
           </Grid>
@@ -90,11 +90,11 @@ const Login = () => {
                 <Checkbox
                   checked={checked}
                   onChange={handleChange}
-                  label={"Keep me logged in"}
+                  label={"show password"}
                   inputProps={{ "aria-label": "primary checkbox" }}
                 />
               }
-              label="Keep me logged in"
+              label="show password"
             />
           </Grid>
           <Grid item xs={12}>
