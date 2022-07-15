@@ -136,7 +136,7 @@ export default function Dashboard() {
                 justifyContent="space-between"
                 marginBottom={1}
               >
-                <AddTaskIcon />
+                <AddTaskIcon color="secondary"/>
                 <Typography variant="h5" color="inherit">
                   Deadline Assignment
                 </Typography>
@@ -247,7 +247,7 @@ export default function Dashboard() {
                 justifyContent="space-between"
                 marginBottom={2}
               >
-                <AssignmentIcon />
+                <AssignmentIcon color="primary"/>
                 <Typography variant="h5" color="inherit" marginLeft={10}>
                   Today's class
                 </Typography>

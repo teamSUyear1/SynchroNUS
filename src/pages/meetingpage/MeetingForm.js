@@ -1,6 +1,6 @@
 import { DatePicker, LocalizationProvider, TimePicker } from "@mui/lab";
 import { db, useAuth } from "../../hooks/useAuth";
-import { doc, getDoc, onSnapshot, collection } from "@firebase/firestore";
+import { doc, getDoc, setDoc, collection, arrayUnion, updateDoc } from "@firebase/firestore";
 import {
   Autocomplete,
   Avatar,
@@ -54,7 +54,11 @@ function MeetingForm(props) {
   const [avatars, setAvatars] = useState([]);
   const [username, setUsername] = useState([]);
   const [participants, setParticipants] = useState([]);
+  const [title, setTitle] = useState("")
+  const [link, setLink] = useState("")
+  const [passcode, setPasscode] = useState("")
 
+  /*
   const getAvatarState = async (email) => {
     const alluserRef = doc(db, "users", email);
     const alluserSnap = await getDoc(alluserRef);
@@ -75,7 +79,7 @@ function MeetingForm(props) {
     });
     return avatars[index];
   }
-
+*/
   const getUsernameState = async (email) => {
     const alluserRef = doc(db, "users", email);
     const alluserSnap = await getDoc(alluserRef);
@@ -102,15 +106,52 @@ function MeetingForm(props) {
     setUsername([]);
   }
 
-  function HandleAddMeeting(e) {
-    e.preventDefault();
+  function addMeeting(title, participants, link, passcode ,date){
+    setOpenPopup(false);
+    const newMeetingRef = doc(collection(db, "meetings  "))
+    setDoc(newMeetingRef, {
+      title: title,
+      participants: participants,
+      link: link,
+      passcode: passcode,
+      date: date,
+    })
+    participants.map(participant => 
+      sendNotification(participant.email, newMeetingRef.id)
+    )
     
   }
 
+  async function sendNotification(email, docID){
+    console.log(email)
+    const newNotificationRef = doc(db, "notifications", email);
+    const docSnap = await getDoc(newNotificationRef)
+    const newNotification = {
+      docID: docID,
+      timestamp: new Date()
+    }
+   
+    if (docSnap.exists()){
+    updateDoc(newNotificationRef, {
+      new: arrayUnion(newNotification)
+    })
+  } else{
+    setDoc(newNotificationRef, {
+      new: [newNotification]
+    })
+  }
+
+  }
+
+  function handleAddMeeting(e) {
+    e.preventDefault();
+    addMeeting(title, participants, link, passcode, endevent.toISOString())
+  }
+
   return (
-    <form>
+    <form onSubmit={handleAddMeeting}>
       <Stack spacing={3} marginTop={1} marginBottom={1} width={400}>
-        <TextField label="Meeting Title" required />
+        <TextField label="Meeting Title" required onChange={e => setTitle(e.target.value)}/>
         <Box>
           <Autocomplete
             multiple
@@ -148,9 +189,10 @@ function MeetingForm(props) {
         <TextField
           label="Meeting invite link"
           size="small"
-          required
+          required  
+          onChange={e => setLink(e.target.value)}
         ></TextField>
-        <TextField label="Meeting Passcode" size="small"></TextField>
+        <TextField label="Meeting Passcode" size="small" helperText="If there is passcode, please input it" onChange={e => setPasscode(e.target.value)}></TextField>
         <Box
           sx={{
             display: "flex",
@@ -185,7 +227,7 @@ function MeetingForm(props) {
               renderInput={(params) => <TextField {...params} />}
             />
           </Stack>
-          <Typography>{endevent.toString()}</Typography>
+          <Typography fontSize={13}>{endevent.toString()}</Typography>
         </LocalizationProvider>
         <Button variant="contained" type="submit" disabled={disable}>
           Add
