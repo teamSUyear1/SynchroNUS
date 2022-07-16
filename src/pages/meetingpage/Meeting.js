@@ -3,10 +3,13 @@ import React from "react";
 import { useState } from "react";
 import Popup from "../../components/Popup/Popup";
 import SideBar from "../../components/SideBar/SideBar";
+import useMeeting from "../../hooks/useMeeting";
 import MeetingForm from "./MeetingForm";
 
 function Meeting() {
   const [openPopup, setOpenPopup] = useState(false);
+  const {meetings} = useMeeting();
+
   return (
     <>
       <SideBar select={2} />
