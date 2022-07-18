@@ -1,38 +1,37 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', 'Arial Narrow Bold', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito', 'Roboto', sans-serif;
 }
 
 .main {
-    width: 100%;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
 }
 
 video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 /* Change content as you like according to typography's style */
-  .content {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 1;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,.6);
-    object-fit: cover;
-    /* background-color: #000000cc; */
-  }
+.content {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.6);
+  object-fit: cover;
+  /* background-color: #000000cc; */
+}
