@@ -1,9 +1,22 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .title {
   font-weight: bold;
-  font-size: 4.5rem;
+  font-size: 5rem;
+  color: white;
 }
 
 .goDown {
+  color: #FF5F1F;
+}
+
+.container {
   text-align: center;
 }
 
