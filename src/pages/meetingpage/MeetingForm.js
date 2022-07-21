@@ -10,6 +10,7 @@ import {
 } from "@firebase/firestore";
 import {
   Autocomplete,
+  Avatar,
   Button,
   Checkbox,
   Chip,
@@ -23,7 +24,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { isAfter } from "date-fns";
+import { isAfter, add } from "date-fns";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import useUser from "../../hooks/useUser";
@@ -31,6 +32,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import AccountInfo from "../../hooks/AccountInfo";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -38,6 +40,7 @@ function MeetingForm(props) {
   const { setOpenPopup } = props;
   const date = new Date();
   const { user } = useAuth();
+  const { avatar, name } = AccountInfo();
   const currDate =
     date.getFullYear() +
     "-" +
@@ -56,11 +59,11 @@ function MeetingForm(props) {
     date.getMinutes().toLocaleString("en-US", {
       minimumIntegerDigits: 2,
     });
-  const [endevent, setEndevent] = useState(new Date(currDate));
+  const [start, setStart] = useState(new Date(currDate));
   const { alluser } = useUser();
   const [disable, setDisable] = useState(false);
   //  const [avatars, setAvatars] = useState([]);
-  const [username, setUsername] = useState([]);
+  // const [username, setUsername] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
@@ -103,33 +106,19 @@ function MeetingForm(props) {
     return avatars[index];
   }
 */
-  const getUsernameState = async (email) => {
-    const alluserRef = doc(db, "users", email);
-    const alluserSnap = await getDoc(alluserRef);
-    return alluserSnap.data().name;
-  };
+  // const getUsernameState = async (email) => {
+  //   const alluserRef = doc(db, "users", email);
+  //   const alluserSnap = await getDoc(alluserRef);
+  //   return alluserSnap.data().name;
+  // };
 
-  function getUsername(email, index, val) {
+  function getUsername(name, val) {
     setParticipants(val);
-    getUsernameState(email).then((value) => {
-      if (!username.includes(value)) {
-        const newUsername = [
-          ...username.slice(0, index),
-          value,
-          ...username.slice(index + 1),
-        ];
-        setUsername(newUsername);
-      }
-    });
-    return username[index];
+    return name;
   }
 
-  function changeHandler() {
-    //    setAvatars([]);
-    setUsername([]);
-  }
 
-  function addMeeting(title, participants, link, passcode, date, duration) {
+  function addMeeting(title, participants, link, passcode, start, end, duration) {
     setOpenPopup(false);
     const newMeetingRef = doc(collection(db, "meetings"));
     setDoc(newMeetingRef, {
@@ -137,13 +126,17 @@ function MeetingForm(props) {
       participants: participants,
       link: link,
       passcode: passcode,
-      date: date,
+      start: start,
+      end: end,
       duration: duration,
-      organiser: user.email,
+      organiser: { email: user.email, avatar: avatar, name: name },
     });
-    const allNotification = [...participants, {
-      email: user.email
-    }]
+    const allNotification = [
+      ...participants,
+      {
+        email: user.email,
+      },
+    ];
     allNotification.map((participant) =>
       sendNotification(participant.email, newMeetingRef.id)
     );
@@ -155,6 +148,7 @@ function MeetingForm(props) {
     const docSnap = await getDoc(newNotificationRef);
     const newNotification = {
       docID: docID,
+      status: email === user.email,
       timestamp: new Date(),
     };
 
@@ -171,12 +165,17 @@ function MeetingForm(props) {
 
   function handleAddMeeting(e) {
     e.preventDefault();
+    const end = add(start, {
+      minutes: duration
+    });
+    console.log("end", end)
     addMeeting(
       title,
       participants,
       link,
       passcode,
-      endevent.toISOString(),
+      start.toISOString(),
+      end.toISOString(),
       duration
     );
   }
@@ -193,7 +192,7 @@ function MeetingForm(props) {
     if (
       duration === 0 ||
       isNaN(duration) ||
-      isAfter(new Date(currDate), endevent) ||
+      isAfter(new Date(currDate), start) ||
       participants.length === 0
     ) {
       setDisable(true);
@@ -201,7 +200,7 @@ function MeetingForm(props) {
       setDisable(false);
     }
     console.log(alluser);
-  }, [duration, endevent, currDate, participants]);
+  }, [duration, start, currDate, participants]);
 
   return (
     <form onSubmit={handleAddMeeting}>
@@ -217,7 +216,7 @@ function MeetingForm(props) {
             id="tags-standard"
             limitTags={2}
             options={alluser.filter((users) => users.email !== user.email)}
-            onChange={changeHandler}
+            getOptionLabel={(option) => option.email}
             renderOption={(props, option, { selected }) => (
               <li {...props}>
                 <Checkbox
@@ -233,7 +232,13 @@ function MeetingForm(props) {
               value.map((option, index) => (
                 <Chip
                   variant="outlined"
-                  label={getUsername(option.email, index, value)}
+                  avatar={
+                    <Avatar
+                      alt={option.name}
+                      src={option.avatar === null ? "NA" : option.avatar}
+                    />
+                  }
+                  label={getUsername(option.name, value)}
                   size="small"
                   {...getTagProps({ index })}
                 />
@@ -279,19 +284,19 @@ function MeetingForm(props) {
               label="Date"
               openTo="day"
               views={["month", "day"]}
-              value={endevent}
+              value={start}
               shouldDisableDate={(date) => isAfter(new Date(currDate), date)}
               onChange={(newDate) => {
-                setEndevent(newDate);
+                setStart(newDate);
               }}
               renderInput={(params) => <TextField {...params} />}
             />
             <TimePicker
               label="Time"
-              value={endevent}
+              value={start}
               showToolbar
               onChange={(newTime) => {
-                setEndevent(newTime);
+                setStart(newTime);
               }}
               renderInput={(params) => <TextField {...params} />}
             />
@@ -340,7 +345,7 @@ function MeetingForm(props) {
               }}
             ></TextField>
           </Stack>
-          <Typography fontSize={13}>{endevent.toString()}</Typography>
+          <Typography fontSize={13}>{start.toString()}</Typography>
         </LocalizationProvider>
         <Button variant="contained" type="submit" disabled={disable}>
           Add

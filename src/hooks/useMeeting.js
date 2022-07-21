@@ -1,33 +1,29 @@
-import { doc, onSnapshot } from 'firebase/firestore';
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useAuth, db } from './useAuth';
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { useAuth, db } from "./useAuth";
+import useNotification from "./useNotification";
 
 function useMeeting() {
-    const [meetings, setMeetings] = useState([])
-    const [notifications, setNotifications] = useState([])
-    const {user} = useAuth();
-    const notificationRef = doc(db, "notifications", user.email)
+  const { notifications } = useNotification();
+  const [meetings, setMeetings] = useState([]);
+  // const [meet, setMeet] = useState([]);
 
-    useEffect(() => {
-        const unsubscribe = onSnapshot(notificationRef, snapshot => {
-            setNotifications(snapshot.data().new)
-        })
+  const getMeetings = async () => {
+    const querySnapshot = await getDocs(collection(db, "meetings"));
+    setMeetings(querySnapshot.docs.map((value) => value.data()));
+  };
 
-        return () => {
-            unsubscribe();
-            notifications.map(notification => (
-                onSnapshot(doc(db, "meetings", notification.docID), snapshot => {
-                    setMeetings(snapshot.data())
-                })
-            ))
-        }
-    }, [user.uid])
+  useEffect(() => {
+    getMeetings();
+    // notifications.map((notification, index) =>
+    //   onSnapshot(doc(db, "meetings", notification.docID), (snapshot) => {
+    //     meet[index] = snapshot.data();
+    //   })
+    // );
+    // setMeetings(meet);
+  }, [notifications]);
 
-  return {
-    meetings, setMeetings
-  }
+  return { meetings, setMeetings };
 }
 
-export default useMeeting
+export default useMeeting;

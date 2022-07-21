@@ -84,16 +84,23 @@ function useProvideAuth() {
     console.log("Add...")
   }
 
-  async function AddAllUser(user) {
+  /*
+  async function AddAllUser(email) {
+    const userinfoRef = doc(db, "users", email);
     const alluserRef = doc(db, "users", "alluser");
+    const userindoSnap = await getDoc(userinfoRef);
     const alluserSnap = await getDoc(alluserRef)
     const newUser = [
         ...alluserSnap.data().users, {
-          email: user
+          email: email,
+          name: userindoSnap.data().name,
+          avatar: userindoSnap.data().avatar
         },
       ]
       setAllUser(newUser)
+      console.log(userindoSnap.data())
   }
+  */
   
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
@@ -108,12 +115,14 @@ function useProvideAuth() {
         if (!docSnap.exists()) {
           console.log("Add information to database");
           await setDoc(docRef, {
+            email: user.email,
             name: user.displayName !== null ? user.displayName : "User",
             avatar: user?.photoURL,
             uid: user?.uid
           });
-          AddAllUser(user.email)
+  //        AddAllUser(user.email)
         }
+        
         setUser(user);
         
       } else {
