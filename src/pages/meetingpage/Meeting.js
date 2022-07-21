@@ -3,6 +3,8 @@ import {
   Avatar,
   Button,
   Card,
+  CardActionArea,
+  CardActions,
   CardContent,
   Divider,
   Grid,
@@ -19,13 +21,25 @@ import SideBar from "../../components/SideBar/SideBar";
 import useMeeting from "../../hooks/useMeeting";
 import MeetingForm from "./MeetingForm";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { compareAsc } from "date-fns";
 import useUser from "../../hooks/useUser";
-import { add } from "date-fns";
+import CustomAvatar from "../../components/CustomAvatar/CustomAvatar";
 
 function Meeting() {
   const { meetings } = useMeeting();
   const { alluser } = useUser();
   const [openPopup, setOpenPopup] = useState(false);
+  const [openCardPopup, setOpenCardPopup] = useState(false);
+  const [meet, setMeet] = useState({
+duration: null,
+end: null,
+start: null,
+link: null,
+organiser:{avatar: null, email: null, name: null},
+participants: [],
+passcode: null,
+title: null
+  })
   console.log("alluser", alluser);
   console.log("meetings", meetings);
   const date = new Date();
@@ -61,6 +75,11 @@ function Meeting() {
     console.log("email", email);
     return alluser.find((value) => value.email === email);
   };
+
+  function getPopup(meet) {
+    setOpenCardPopup(true);
+setMeet(meet)
+  }
 
   useEffect(() => {}, []);
   return (
@@ -122,49 +141,71 @@ function Meeting() {
                 margin: "auto",
               }}
             >
-              {meetings.filter(filterMeetDate).map((meet, index) => (
-                <Card
-                  key={index}
-                  variant="outlined"
-                  sx={{
-                    minWidth: 200,
-                    boxShadow: 4,
-                  }}
-                >
-                  <CardContent>
-                    <Typography variant="h5" component="div">
-                      {meet.title}
-                    </Typography>
-                    
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      {new Date(meet.start).toDateString()}
-                      <br />  
-                     {new Date(meet.start).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })} - {new Date(meet.end).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })} 
-                    </Typography>
-                    <Stack
-                      direction="row"
-                      divider={<Divider orientation="vertical" flexItem />}
-                      spacing={1}
-                      mt={1}
+              {meetings
+                .filter(filterMeetDate)
+                .sort((a, b) =>
+                  compareAsc(new Date(a.start), new Date(b.start))
+                )
+                .map((meet, index) => (
+                  <>
+                    <Card
+                      key={index}
+                      variant="outlined"
+                      sx={{
+                        minWidth: 200,
+                        boxShadow: 4,
+                      }}
                     >
-                      <Avatar src={meet.organiser.avatar}></Avatar>
-                      <AvatarGroup max={3}>
-                        {meet.participants.map((user) => (
-                          <Avatar
-                            src={getUserState(user.email).avatar}
-                          ></Avatar>
-                        ))}
-                      </AvatarGroup>
-                    </Stack>
-                  </CardContent>
-                </Card>
-              ))}
+                      <CardActionArea onClick={() => getPopup(meet)}>
+                        <CardContent>
+                          <Typography variant="h5" component="div">
+                            {meet.title}
+                          </Typography>
+
+                          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                            {new Date(meet.start).toDateString()}
+                            <br />
+                            {new Date(meet.start).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}{" "}
+                            -{" "}
+                            {new Date(meet.end).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </Typography>
+                          <Stack
+                            direction="row"
+                            divider={
+                              <Divider orientation="vertical" flexItem />
+                            }
+                            spacing={1}
+                            mt={1}
+                          >
+                            <CustomAvatar
+                              name={meet.organiser.name}
+                              avatar={meet.organiser.avatar}
+                            ></CustomAvatar>
+                            <AvatarGroup max={3}>
+                              {meet.participants.map((user) => (
+                                <CustomAvatar
+                                  name={getUserState(user.email).name}
+                                  avatar={getUserState(user.email).avatar}
+                                ></CustomAvatar>
+                              ))}
+                            </AvatarGroup>
+                          </Stack>
+                        </CardContent>
+                      </CardActionArea>
+                      <CardActions>
+                        <Button onClick={() => window.open(meet.link)}>
+                          Join
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </>
+                ))}
             </Stack>
           </Box>
         </Grid>
@@ -175,6 +216,17 @@ function Meeting() {
         setOpenPopup={setOpenPopup}
       >
         <MeetingForm setOpenPopup={setOpenPopup}></MeetingForm>
+      </Popup>
+      <Popup
+        title={meet.title}
+        openPopup={openCardPopup}
+        setOpenPopup={setOpenCardPopup}
+      >
+        {meet.organiser.name}
+        <br/>
+        {meet.participants.map(user => (
+          <Typography>{user.name}</Typography>
+        ))}
       </Popup>
     </>
   );
