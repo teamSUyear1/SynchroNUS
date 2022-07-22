@@ -90,7 +90,8 @@ function Assignment() {
         container
         minHeight="80vh"
         justifyContent="center"
-        paddingLeft={{ xs: 5, md: 30 }}
+        paddingLeft={{ xs: 0, xl: 30 }}
+        width="100%"
       >
         <Grid item margin={3}>
           <Stack spacing={3} direction={{ xs: "column", xl: "row" }}>
@@ -193,7 +194,7 @@ function Assignment() {
                 backgroundColor: "background.default", boxShadow: 2,
                 borderRadius: 2,
               }}
-              width={{ xs: 500, xl: 1000 }}
+              width={{ xs: "100", xl: "60vw" }}
             >
               <AssignmentTable
                 events={events}
