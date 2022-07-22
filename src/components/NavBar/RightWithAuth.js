@@ -16,6 +16,7 @@ import AccountInfo from "../../hooks/AccountInfo";
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import CustomAvatar from "../CustomAvatar/CustomAvatar";
 
 export default function RightWithAuth() {
   const { signout } = useAuth();
@@ -55,10 +56,11 @@ export default function RightWithAuth() {
             aria-expanded={open ? "true" : undefined}
             endIcon={<KeyboardArrowDownIcon />}
           >
-            <Avatar
+            <CustomAvatar
               sx={{ width: 32, height: 32, marginRight: 1 }}
-              src={avatar}
-            ></Avatar>
+              avatar={avatar}
+              name={name}
+            ></CustomAvatar>
             {name}
           </Button>
         </Tooltip>

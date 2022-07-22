@@ -21,10 +21,11 @@ import AccountInfo from "../../hooks/AccountInfo";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
+import CustomAvatar from "../CustomAvatar/CustomAvatar";
 
 function SideBar(props) {
   const { signout } = useAuth();
-  const { avatar } = AccountInfo();
+  const { avatar, name } = AccountInfo();
   const select = props.select;
 
   const handleLogout = () => {
@@ -44,23 +45,29 @@ function SideBar(props) {
     >
       <Toolbar />
       <Box justifyContent={"center"} display="flex" padding={3}>
-        <Avatar src={avatar} sx={{ width: 56, height: 56 }} />
+        <CustomAvatar
+          avatar={avatar}
+          name={name}
+          sx={{ width: 56, height: 56 }}
+        />
       </Box>
       {/* Temporary template */}
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Typography
-          color="primary"
-        >
-          Level 30: 12513 EXP
-        </Typography>
+        <Typography color="primary">Level 30: 12513 EXP</Typography>
       </Box>
-      <Box sx={{display: 'flex', justifyContent: 'center'}}>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <LinearProgress
           variant="determinate"
           value="10"
-          sx={{borderRadius: 5, height: 5, width: '75%', mr: '1vh', mt: '1.5vh'}}
+          sx={{
+            borderRadius: 5,
+            height: 5,
+            width: "75%",
+            mr: "1vh",
+            mt: "1.5vh",
+          }}
         />
-        <Typography sx={{fontSize: '10'}}>13%</Typography>
+        <Typography sx={{ fontSize: "10" }}>13%</Typography>
       </Box>
       <Box sx={{ overflow: "auto" }}>
         <List>

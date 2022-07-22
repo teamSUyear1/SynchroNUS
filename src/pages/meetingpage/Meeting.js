@@ -24,22 +24,25 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { compareAsc } from "date-fns";
 import useUser from "../../hooks/useUser";
 import CustomAvatar from "../../components/CustomAvatar/CustomAvatar";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import MeetingDetailForm from "./MeetingDetailForm";
 
 function Meeting() {
   const { meetings } = useMeeting();
   const { alluser } = useUser();
   const [openPopup, setOpenPopup] = useState(false);
   const [openCardPopup, setOpenCardPopup] = useState(false);
-  const [meet, setMeet] = useState({
-duration: null,
-end: null,
-start: null,
-link: null,
-organiser:{avatar: null, email: null, name: null},
-participants: [],
-passcode: null,
-title: null
-  })
+  const [meetDetail, setMeetDetail] = useState({
+    duration: null,
+    end: null,
+    start: null,
+    link: null,
+    organiser: { avatar: null, email: null, name: null },
+    participants: [],
+    passcode: null,
+    title: null,
+  });
   console.log("alluser", alluser);
   console.log("meetings", meetings);
   const date = new Date();
@@ -78,7 +81,7 @@ title: null
 
   function getPopup(meet) {
     setOpenCardPopup(true);
-setMeet(meet)
+    setMeetDetail(meet);
   }
 
   useEffect(() => {}, []);
@@ -90,6 +93,7 @@ setMeet(meet)
         minHeight="80vh"
         justifyContent="center"
         paddingLeft={{ xs: 5, md: 30 }}
+        paddingTop={2}
       >
         <Grid item margin={3}>
           <Stack spacing={3} direction="column">
@@ -161,10 +165,17 @@ setMeet(meet)
                           <Typography variant="h5" component="div">
                             {meet.title}
                           </Typography>
-
+                          <Stack direction="row" spacing={1}>
+                            <CalendarTodayIcon fontSize="small" />
+                            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                              {" "}
+                              {new Date(meet.start).toDateString()}
+                            </Typography>
+                          </Stack>
+                          <Stack direction="row" spacing={1}>
+                          <AccessTimeIcon fontSize="small" />
                           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            {new Date(meet.start).toDateString()}
-                            <br />
+                            {" "}
                             {new Date(meet.start).toLocaleTimeString([], {
                               hour: "2-digit",
                               minute: "2-digit",
@@ -175,6 +186,7 @@ setMeet(meet)
                               minute: "2-digit",
                             })}
                           </Typography>
+                          </Stack>
                           <Stack
                             direction="row"
                             divider={
@@ -218,15 +230,11 @@ setMeet(meet)
         <MeetingForm setOpenPopup={setOpenPopup}></MeetingForm>
       </Popup>
       <Popup
-        title={meet.title}
+        title={meetDetail.title}
         openPopup={openCardPopup}
         setOpenPopup={setOpenCardPopup}
       >
-        {meet.organiser.name}
-        <br/>
-        {meet.participants.map(user => (
-          <Typography>{user.name}</Typography>
-        ))}
+        <MeetingDetailForm meetDetail={meetDetail}></MeetingDetailForm>
       </Popup>
     </>
   );
