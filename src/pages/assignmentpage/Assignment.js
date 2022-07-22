@@ -134,7 +134,7 @@ function Assignment() {
                     >
                       <TransitionGroup>
                         {events.filter(filterDate).length === 0 ? (
-                          <Typography>No Assignment Due.</Typography>
+                          <Typography textAlign="center">No Assignment Due.</Typography>
                         ) : (
                           events.filter(filterDate).map((task, index) => (
                             <Collapse>

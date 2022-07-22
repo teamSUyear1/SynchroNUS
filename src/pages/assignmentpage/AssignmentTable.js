@@ -116,16 +116,16 @@ function AssignmentTable(props) {
                     <TableCell align="center">{row.title}</TableCell>
                     <TableCell align="center">{row.type}</TableCell>
                     <TableCell align="center">
-                      <Typography component="p">
+                      <Typography width={{xs: "150px", xl: "100%"}}>
                         {new Date(row.date).toDateString()}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {formatDistanceToNow(new Date(row.date), {
                           addSuffix: true,
                         })}
@@ -166,16 +166,16 @@ function AssignmentTable(props) {
                     </TableCell>
                     <TableCell align="center">{row.title}</TableCell>
                     <TableCell align="center">
-                      <Typography component="p">
+                      <Typography width={{xs: "150px", xl: "100%"}}>
                         {new Date(row.date).toDateString()}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {formatDistanceToNow(new Date(row.date), {
                           addSuffix: true,
                         })}
@@ -219,16 +219,16 @@ function AssignmentTable(props) {
                     </TableCell>
                     <TableCell align="center">{row.title}</TableCell>
                     <TableCell align="center">
-                      <Typography component="p">
+                      <Typography width={{xs: "150px", xl: "100%"}}>
                         {new Date(row.date).toDateString()}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {formatDistanceToNow(new Date(row.date), {
                           addSuffix: true,
                         })}
@@ -271,16 +271,16 @@ function AssignmentTable(props) {
                     </TableCell>
                     <TableCell align="center">{row.title}</TableCell>
                     <TableCell align="center">
-                      <Typography component="p">
+                      <Typography width={{xs: "150px", xl: "100%"}}>
                         {new Date(row.date).toDateString()}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {formatDistanceToNow(new Date(row.date), {
                           addSuffix: true,
                         })}
@@ -323,16 +323,16 @@ function AssignmentTable(props) {
                     </TableCell>
                     <TableCell align="center">{row.title}</TableCell>
                     <TableCell align="center">
-                      <Typography component="p">
+                      <Typography width={{xs: "150px", xl: "100%"}}>
                         {new Date(row.date).toDateString()}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {formatDistanceToNow(new Date(row.date), {
                           addSuffix: true,
                         })}
@@ -375,16 +375,16 @@ function AssignmentTable(props) {
                     </TableCell>
                     <TableCell align="center">{row.title}</TableCell>
                     <TableCell align="center">
-                      <Typography component="p">
+                      <Typography width={{xs: "150px", xl: "100%"}}>
                         {new Date(row.date).toDateString()}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </Typography>
-                      <Typography component="p">
+                      <Typography>
                         {formatDistanceToNow(new Date(row.date), {
                           addSuffix: true,
                         })}
@@ -428,10 +428,10 @@ function AssignmentTable(props) {
                       {index + 1}
                     </TableCell>
                     <TableCell align="center">
-                      <Typography varient="p" color="#81c784">
+                      <Typography width={{xs: "150px", xl: "100%"}} color="#81c784">
                         {new Date(row.Cdate).toDateString()}
                       </Typography>
-                      <Typography varient="p" color="#81c784">
+                      <Typography color="#81c784">
                         {new Date(row.Cdate).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -471,10 +471,10 @@ function AssignmentTable(props) {
                       {index + 1}
                     </TableCell>
                     <TableCell align="center">
-                      <Typography component="p" color="error.light">
+                      <Typography width={{xs: "150px", xl: "100%"}} color="error.light">
                         {new Date(row.date).toDateString()}
                       </Typography>
-                      <Typography component="p" color="error.light">
+                      <Typography  color="error.light">
                         {new Date(row.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",

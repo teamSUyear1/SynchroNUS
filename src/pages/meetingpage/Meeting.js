@@ -109,6 +109,7 @@ function Meeting() {
         justifyContent="center"
         paddingLeft={{ xs: 5, md: 30 }}
         paddingTop={2}
+        direction={{xs: "column", xl: "row"}}
       >
         <Grid item margin={3}>
           <Stack spacing={3} direction="column">
@@ -136,6 +137,7 @@ function Meeting() {
           </Stack>
         </Grid>
         <Grid item>
+        
           <Box
             sx={{
               borderRadius: 3,
@@ -144,9 +146,11 @@ function Meeting() {
               alignSelf: "start",
               backgroundColor: "background.default",
               boxShadow: 2,
+              width: "100%"
             }}
           >
-            <Typography variant="h5" color="inherit">
+          <Stack spacing={1} padding={1} >
+            <Typography variant="h5" color="inherit" fontSize={{xs: 20}}>
               Meeting
             </Typography>
 
@@ -155,7 +159,7 @@ function Meeting() {
               spacing={2}
               sx={{
                 overflow: "auto",
-                width: "55vw",
+                width: "56vw",
                 minHeight: 232,
                 margin: "auto",
               }}
@@ -234,7 +238,9 @@ function Meeting() {
                   </>
                 ))}
             </Stack>
+            </Stack>
           </Box>
+          
         </Grid>
       </Grid>
       <Popup

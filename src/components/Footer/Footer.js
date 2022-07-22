@@ -24,10 +24,11 @@ function Footer() {
           divider={<Divider orientation="vertical" flexItem />}
           justifyContent="center"
         >
-          <Button startIcon={<HomeIcon />} color="inherit" href="/">
+          <Button startIcon={<HomeIcon />} color="inherit" href="/" size="small">
             About
           </Button>
           <Button
+           size="small"
             startIcon={<GitHubIcon />}
             color="inherit"
             href="https://github.com/teamSUyear1/SynchroNUS-website"
@@ -35,9 +36,10 @@ function Footer() {
             Github
           </Button>
           <Button
+           size="small"
             startIcon={<ArticleIcon />}
             color="inherit"
-            href="https://teamsuyear1.github.io/"
+            href="https://docs.google.com/document/d/1aRY3IPHItdS-FfE3ZCl0SOZUpxlfcSQY/edit?usp=sharing&ouid=109089549339759200133&rtpof=true&sd=true"
           >
             Documentation
           </Button>
