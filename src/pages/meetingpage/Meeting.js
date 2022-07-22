@@ -161,7 +161,7 @@ function Meeting() {
                 spacing={2}
                 sx={{
                   overflow: "auto",
-                  width: "60  vw",
+                  width: "60vw",
                   minHeight: 232,
                   margin: "auto",
                 }}
