@@ -109,7 +109,7 @@ function Meeting() {
         paddingLeft={{ xs: 5, md: 30 }}
         paddingTop={2}
       >
-        <Grid item margin={3}>
+        <Grid item margin={{xs: 0, md:3}}>
           <Stack spacing={3} direction="column">
             <Button variant="contained" onClick={() => setOpenPopup(true)}>
               Add Meeting
@@ -134,7 +134,7 @@ function Meeting() {
             </LocalizationProvider>
           </Stack>
         </Grid>
-        <Grid item>
+        <Grid item marginY={3}>
           <Box
             sx={{
               borderRadius: 3,
