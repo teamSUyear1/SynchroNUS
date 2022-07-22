@@ -106,7 +106,7 @@ function Meeting() {
         container
         minHeight="80vh"
         justifyContent="center"
-        paddingLeft={{ xs: 5, md: 30 }}
+        paddingLeft={{ xs: 0, md: 30 }}
         paddingTop={2}
       >
         <Grid item margin={{xs: 0, md:3}}>
@@ -161,7 +161,7 @@ function Meeting() {
                 spacing={2}
                 sx={{
                   overflow: "auto",
-                  width: "56vw",
+                  width: "60  vw",
                   minHeight: 232,
                   margin: "auto",
                 }}
