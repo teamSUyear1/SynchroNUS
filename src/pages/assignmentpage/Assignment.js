@@ -194,7 +194,7 @@ function Assignment() {
                 backgroundColor: "background.default", boxShadow: 2,
                 borderRadius: 2,
               }}
-              width={{ xs: "90vw", xl: "60vw" }}
+              width={{ xs: "75vw", xl: "60vw" }}
             >
               <AssignmentTable
                 events={events}

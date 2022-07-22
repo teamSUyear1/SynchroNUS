@@ -106,7 +106,7 @@ export default function Dashboard() {
         paddingLeft={{ xs: 5, md: 35 }}
         paddingTop={2}
         paddingRight={{ xs: 5, md: 5 }}
-        spacing={2}
+        spacing={{xs: 0, md: 2}}
         direction={{xs: "column", xl: "row"}}
         justifyContent="center"
         
