@@ -28,12 +28,12 @@ const Introduction = () => {
     return (
         <div className={classes.main} id="introduction-page">
         <Stack direction="row">
-            <ImageCard checked={checked} title="Deadline Reminder" alt="SynchroNUS" image="" height={200} width={300}>Feature 1 Description</ImageCard>
-            <ImageCard checked={checked} title="Meeting Scheduler" alt="SynchroNUS" image="" height={200} width={300}>Feature 2 Description</ImageCard>
+            <ImageCard checked={checked} title="Deadline Reminder" alt="SynchroNUS" image="" height={200} width={200}>Feature 1 Description</ImageCard>
+            <ImageCard checked={checked} title="Meeting Scheduler" alt="SynchroNUS" image="" height={200} width={200}>Feature 2 Description</ImageCard>
             </Stack>
             <Stack direction="row">
-            <ImageCard checked={checked} title="Study Timer" alt="SynchroNUS" image="" height={200} width={300}>Feature 1 Description</ImageCard>
-            <ImageCard checked={checked} title="Timetable Viewer" alt="SynchroNUS" image="" height={200} width={300}>Feature 2 Description</ImageCard>
+            <ImageCard checked={checked} title="Study Timer" alt="SynchroNUS" image="" height={200} width={200}>Feature 3 Description</ImageCard>
+            <ImageCard checked={checked} title="Timetable Viewer" alt="SynchroNUS" image="" height={200} width={200}>Feature 4 Description</ImageCard>
             </Stack>
         </div>
       );
