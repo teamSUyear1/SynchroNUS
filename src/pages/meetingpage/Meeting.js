@@ -86,19 +86,18 @@ function Meeting() {
     setMeetDetail(meet);
   }
 
-  function timeReminder(){
-    meetings.map(meet => {
-      if(meet.start === new Date(currDate).toISOString()){
-        console.log("play")
-        audioAlert.play()
+  function timeReminder() {
+    meetings.map((meet) => {
+      if (meet.start === new Date(currDate).toISOString()) {
+        console.log("play");
+        audioAlert.play();
       }
-      console.log("curr time", new Date(currDate).toISOString(), meet.start)
-    })
+      console.log("curr time", new Date(currDate).toISOString(), meet.start);
+    });
   }
 
   useEffect(() => {
-    timeReminder()
-    
+    timeReminder();
   }, [meetings, date]);
   return (
     <>
@@ -109,7 +108,6 @@ function Meeting() {
         justifyContent="center"
         paddingLeft={{ xs: 5, md: 30 }}
         paddingTop={2}
-        direction={{xs: "column", xl: "row"}}
       >
         <Grid item margin={3}>
           <Stack spacing={3} direction="column">
@@ -137,7 +135,6 @@ function Meeting() {
           </Stack>
         </Grid>
         <Grid item>
-        
           <Box
             sx={{
               borderRadius: 3,
@@ -146,101 +143,111 @@ function Meeting() {
               alignSelf: "start",
               backgroundColor: "background.default",
               boxShadow: 2,
-              width: "100%"
+              width: "100%",
             }}
           >
-          <Stack spacing={1} padding={1} >
-            <Typography variant="h5" color="inherit" fontSize={{xs: 20}}>
-              Meeting
-            </Typography>
+            <Stack spacing={2} padding={1}>
+              <Typography
+                variant="h5"
+                color="inherit"
+                fontSize={{ xs: 20 }}
+                textAlign="center"
+              >
+                Meeting
+              </Typography>
 
-            <Stack
-              direction="row"
-              spacing={2}
-              sx={{
-                overflow: "auto",
-                width: "56vw",
-                minHeight: 232,
-                margin: "auto",
-              }}
-            >
-              {meetings
-                .filter(filterMeetDate)
-                .sort((a, b) =>
-                  compareAsc(new Date(a.start), new Date(b.start))
-                )
-                .map((meet, index) => (
-                  <>
-                    <Card
-                      key={index}
-                      variant="outlined"
-                      sx={{
-                        minWidth: 200,
-                        boxShadow: 4,
-                      }}
-                    >
-                      <CardActionArea onClick={() => getPopup(meet)}>
-                        <CardContent>
-                          <Typography variant="h5" component="div">
-                            {meet.title}
-                          </Typography>
-                          <Stack direction="row" spacing={1}>
-                            <CalendarTodayIcon fontSize="small" />
-                            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                              {" "}
-                              {new Date(meet.start).toDateString()}
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{
+                  overflow: "auto",
+                  width: "56vw",
+                  minHeight: 232,
+                  margin: "auto",
+                }}
+              >
+                {meetings
+                  .filter(filterMeetDate)
+                  .sort((a, b) =>
+                    compareAsc(new Date(a.start), new Date(b.start))
+                  )
+                  .map((meet, index) => (
+                    <>
+                      <Card
+                        key={index}
+                        variant="outlined"
+                        sx={{
+                          minWidth: 200,
+                          boxShadow: 4,
+                        }}
+                      >
+                        <CardActionArea onClick={() => getPopup(meet)}>
+                          <CardContent>
+                            <Typography variant="h5" component="div">
+                              {meet.title}
                             </Typography>
-                          </Stack>
-                          <Stack direction="row" spacing={1}>
-                          <AccessTimeIcon fontSize="small" />
-                          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            {" "}
-                            {new Date(meet.start).toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}{" "}
-                            -{" "}
-                            {new Date(meet.end).toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </Typography>
-                          </Stack>
-                          <Stack
-                            direction="row"
-                            divider={
-                              <Divider orientation="vertical" flexItem />
-                            }
-                            spacing={1}
-                            mt={1}
-                          >
-                            <CustomAvatar
-                              name={meet.organiser.name}
-                              avatar={meet.organiser.avatar}
-                            ></CustomAvatar>
-                            <AvatarGroup max={3}>
-                              {meet.participants.map((user) => (
-                                <CustomAvatar
-                                  name={getUserState(user.email).name}
-                                  avatar={getUserState(user.email).avatar}
-                                ></CustomAvatar>
-                              ))}
-                            </AvatarGroup>
-                          </Stack>
-                        </CardContent>
-                      </CardActionArea>
-                      <CardActions>
-                        <Button onClick={() => window.open(meet.link)}>
-                          Join
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </>
-                ))}
-            </Stack>
+                            <Stack direction="row" spacing={1}>
+                              <CalendarTodayIcon fontSize="small" />
+                              <Typography
+                                sx={{ mb: 1.5 }}
+                                color="text.secondary"
+                              >
+                                {" "}
+                                {new Date(meet.start).toDateString()}
+                              </Typography>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                              <AccessTimeIcon fontSize="small" />
+                              <Typography
+                                sx={{ mb: 1.5 }}
+                                color="text.secondary"
+                              >
+                                {" "}
+                                {new Date(meet.start).toLocaleTimeString([], {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}{" "}
+                                -{" "}
+                                {new Date(meet.end).toLocaleTimeString([], {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </Typography>
+                            </Stack>
+                            <Stack
+                              direction="row"
+                              divider={
+                                <Divider orientation="vertical" flexItem />
+                              }
+                              spacing={1}
+                              mt={1}
+                            >
+                              <CustomAvatar
+                                name={meet.organiser.name}
+                                avatar={meet.organiser.avatar}
+                              ></CustomAvatar>
+                              <AvatarGroup max={3}>
+                                {meet.participants.map((user) => (
+                                  <CustomAvatar
+                                    name={getUserState(user.email).name}
+                                    avatar={getUserState(user.email).avatar}
+                                  ></CustomAvatar>
+                                ))}
+                              </AvatarGroup>
+                            </Stack>
+                          </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                          <Button onClick={() => window.open(meet.link)}>
+                            Join
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </>
+                  ))}
+              </Stack>
             </Stack>
           </Box>
-          
         </Grid>
       </Grid>
       <Popup

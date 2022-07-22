@@ -204,7 +204,7 @@ function MeetingForm(props) {
 
   return (
     <form onSubmit={handleAddMeeting}>
-      <Stack spacing={3} marginTop={1} marginBottom={1} width={400}>
+      <Stack spacing={3} marginTop={1} marginBottom={1}>
         <TextField
           label="Meeting Title"
           required
