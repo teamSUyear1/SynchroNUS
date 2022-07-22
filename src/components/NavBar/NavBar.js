@@ -20,7 +20,7 @@ const NavBar = () => {
       position="sticky"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
-      <Grid container  direction="column">
+      <Grid container  direction="column" >
         <Toolbar disableGutters >
           <Stack direction="row" color="inherit" marginLeft={2}>
             <Avatar

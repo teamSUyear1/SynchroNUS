@@ -3,8 +3,11 @@ import {
   Button,
   Card,
   CardContent,
+  Collapse,
   Grid,
   IconButton,
+  List,
+  ListItem,
   Stack,
   Typography,
 } from "@mui/material";
@@ -27,6 +30,9 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 import useClasses from "../hooks/useClasses";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SettingsContext from "./timerpage/SettingsContext";
+import { TransitionGroup } from "react-transition-group";
+import useMeeting from "../hooks/useMeeting";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 export default function Dashboard() {
   var tmpDate = new Date();
@@ -52,6 +58,7 @@ export default function Dashboard() {
   const [value, setValue] = useState(new Date(currDate));
   const [month, setMonth] = useState(value.getMonth());
   const { events } = useAssignment();
+  const { meetings } = useMeeting();
   const { timetable } = useClasses();
   const { name } = AccountInfo();
 
@@ -65,6 +72,12 @@ export default function Dashboard() {
     const classdate = new Date(time).toLocaleDateString();
     const selecteddate = new Date(value).toLocaleDateString();
     return classdate === selecteddate;
+  }
+
+  function filterMeetDate(meet) {
+    const startdate = new Date(meet.start).toLocaleDateString();
+    const selecteddate = new Date(value).toLocaleDateString();
+    return startdate === selecteddate;
   }
 
   function getRandomColor() {
@@ -94,15 +107,23 @@ export default function Dashboard() {
         paddingTop={2}
         paddingRight={{ xs: 5, md: 5 }}
         spacing={2}
+        direction={{xs: "column", xl: "row"}}
+        justifyContent="center"
+        
       >
         <Grid item>
           <Stack spacing={1} padding={1}>
-            <Typography variant="h4" color="inherit">
+            <Typography variant="h4" color="inherit" fontSize={30}>
               Welcome, {name === undefined ? "User" : name}!
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Box
-                sx={{  backgroundColor: "background.default", boxShadow: 2, borderWidth: 1, borderRadius: 2 }}
+                sx={{
+                  backgroundColor: "background.default",
+                  boxShadow: 2,
+                  borderWidth: 1,
+                  borderRadius: 2,
+                }}
                 p={1}
               >
                 <Calendar
@@ -114,13 +135,89 @@ export default function Dashboard() {
               </Box>
             </LocalizationProvider>
 
-            <Box height="28vh" sx={{ backgroundColor: "background.default", boxShadow: 2}} borderRadius={3}>
-              <Stack alignItems="center">This is for timer</Stack>
+            <Box
+              sx={{
+                backgroundColor: "background.default",
+                boxShadow: 2,
+                borderRadius: 2,
+              }}
+            >
+              <Stack
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}
+                margin={2}
+              >
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <GroupsIcon color="success"/>
+                  <Typography>{value.toDateString()}</Typography>
+                  <Button color="primary" href="/meeting">
+                    View All
+                  </Button>
+                </Stack>
+                <List
+                  sx={{
+                    width: "100%",
+                    bgcolor: "background.default",
+                    position: "relative",
+                    overflow: "auto",
+                    maxHeight: 200,
+                    "& ul": { padding: 0 },
+                    borderRadius: 2,
+                  }}
+                >
+                  <TransitionGroup>
+                    {meetings.filter(filterMeetDate).length === 0 ? (
+                      <Typography textAlign="center">No Meeting.</Typography>
+                    ) : (
+                      meetings.filter(filterMeetDate).map((meet, index) => (
+                        <Collapse>
+                          <ListItem key={index}>
+                            <Box
+                              sx={{
+                                border: "1px solid",
+                                borderWidth: 2,
+                                borderRadius: 2,
+                              }}
+                              width="100%"
+                              padding={2}
+                            >
+                              <Typography component="p">
+                                Meeting Title: {meet.title}
+                              </Typography>
+                              <Typography component="p">
+                                Start:{" "}
+                                {new Date(meet.start).toLocaleTimeString([], {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </Typography>
+                              <Typography component="p">
+                                End:{" "}
+                                {new Date(meet.end).toLocaleTimeString([], {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </Typography>
+                            </Box>
+                          </ListItem>
+                        </Collapse>
+                      ))
+                    )}
+                  </TransitionGroup>
+                </List>
+              </Stack>
             </Box>
           </Stack>
         </Grid>
-        <Grid item>
-          <Stack spacing={2}>
+        <Grid item >
+          <Stack spacing={1} padding={1} >
             <Box
               sx={{
                 borderRadius: 3,
@@ -128,7 +225,8 @@ export default function Dashboard() {
                 maxWidth: 1200,
                 alignSelf: "start",
                 backgroundColor: "background.default",
-                boxShadow: 2
+                boxShadow: 2,
+                width: "100%"
               }}
             >
               <Stack
@@ -136,8 +234,8 @@ export default function Dashboard() {
                 justifyContent="space-between"
                 marginBottom={1}
               >
-                <AddTaskIcon color="secondary"/>
-                <Typography variant="h5" color="inherit">
+                <AddTaskIcon color="secondary" />
+                <Typography variant="h5" color="inherit" fontSize={{xs: 20}}>
                   Deadline Assignment
                 </Typography>
                 <Button color="primary" href="/assignment">
@@ -209,12 +307,11 @@ export default function Dashboard() {
               sx={{
                 borderRadius: 3,
                 padding: 1,
-                width: "100%",
                 backgroundColor: "background.default",
-                boxShadow: 2
+                boxShadow: 2,
               }}
             >
-              <Stack direction="row" spacing={0.5} justifyContent="center">
+              <Stack direction="row" spacing={1} justifyContent="center">
                 <Typography noWrap>You have </Typography>
                 {events.filter((task) => !task.isComplete).length === 0 ? (
                   <Typography>completed all the tasks</Typography>
@@ -239,7 +336,7 @@ export default function Dashboard() {
                 padding: 2,
                 maxWidth: 1120,
                 alignSelf: "start",
-                boxShadow: 2
+                boxShadow: 2,
               }}
             >
               <Stack
@@ -247,8 +344,8 @@ export default function Dashboard() {
                 justifyContent="space-between"
                 marginBottom={2}
               >
-                <AssignmentIcon color="primary"/>
-                <Typography variant="h5" color="inherit" marginLeft={10}>
+                <AssignmentIcon color="primary" />
+                <Typography variant="h5" color="inherit" marginLeft={10} fontSize={{xs: 20}}>
                   Today's class
                 </Typography>
                 <div>

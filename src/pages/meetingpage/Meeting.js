@@ -27,6 +27,7 @@ import CustomAvatar from "../../components/CustomAvatar/CustomAvatar";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MeetingDetailForm from "./MeetingDetailForm";
+import BellSound from "../../components/Assets/BellSound.wav";
 
 function Meeting() {
   const { meetings } = useMeeting();
@@ -66,6 +67,7 @@ function Meeting() {
     });
   const [value, setValue] = useState(new Date(currDate));
   const [month, setMonth] = useState(value.getMonth());
+  let audioAlert = new Audio(BellSound);
 
   function filterMeetDate(meet) {
     console.log("startdate", meet.start);
@@ -84,7 +86,20 @@ function Meeting() {
     setMeetDetail(meet);
   }
 
-  useEffect(() => {}, []);
+  function timeReminder(){
+    meetings.map(meet => {
+      if(meet.start === new Date(currDate).toISOString()){
+        console.log("play")
+        audioAlert.play()
+      }
+      console.log("curr time", new Date(currDate).toISOString(), meet.start)
+    })
+  }
+
+  useEffect(() => {
+    timeReminder()
+    
+  }, [meetings, date]);
   return (
     <>
       <SideBar select={2} />
