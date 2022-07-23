@@ -34,7 +34,8 @@ import { TransitionGroup } from "react-transition-group";
 import useMeeting from "../hooks/useMeeting";
 import GroupsIcon from "@mui/icons-material/Groups";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
+  const {darkMode} = props
   var tmpDate = new Date();
   const date = new Date();
   const currDate =
@@ -136,7 +137,7 @@ export default function Dashboard() {
 
             <Box
               sx={{
-                backgroundColor: "#66bb6a",
+                backgroundColor: darkMode ? "#66bb6a" : "#81c784",
                 boxShadow: 2,
                 borderRadius: 2,
               }}
@@ -163,7 +164,7 @@ export default function Dashboard() {
                 <List
                   sx={{
                     width: "100%",
-                    bgcolor: "#66bb6a",
+                    bgcolor: darkMode ? "#66bb6a" : "#81c784",
                     position: "relative",
                     overflow: "auto",
                     maxHeight: 200,
@@ -224,7 +225,7 @@ export default function Dashboard() {
                 padding: 2,
                 maxWidth: 1200,
                 alignSelf: "start",
-                backgroundColor: "#ce93d8",
+                backgroundColor: darkMode ? "#ab47bc" : "#ce93d8",
                 boxShadow: 2,
                 width: "100%",
               }}
@@ -259,15 +260,15 @@ export default function Dashboard() {
                     sx={{
                       minWidth: 200,
                       background: task.isComplete
-                        ? "#66bb6a"
+                        ? darkMode ? "#388e3c" : "#66bb6a"
                         : isAfter(new Date(), new Date(task.date))
-                        ? "#f44336"
+                        ? darkMode ? "#d32f2f" :"#f44336"
                         : isAfter(
                             tmpDate.setDate(tmpDate.getDate() + 1),
                             new Date(task.date)
                           )
-                        ? "#ffa726"
-                        : "#29b6f6",
+                        ? darkMode ? "#f57c00" : "#ffa726"
+                        : darkMode ? "#0288d1" : "#29b6f6",
                       boxShadow: 4,
                     }}
                   >
@@ -309,7 +310,7 @@ export default function Dashboard() {
                 borderBottomLeftRadius: 12,
                 borderBottomRightRadius: 12,
                 padding: 1,
-                backgroundColor: "#ce93d8",
+                backgroundColor: darkMode ? "#ab47bc" : "#ce93d8",
                 boxShadow: 2,
               }}
             >
@@ -333,7 +334,7 @@ export default function Dashboard() {
 
             <Box
               sx={{
-                backgroundColor: "#29b6f6",
+                backgroundColor: darkMode ? "#42a5f5" : "#29b6f6",
                 borderRadius: 3,
                 padding: 2,
                 maxWidth: 1120,

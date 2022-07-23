@@ -32,16 +32,18 @@ import SignupPw from "./pages/SignupPw";
 import StudyTimer from "./pages/timerpage/StudyTimer";
 import Assignment from "./pages/assignmentpage";
 import Meeting from "./pages/meetingpage/Meeting";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true)
+  let mode =window.localStorage.getItem("darkMode")
+  const [darkMode, setDarkMode] = useState(mode === true)
   const { user } = useAuth();
   function getMode(mode) {
-    console.log(mode)
     let theme;
-    if (mode) {
+    console.log("fun", mode)  
+    if (mode ) {
+      console.log("dark", mode)
       theme = createTheme({
         palette: {
           mode: "dark",
@@ -49,6 +51,7 @@ function App() {
         },
     });
   } else {
+    console.log("light")
     theme = createTheme({
       palette: {
         primary: {
@@ -78,6 +81,9 @@ function App() {
 //       mode: "light",
 //     },
 //   });
+useEffect(() => {
+
+}, [mode])
 
   return (
     <ThemeProvider theme={getMode(darkMode)}>
@@ -101,7 +107,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route
                     path="/dashboard"
-                    element={user ? <Dashboard /> : <Navigate replace to="/" />}
+                    element={user ? <Dashboard darkMode={darkMode}/> : <Navigate replace to="/" />}
                   />
                   <Route
                     path="/profile"

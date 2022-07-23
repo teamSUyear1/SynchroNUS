@@ -31,6 +31,12 @@ function LeftComponent(props) {
     setOpen(false);
   }
 
+  function modeOnClick() {
+    window.localStorage.setItem("darkMode", !darkMode)
+    setDarkMode(!darkMode)
+    
+  }
+
   return (
     <Box>
       <Tooltip title="Home">
@@ -44,7 +50,7 @@ function LeftComponent(props) {
         </IconButton>
       </Tooltip>
       <Tooltip title={darkMode ? "Light" : "Dark"}>
-      <IconButton onClick={() => setDarkMode(!darkMode)} color="inherit">
+      <IconButton onClick={modeOnClick } color="inherit">
         {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
       </Tooltip>
