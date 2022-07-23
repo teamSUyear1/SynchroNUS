@@ -19,9 +19,17 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import Popup from "../../components/Popup/Popup";
+import ProfileDetailForm from "./ProfileDetailForm";
 
 function MeetingDetailForm(props) {
   const { meetDetail } = props;
+  const [openPopup, setOpenPopup] = useState(false)
+  const [selectedUser, setSelectedUser] = useState({
+    avatar: null,
+    email: null,
+    name: null
+  })
   const [showPassword, setShowPassword] = useState(false);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -30,7 +38,13 @@ function MeetingDetailForm(props) {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  function avatarOnClick(user) {
+    setSelectedUser(user)
+    setOpenPopup(true)
+  }
   return (
+    <>
     <Stack spacing={1}>
       <Stack direction="row" spacing={1} alignItems="center">
         <CalendarTodayIcon fontSize="small" />
@@ -57,7 +71,7 @@ function MeetingDetailForm(props) {
       <Stack direction="row" alignItems="center" spacing={1}>
         <PersonIcon />
         <Tooltip title={meetDetail.organiser.name} followCursor>
-          <Box>
+          <Box onClick={() => avatarOnClick(meetDetail.organiser)}>
             <CustomAvatar
               avatar={meetDetail.organiser.avatar}
               name={meetDetail.organiser.name}
@@ -69,7 +83,7 @@ function MeetingDetailForm(props) {
         <PeopleIcon sx={{ marginRight: 1 }} />
         {meetDetail.participants.map((user) => (
           <Tooltip title={user.name} followCursor>
-            <Box>
+            <Box onClick={() => avatarOnClick(user)}>
               <CustomAvatar
                 avatar={user.avatar}
                 name={user.name}
@@ -106,6 +120,9 @@ function MeetingDetailForm(props) {
         ></TextField>
       </Stack>
     </Stack>
+    <Popup title="Profile detail" openPopup={openPopup}
+        setOpenPopup={setOpenPopup}><ProfileDetailForm selectedUser={selectedUser}/></Popup>
+    </>
   );
 }
 
