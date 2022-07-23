@@ -3,6 +3,7 @@ import classes from "./Home.module.css";
 import Header from "./Header";
 import Introduction from "./Introduction";
 import Timeline from "./Timeline";
+import Template from "./Template";
 
 function Home() {
   return (
@@ -14,7 +15,7 @@ function Home() {
           <Header />
           {/* Add 100vh to overlay for each component stacked below */}
           <Introduction />
-          <Timeline />
+          <Template />
         </div>
       </div>
     </>

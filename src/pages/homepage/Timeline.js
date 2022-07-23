@@ -1,3 +1,4 @@
+/* Currently does not work with homepage as every visit scrolls you down directly */ 
 import classes from "./Timeline.module.css";
 import { Chrono } from "react-chrono";
 import data from "../../components/Data/Data";
@@ -17,7 +18,6 @@ const Timeline = () => {
         >
           <Chrono
             items={data}
-            slideItemDuration={4500}
             mode="HORIZONTAL"
             enableOutline
             theme={{
