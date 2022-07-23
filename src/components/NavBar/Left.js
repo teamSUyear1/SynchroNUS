@@ -4,6 +4,8 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import {
   Avatar,
   Button,
@@ -19,19 +21,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function LeftComponent() {
+function LeftComponent(props) {
+  const {darkMode, setDarkMode} = props
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-  };
+  }
 
   return (
     <Box>
       <Tooltip title="Home">
-        <IconButton href="/">
+        <IconButton href="/" color="inherit">
           <HomeIcon />
         </IconButton>
       </Tooltip>
@@ -40,10 +43,10 @@ function LeftComponent() {
           <Avatar src="/NUSMod.png" sx={{ width: 25, height: 25 }} />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Dashboard">
-        <IconButton href="/dashboard" >
-          <DashboardIcon />
-        </IconButton>
+      <Tooltip title={darkMode ? "Light" : "Dark"}>
+      <IconButton onClick={() => setDarkMode(!darkMode)} color="inherit">
+        {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
       </Tooltip>
       <Dialog
         open={open}

@@ -13,7 +13,8 @@ import RightWithAuth from "./RightWithAuth";
 import { useAuth } from "../../hooks/useAuth";
 
 
-const NavBar = () => {
+const NavBar = (props) => {
+  const {darkMode, setDarkMode} = props
   const { user } = useAuth();
   return (
     <AppBar
@@ -65,7 +66,7 @@ const NavBar = () => {
           </Stack>
           <Grid container direction="row" justifyContent="space-between">
             <Grid item>
-              <LeftComponent />
+              <LeftComponent darkMode={darkMode} setDarkMode={setDarkMode} />
             </Grid>
             <Grid item>{user ? <RightWithAuth />  : <RightWihoutAuth  />}</Grid>
           </Grid>

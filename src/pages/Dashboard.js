@@ -156,7 +156,7 @@ export default function Dashboard() {
                 >
                   <GroupsIcon color="#fff" />
                   <Typography>{value.toDateString()}</Typography>
-                  <Button href="/meeting" sx={{color: "#fff"}}>
+                  <Button href="/meeting" color="inherit">
                     View All
                   </Button>
                 </Stack>
@@ -239,7 +239,7 @@ export default function Dashboard() {
                 <Typography variant="h5" color="inherit" >
                   Deadline Assignment
                 </Typography>
-                <Button sx={{color: "#fff"}} href="/assignment">
+                <Button color="inherit" href="/assignment">
                   View All
                 </Button>
               </Stack>

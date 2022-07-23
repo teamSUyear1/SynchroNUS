@@ -12,7 +12,7 @@ import Profile from "./pages/profilepage/Profile";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
 
-import Navbar from "./components/NavBar";
+import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer";
 import {
   Backdrop,
@@ -32,29 +32,55 @@ import SignupPw from "./pages/SignupPw";
 import StudyTimer from "./pages/timerpage/StudyTimer";
 import Assignment from "./pages/assignmentpage";
 import Meeting from "./pages/meetingpage/Meeting";
+import { useState } from "react";
+
 
 function App() {
+  const [darkMode, setDarkMode] = useState(true)
   const { user } = useAuth();
- let darkTheme = createTheme({
-    palette: {
-      mode: "dark",
-      primary: { main: "rgb(102, 157, 246)" },
-    },
-  });
-
-  darkTheme = responsiveFontSizes(darkTheme);
-
- let lightTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#01579b",
+  function getMode(mode) {
+    console.log(mode)
+    let theme;
+    if (mode) {
+      theme = createTheme({
+        palette: {
+          mode: "dark",
+          primary: { main: "rgb(102, 157, 246)" },
+        },
+    });
+  } else {
+    theme = createTheme({
+      palette: {
+        primary: {
+          main: "#01579b",
+        },
+        mode: "light",
       },
-      mode: "light",
-    },
-  });
+    });
+  }
+  return theme = responsiveFontSizes(theme);
+
+  }
+//  let darkTheme = createTheme({
+//     palette: {
+//       mode: "dark",
+//       primary: { main: "rgb(102, 157, 246)" },
+//     },
+//   });
+
+//   darkTheme = responsiveFontSizes(darkTheme);
+
+//  let lightTheme = createTheme({
+//     palette: {
+//       primary: {
+//         main: "#01579b",
+//       },
+//       mode: "light",
+//     },
+//   });
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={getMode(darkMode)}>
       <Router>
         <CssBaseline enableColorScheme />
         {user === null ? (
@@ -70,7 +96,7 @@ function App() {
           <>
             <Paper component={Stack} square>
               <Grid container direction="column">
-                <Navbar />
+                <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route
