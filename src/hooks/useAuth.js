@@ -10,7 +10,7 @@ import {
   signInWithRedirect,
 } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { getFirestore, doc, setDoc, getDoc, onSnapshot   } from "@firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc  } from "@firebase/firestore";
 import {getStorage} from "firebase/storage"
 
 // Add your Firebase credentials
