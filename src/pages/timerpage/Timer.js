@@ -269,9 +269,6 @@ function Timer(props) {
               >
                 Configuration Menu
               </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Coming in the near future!
-              </Typography>
               <ToggleButton
                 selected={loopToggle}
                 onClick={handleLoopToggle}

@@ -40,7 +40,7 @@ const Settings = (props) => {
 
   return (
     <Fragment>
-      <Grid container justifyContent={"center"}>
+      <Grid container justifyContent={"center"} sx={{ml: '10vh'}}>
         <Grid item>
           <Typography variant="h2" color="inherit" sx={{ mt: "3vh" }}>
             Pick a Time
@@ -50,9 +50,8 @@ const Settings = (props) => {
       </Grid>
       <Grid
         container
-        direction={"row"}
-        justifyContent={"center"}
-        sx={{ gap: "5px" }}
+        // justifyContent={"center"}
+        sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', ml: '10vh'}}
       >
         <TimeConfigUI
           title={"Session length"}
@@ -63,7 +62,6 @@ const Settings = (props) => {
           //take note same attribute name different attributes
           timeSet={settingsInfo.setSessionTime}
         />
-        <Grid item width={"10vh"} />
         <TimeConfigUI
           title={"Break length"}
           changeTime={settingsInfo.changeTimeHandler}
@@ -86,7 +84,7 @@ const Settings = (props) => {
         </Button>
       </Grid>
       <Grid item height={"5vh"} />
-      <Grid container justifyContent={"center"}>
+      <Grid container justifyContent={"center"} sx={{ml: '10vh'}}>
         <SettingsCardUI
           title="Template 1"
           templateSession={60 * 60}
@@ -104,7 +102,7 @@ const Settings = (props) => {
           setBreak={settingsInfo.setBreakTime}
         />
         <SettingsCardUI
-          title="Template 3 (Not recommended)"
+          title="Template 3"
           templateSession={180 * 60}
           templateBreak={45 * 60}
           formatTime={settingsInfo.formatTimeHandler}

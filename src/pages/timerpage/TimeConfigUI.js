@@ -17,7 +17,7 @@ const TimeConfigUI = (props) => {
 
   return (
     <Fragment>
-      <Card variant="outlined" sx={{ minWidth: 200, mr: "20px" }}> 
+      <Card variant="outlined" sx={{ minWidth: 200, mr: "5vh" }}> 
         <CardContent>
           <Typography sx={{ fontWeight: "bold" }}>
             Set a {props.type} length
