@@ -17,13 +17,13 @@ import Footer from "./components/Footer";
 import {
   Backdrop,
   CircularProgress,
-  createTheme,
   Divider,
   Grid,
   Paper,
   Stack,
   ThemeProvider,
 } from "@mui/material";
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import CssBaseline from "@mui/material/CssBaseline";
 import { useAuth } from "./hooks/useAuth";
 import SignupEmail from "./pages/SignupEmail";
@@ -35,14 +35,16 @@ import Meeting from "./pages/meetingpage/Meeting";
 
 function App() {
   const { user } = useAuth();
-  const darkTheme = createTheme({
+ let darkTheme = createTheme({
     palette: {
       mode: "dark",
       primary: { main: "rgb(102, 157, 246)" },
     },
   });
 
-  const lightTheme = createTheme({
+  darkTheme = responsiveFontSizes(darkTheme);
+
+ let lightTheme = createTheme({
     palette: {
       primary: {
         main: "#01579b",
@@ -61,7 +63,7 @@ function App() {
               sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={true}
             >
-              <CircularProgress color="inherit" />
+              <CircularProgress color="inherit" />  
             </Backdrop>
           </Grid>
         ) : (

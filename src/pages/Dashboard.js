@@ -106,10 +106,9 @@ export default function Dashboard() {
         paddingLeft={{ xs: 5, md: 35 }}
         paddingTop={2}
         paddingRight={{ xs: 5, md: 5 }}
-        spacing={{xs: 0, md: 2}}
-        direction={{xs: "column", xl: "row"}}
+        spacing={{ xs: 0, md: 2 }}
+        direction={{ xs: "column", sm: "row" }}
         justifyContent="center"
-        
       >
         <Grid item>
           <Stack spacing={1} padding={1}>
@@ -137,7 +136,7 @@ export default function Dashboard() {
 
             <Box
               sx={{
-                backgroundColor: "background.default",
+                backgroundColor: "#66bb6a",
                 boxShadow: 2,
                 borderRadius: 2,
               }}
@@ -155,16 +154,16 @@ export default function Dashboard() {
                   alignItems="center"
                   spacing={2}
                 >
-                  <GroupsIcon color="success"/>
+                  <GroupsIcon color="#fff" />
                   <Typography>{value.toDateString()}</Typography>
-                  <Button color="primary" href="/meeting">
+                  <Button href="/meeting" sx={{color: "#fff"}}>
                     View All
                   </Button>
                 </Stack>
                 <List
                   sx={{
                     width: "100%",
-                    bgcolor: "background.default",
+                    bgcolor: "#66bb6a",
                     position: "relative",
                     overflow: "auto",
                     maxHeight: 200,
@@ -216,29 +215,31 @@ export default function Dashboard() {
             </Box>
           </Stack>
         </Grid>
-        <Grid item >
-          <Stack spacing={1} padding={1} >
+        <Grid item>
+          <Stack spacing={1} padding={1}>
             <Box
               sx={{
-                borderRadius: 3,
+                borderTopLeftRadius:12,
+                borderTopRightRadius:12,
                 padding: 2,
                 maxWidth: 1200,
                 alignSelf: "start",
-                backgroundColor: "background.default",
+                backgroundColor: "#ce93d8",
                 boxShadow: 2,
-                width: "100%"
+                width: "100%",
               }}
             >
               <Stack
                 direction="row"
                 justifyContent="space-between"
+                alignItems="center"
                 marginBottom={1}
               >
-                <AddTaskIcon color="secondary" />
-                <Typography variant="h5" color="inherit" fontSize={{xs: 20}}>
+                <AddTaskIcon color="#fff" />
+                <Typography variant="h5" color="inherit" >
                   Deadline Assignment
                 </Typography>
-                <Button color="primary" href="/assignment">
+                <Button sx={{color: "#fff"}} href="/assignment">
                   View All
                 </Button>
               </Stack>
@@ -266,7 +267,7 @@ export default function Dashboard() {
                             new Date(task.date)
                           )
                         ? "#ffa726"
-                        : "#ce93d8",
+                        : "#29b6f6",
                       boxShadow: 4,
                     }}
                   >
@@ -305,9 +306,10 @@ export default function Dashboard() {
             </Box>
             <Box
               sx={{
-                borderRadius: 3,
+                borderBottomLeftRadius: 12,
+                borderBottomRightRadius: 12,
                 padding: 1,
-                backgroundColor: "background.default",
+                backgroundColor: "#ce93d8",
                 boxShadow: 2,
               }}
             >
@@ -331,7 +333,7 @@ export default function Dashboard() {
 
             <Box
               sx={{
-                backgroundColor: "background.default",
+                backgroundColor: "#29b6f6",
                 borderRadius: 3,
                 padding: 2,
                 maxWidth: 1120,
@@ -342,17 +344,22 @@ export default function Dashboard() {
               <Stack
                 direction="row"
                 justifyContent="space-between"
+                alignItems="center"
                 marginBottom={2}
               >
-                <AssignmentIcon color="primary" />
-                <Typography variant="h5" color="inherit" marginLeft={10} fontSize={{xs: 20}}>
+                <AssignmentIcon color="#fff" />
+                <Typography
+                  variant="h5"
+                  color="inherit"
+                  marginLeft={10}
+                >
                   Today's class
                 </Typography>
                 <div>
                   <Typography variant="caption" color="inherit">
                     haven't import timetable?
                   </Typography>
-                  <IconButton href="/profile" size="small">
+                  <IconButton href="/profile" size="small" >
                     <AddCircleIcon />
                   </IconButton>
                 </div>
@@ -397,22 +404,30 @@ export default function Dashboard() {
                       key={task}
                     >
                       <CardContent>
-                        <Typography sx={{ fontSize: 14 }} gutterBottom>
+                        <Typography
+                          sx={{ fontSize: 14 }}
+                          color="#fff"
+                          gutterBottom
+                        >
                           {task?.summary}
                         </Typography>
                         <Typography
                           variant="h7"
                           sx={{ fontSize: 15 }}
+                          color="#fff"
                           component="div"
                         >
                           {task?.description.split("\\n")[0]}
                         </Typography>
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        <Typography
+                          sx={{ mb: 1.5 }}
+                          color="rgba(255, 255, 255, 0.7)"
+                        >
                           {task?.description.split("\\n")[1]}
                           <br />
                           {task?.location}
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography variant="body2" color="#fff">
                           Start:{" "}
                           {new Date(task?.dtstart).toLocaleTimeString([], {
                             hour: "2-digit",

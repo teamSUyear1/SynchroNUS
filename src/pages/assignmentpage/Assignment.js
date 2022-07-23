@@ -90,12 +90,12 @@ function Assignment() {
         container
         minHeight="80vh"
         justifyContent="center"
-        paddingLeft={{ xs: 0, xl: 30 }}
+        paddingLeft={{ xs: 0, md: 30 }}
         width="100%"
       >
         <Grid item margin={3}>
-          <Stack spacing={3} direction={{ xs: "column", xl: "row" }}>
-            <Stack justifyContent="flex-start" alignItems="stretch" spacing={2}>
+          <Stack spacing={3} direction={{ xs: "column", xl:"row" }}>
+            <Stack justifyContent="flex-start"  spacing={2}>
               <Button variant="contained" onClick={() => setOpenPopup(true)}>
                 Add Assignment Event
               </Button>
@@ -194,7 +194,7 @@ function Assignment() {
                 backgroundColor: "background.default", boxShadow: 2,
                 borderRadius: 2,
               }}
-              width={{ xs: "75vw", xl: "60vw" }}
+              width={{ xs: "75vw", md: "60vw" }}
             >
               <AssignmentTable
                 events={events}
