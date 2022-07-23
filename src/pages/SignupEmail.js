@@ -30,7 +30,8 @@ const SignupEmail = () => {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      padding={10}
+      padding={{xs: 5, md:10}}
+      height="79.5vh"
     >
       <Box
         component="span"
