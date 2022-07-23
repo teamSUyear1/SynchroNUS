@@ -46,8 +46,8 @@ const Login = () => {
     <Stack
       direction="column"
       alignItems="center"
-      justifyContent="center"
-      padding={10}
+      justifyItems="center"
+      padding={5}
     >
       <Box
         component="span"
@@ -58,7 +58,7 @@ const Login = () => {
           width: "fit-content",
           backgroundColor: "background.default",
         }}
-        padding={10}
+        padding={{xs: 5, md: 10}}
       >
         <Grid
           container
