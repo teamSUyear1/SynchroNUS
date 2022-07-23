@@ -46,8 +46,9 @@ const Login = () => {
     <Stack
       direction="column"
       alignItems="center"
-      justifyItems="center"
+      justifyContent="center"
       padding={5}
+      height="79.5vh"
     >
       <Box
         component="span"
