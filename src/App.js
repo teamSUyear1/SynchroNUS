@@ -36,13 +36,13 @@ import { useEffect, useState } from "react";
 
 
 function App() {
-  let mode =window.localStorage.getItem("darkMode")
-  const [darkMode, setDarkMode] = useState(mode === true)
+  let mode =window.localStorage.getItem("darkMode").toString()
+  const [darkMode, setDarkMode] = useState(mode === "true")
   const { user } = useAuth();
   function getMode(mode) {
     let theme;
     console.log("fun", mode)  
-    if (mode ) {
+    if (mode) {
       console.log("dark", mode)
       theme = createTheme({
         palette: {
