@@ -17,11 +17,9 @@ const Timeline = () => {
         >
           <Chrono
             items={data}
-            slideShow
             slideItemDuration={4500}
             mode="HORIZONTAL"
             enableOutline
-            allowDynamicUpdate
             theme={{
               primary: "red",
               secondary: "blue",
