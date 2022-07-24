@@ -167,9 +167,9 @@ function Profile() {
         justifyContent={"center"}
         minHeight="80vh"
         spacing={3}
-        ml="30vh"
       >
         <Grid item alignSelf={"center"}>
+        <Stack spacing={3} direction="column">
           <Box border={"1px solid"} borderRadius={3} padding={3}>
             <Stack direction="row" spacing={3}>
               <Stack alignItems="center" spacing={3}>
@@ -203,8 +203,7 @@ function Profile() {
               </Stack>
             </Stack>
           </Box>
-        </Grid>
-        <Grid item alignSelf={"center"}>
+          <Box>
           <Stack>
             <Button
               onClick={openICS}
@@ -222,14 +221,16 @@ function Profile() {
               hidden
             />
           </Stack>
+          </Box>
+        </Stack>
         </Grid>
-        <Grid item alignSelf={"center"}>
-          <Card
+        
+        <Grid item alignSelf={"center"} >
+        <Box border={"1px solid"} borderRadius={3} padding={3}>
+        <Card
             sx={{
-              height: "50vh",
-              width: "50vh",
-              backgroundColor: "rgba(0,0,0,0.7)",
-              margin: "20px",
+              height: "40vh",
+              width: "40vh",
             }}
           >
             <CardContent>
@@ -264,7 +265,9 @@ function Profile() {
               </Typography>
             </CardContent>
           </Card>
+          </Box>
         </Grid>
+        
       </Grid>
       <Popup
         title="What is your name?"
