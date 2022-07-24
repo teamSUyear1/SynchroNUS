@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useAuth, db } from "./useAuth";
 
 function useTimer() {
-  const [events, setEventsState] = useState(0);
+  const [timeSpentState, setTimeSpentState] = useState(0);
+  const [breakSpentState, setBreakSpentState] = useState(0);
   const { user } = useAuth();
   const timerRef = doc(db, "timer", user?.uid);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(timerRef, (snapshot) => {
-      setEventsState(snapshot.data().timeSpent);
+      setTimeSpentState(snapshot.data().timeSpent);
+      setBreakSpentState(snapshot.data().breakTime);
     });
 
     return () => {
@@ -18,8 +20,10 @@ function useTimer() {
   }, [user.uid]);
 
   return {
-    events,
-    setEventsState,
+    breakSpentState,
+    setBreakSpentState,
+    timeSpentState,
+    setTimeSpentState,
   };
 }
 

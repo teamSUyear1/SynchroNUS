@@ -9,6 +9,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import React, { useEffect, useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import EditIcon from "@mui/icons-material/Edit";
@@ -22,12 +24,14 @@ import useClasses from "../../hooks/useClasses";
 import ICalParser from "ical-js-parser";
 import { parseISO } from "date-fns";
 import { RRule } from "rrule";
+import useTimer from "../../hooks/useTimer";
 
 function Profile() {
   const { user } = useAuth();
   const { name, avatar } = AccountInfo();
   const [progress, setProgress] = useState(0);
   const docRef = doc(db, "users", user.email);
+  const { breakSpentState, timeSpentState } = useTimer();
   const [openPopup, setOpenPopup] = useState(false);
   const { setTimetableState } = useClasses();
   const [disabledButt, setDisabledButt] = useState(false);
@@ -158,7 +162,13 @@ function Profile() {
   return (
     <>
       <SideBar select={5} />
-      <Grid container justifyContent={"center"} minHeight="80vh" spacing={3}>
+      <Grid
+        container
+        justifyContent={"center"}
+        minHeight="80vh"
+        spacing={3}
+        ml="30vh"
+      >
         <Grid item alignSelf={"center"}>
           <Box border={"1px solid"} borderRadius={3} padding={3}>
             <Stack direction="row" spacing={3}>
@@ -212,6 +222,48 @@ function Profile() {
               hidden
             />
           </Stack>
+        </Grid>
+        <Grid item alignSelf={"center"}>
+          <Card
+            sx={{
+              height: "50vh",
+              width: "50vh",
+              backgroundColor: "rgba(0,0,0,0.7)",
+              margin: "20px",
+            }}
+          >
+            <CardContent>
+              <Typography
+                gutterBottom
+                variant="h3"
+                component="h1"
+                color='primary'
+                sx={{
+                  fontFamily: "Nunito",
+                  fontWeight: "bold",
+                }}
+              >
+                Statistics
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontFamily: "Nunito",
+                  fontSize: "1.5rem",
+                }}
+              > You have spent a total of: <br />
+               <br />
+                Session Time:
+                <br />
+                {Math.round(timeSpentState / 60)} mins
+                <br />
+                Break Time:
+                <br />
+                {Math.round(breakSpentState / 60)} mins
+                <br />
+              </Typography>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
       <Popup

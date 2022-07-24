@@ -49,6 +49,7 @@ function Timer(props) {
   let audioAlert = new Audio(BellSound);
   let timeDiff;
   let sessionTimeSet = parseInt(window.localStorage.getItem("sessionSet"));
+  let breakTimeSet = parseInt(window.localStorage.getItem("breakSet"));
 
   function playAlert() {
     audioAlert.play();
@@ -81,7 +82,10 @@ function Timer(props) {
   const [loopToggle, setLoopToggle] = useState(
     checkLoopNotToggled ? false : true
   );
-  const { events, setEventsState } = useTimer();
+  const {
+    setTimeSpentState,
+    setBreakSpentState,
+  } = useTimer();
   const { user } = useAuth();
   const handleOpen = () => setConfigOpen(true);
   const handleClose = () => setConfigOpen(false);
@@ -105,13 +109,16 @@ function Timer(props) {
   async function timeSpentUpdate() {
     const docRef = doc(db, "timer", user?.uid);
     const docSnap = await getDoc(docRef);
-    console.log("sessionTimeSet:", sessionTimeSet);
+    // console.log("sessionTimeSet:", sessionTimeSet);
     if (!docSnap.exists()) {
-      setDoc(doc(db, "timer", user?.uid), { timeSpent: 0 });
+      setDoc(doc(db, "timer", user?.uid), { timeSpent: 0, breakTime: 0 });
     }
+    // Add to current time spent from total time
     sessionTimeSet += docSnap.data().timeSpent;
-    setEventsState(sessionTimeSet);
-    setDoc(doc(db, "timer", user?.uid), { timeSpent: sessionTimeSet });
+    breakTimeSet += docSnap.data().breakSpent;
+    setBreakSpentState(breakTimeSet);
+    setTimeSpentState(sessionTimeSet);
+    setDoc(doc(db, "timer", user?.uid), { timeSpent: sessionTimeSet, breakTime: breakTimeSet });
   }
 
   function sessionLoop() {
@@ -122,7 +129,7 @@ function Timer(props) {
     const sessionMinutes = settingsInfo.sessionTime * 1000;
     const breakMinutes = settingsInfo.breakTime * 1000;
     let sessionEndTime = new Date(startTime.getTime() + sessionMinutes);
-    
+
     let breakEndTime = new Date(sessionEndTime.getTime() + breakMinutes);
     window.localStorage.setItem("sessionEndTime", sessionEndTime);
     window.localStorage.setItem("breakEndTime", breakEndTime);

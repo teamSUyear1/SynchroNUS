@@ -73,14 +73,15 @@ const Settings = (props) => {
         />
       </Grid>
       <Grid item height={"5vh"} />
-      <Grid container justifyContent={"center"}>
+      <Grid container justifyContent={"center"} sx={{ml: '8vh'}}>
         <Button
           title="Start timer"
           variant="outlined"
           color="success"
           onClick={sessionStartHandler}
+          size="large"
         >
-          Start!
+          Start
         </Button>
       </Grid>
       <Grid item height={"5vh"} />
