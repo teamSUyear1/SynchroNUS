@@ -11,7 +11,8 @@ import Timer from "./Timer";
 import Settings from "./Settings";
 import SettingsContext from "./SettingsContext";
 
-const StudyTimer = () => {
+const StudyTimer = (props) => {
+  const {darkMode} = props
   const [existingSessionRunning, setSessionRunning] = useState(
     window.localStorage.getItem("sessionSet") != null
   );
@@ -74,7 +75,7 @@ const StudyTimer = () => {
         {showSettings && !existingSessionRunning && !existingBreakRunning ? (
           <Settings />
         ) : (
-          <Timer formatTime={formatTimeHandler} />
+          <Timer formatTime={formatTimeHandler} darkMode={darkMode} />
         )}
       </SettingsContext.Provider>
     </Fragment>

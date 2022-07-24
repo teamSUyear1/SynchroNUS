@@ -127,7 +127,7 @@ useEffect(() => {
                   <Route
                     path="/studytimer"
                     element={
-                      user ? <StudyTimer /> : <Navigate replace to="/" />
+                      user ? <StudyTimer darkMode={darkMode}/> : <Navigate replace to="/" />
                     }
                   />
                   <Route

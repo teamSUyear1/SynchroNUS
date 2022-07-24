@@ -236,7 +236,7 @@ function Timer(props) {
           value={percentage}
           text={props.formatTime(secondsLeft)}
           styles={buildStyles({
-            textColor: "#fff",
+            textColor: props.darkMode ? "#fff" :  "#000000",
             pathColor: mode === "session" ? "pink" : "green",
             trailColor: "rgba(255, 255, 255, 0.3)",
           })}
