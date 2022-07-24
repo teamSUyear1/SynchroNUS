@@ -40,7 +40,7 @@ const Settings = (props) => {
 
   return (
     <Fragment>
-      <Grid container justifyContent={"center"} sx={{ml: '10vh'}}>
+      <Grid container justifyContent={"center"} marginLeft={{xs: 0, md: "10vh "}}>
         <Grid item>
           <Typography variant="h2" color="inherit" sx={{ mt: "3vh" }}>
             Pick a Time
@@ -51,7 +51,8 @@ const Settings = (props) => {
       <Grid
         container
         // justifyContent={"center"}
-        sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', ml: '10vh'}}
+        sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+        marginLeft={{xs: 0, md: "10vh"}}
       >
         <TimeConfigUI
           title={"Session length"}
@@ -73,7 +74,7 @@ const Settings = (props) => {
         />
       </Grid>
       <Grid item height={"5vh"} />
-      <Grid container justifyContent={"center"} sx={{ml: '8vh'}}>
+      <Grid container justifyContent={"center"} marginLeft={{xs: 0, md: "8vh"}}>
         <Button
           title="Start timer"
           variant="outlined"
@@ -85,7 +86,7 @@ const Settings = (props) => {
         </Button>
       </Grid>
       <Grid item height={"5vh"} />
-      <Grid container justifyContent={"center"} sx={{ml: '10vh'}}>
+      <Grid container justifyContent={"center"} marginLeft={{xs: 0, md: "10vh"}}>
         <SettingsCardUI
           title="Template 1"
           templateSession={60 * 60}
