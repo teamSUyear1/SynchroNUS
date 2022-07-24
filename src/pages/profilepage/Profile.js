@@ -168,7 +168,7 @@ function Profile() {
         minHeight="80vh"
         spacing={3}
       >
-        <Grid item alignSelf={"center"}>
+        <Grid item alignSelf={"center"} marginTop={{xs: 5, md: 0}}>
         <Stack spacing={3} direction="column">
           <Box border={"1px solid"} borderRadius={3} padding={3}>
             <Stack direction="row" spacing={3}>
@@ -225,7 +225,7 @@ function Profile() {
         </Stack>
         </Grid>
         
-        <Grid item alignSelf={"center"} >
+        <Grid item alignSelf={"center"} marginBottom={{xs: 5, md: 0}}>
         <Box border={"1px solid"} borderRadius={3} padding={3}>
         <Card
             sx={{
