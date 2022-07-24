@@ -1,6 +1,6 @@
 import { AppBar, Button, Divider, Stack, Typography } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import HomeIcon from "@mui/icons-material/Home";
+import TimelineIcon from '@mui/icons-material/Timeline';
 import ArticleIcon from "@mui/icons-material/Article";
 import React from "react";
 
@@ -24,8 +24,8 @@ function Footer() {
           divider={<Divider orientation="vertical" flexItem />}
           justifyContent="center"
         >
-          <Button startIcon={<HomeIcon />} color="inherit" href="/" size="small">
-            About
+          <Button startIcon={<TimelineIcon />} color="inherit" href="/about" size="small">
+            Timeline
           </Button>
           <Button
            size="small"

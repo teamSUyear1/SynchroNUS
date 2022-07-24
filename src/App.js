@@ -11,7 +11,7 @@ import Home from "./pages/homepage/Home";
 import Profile from "./pages/profilepage/Profile";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
-
+import About from "./pages/aboutpage/About";
 import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer";
 import {
@@ -105,6 +105,7 @@ useEffect(() => {
                 <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
                   <Route
                     path="/dashboard"
                     element={user ? <Dashboard darkMode={darkMode}/> : <Navigate replace to="/" />}

@@ -1,4 +1,4 @@
-/* Currently does not work with homepage as every visit scrolls you down directly */ 
+/* Currently does not work with homepage as every visit scrolls you down directly */
 import classes from "./Timeline.module.css";
 import { Chrono } from "react-chrono";
 import data from "../../components/Data/Data";
@@ -7,26 +7,29 @@ const Timeline = () => {
   return (
     <>
       <div className={classes.main}>
-        <h1>Timeline</h1>
+        <h1>Our Timeline</h1>
         <div
           className={classes.chrono}
           style={{
             color: "black",
-            width: "1000px",
-            height: "800px",
+            width: "1200px",
+            height: "80vh",
           }}
         >
           <Chrono
             items={data}
-            mode="HORIZONTAL"
+            mode="VERTICAL_ALTERNATING"
+            slideShow
+            scrollable
             enableOutline
+            slideItemDuration={4000}
             theme={{
-              primary: "red",
-              secondary: "blue",
-              cardBgColor: "yellow",
-              cardForeColor: "violet",
-              titleColor: "black",
-              titleColorActive: "red",
+              // primary: "red",
+              // secondary: "blue",
+              cardBgColor: "#d3d3d3",
+              // cardForeColor: "violet",
+              titleColor: "#87ceeb",
+              // titleColorActive: "#fed8b1",
             }}
             fontSizes={{
               cardSubtitle: "0.85rem",
@@ -42,7 +45,7 @@ const Timeline = () => {
             }}
           />
         </div>
-        <h3>*Use left and right arrow keys to navigate between timeline!</h3>
+        <h3>*Use up and down arrow keys to navigate between timeline!<br />Scroll mouse over card during autoplay to pause</h3>
       </div>
     </>
   );

@@ -2,7 +2,6 @@ import vidBackground from "../../components/Assets/test.mp4";
 import classes from "./Home.module.css";
 import Header from "./Header";
 import Introduction from "./Introduction";
-import Timeline from "./Timeline";
 import Template from "./Template";
 
 function Home() {
@@ -15,7 +14,6 @@ function Home() {
           <Header />
           {/* Add 100vh to overlay for each component stacked below */}
           <Introduction />
-          <Template />
         </div>
       </div>
     </>

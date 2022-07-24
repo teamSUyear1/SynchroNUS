@@ -1,6 +1,6 @@
 const items = [
     {
-      title: "May 1940",
+      title: "10 May 1940",
       url: "http://www.history.com",
       cardTitle: "Dunkirk",
       cardSubtitle:
