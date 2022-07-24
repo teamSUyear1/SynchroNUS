@@ -23,6 +23,9 @@ const Header = () => {
           <h1 className={classes.title}>
             Synchro<span className={classes.colorText}>NUS.</span>
           </h1>
+          <h1 className={classes.subtitle}>
+            A productive study helper
+          </h1>
           <Scroll to="introduction-page" smooth={true}>
           <IconButton>
             <div className={classes.goDown}>

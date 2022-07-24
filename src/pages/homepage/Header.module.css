@@ -12,6 +12,12 @@
   color: white;
 }
 
+.subtitle {
+  font-weight: bold;
+  font-size: 4rem;
+  color: rgb(189, 129, 38);
+}
+
 .goDown {
   color: #FF5F1F;
 }

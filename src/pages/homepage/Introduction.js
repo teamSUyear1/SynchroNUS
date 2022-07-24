@@ -2,6 +2,7 @@ import ImageCard from "./ImageCard";
 import useWindowPosition from "../../hooks/useWindowPosition";
 import { makeStyles } from '@material-ui/core/styles';
 import Image from "../../components/Assets/bgimg.jpg";
+import Timer from "../../components/Assets/timer.jpg"
 import { Stack } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,12 +29,12 @@ const Introduction = () => {
     return (
         <div className={classes.main} id="introduction-page">
         <Stack direction="row">
-            <ImageCard checked={checked} title="Deadline Reminder" alt="SynchroNUS" image="" height={200} width={200}>Feature 1 Description</ImageCard>
-            <ImageCard checked={checked} title="Meeting Scheduler" alt="SynchroNUS" image="" height={200} width={200}>Feature 2 Description</ImageCard>
+            <ImageCard checked={checked} title="Deadline Reminder" alt="SynchroNUS" image="" height={300} width={200}>Alleviate your stress from upcoming deadlines</ImageCard>
+            <ImageCard checked={checked} title="Meeting Scheduler" alt="SynchroNUS" image="" height={300} width={200}>Lead project meetings timely</ImageCard>
             </Stack>
             <Stack direction="row">
-            <ImageCard checked={checked} title="Study Timer" alt="SynchroNUS" image="" height={200} width={200}>Feature 3 Description</ImageCard>
-            <ImageCard checked={checked} title="Timetable Viewer" alt="SynchroNUS" image="" height={200} width={200}>Feature 4 Description</ImageCard>
+            <ImageCard checked={checked} title="Study Timer" alt="SynchroNUS" image={Timer} height={300} width={200}>Beat procrastination</ImageCard>
+            <ImageCard checked={checked} title="Timetable Viewer" alt="SynchroNUS" image="" height={300} width={200}>Always on schedule</ImageCard>
             </Stack>
         </div>
       );
