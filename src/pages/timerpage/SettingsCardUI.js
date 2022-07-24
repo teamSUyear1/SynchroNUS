@@ -17,16 +17,15 @@ const SettingsCardUI = (props) => {
         {/*Add session time and break time, and a button to set the timings*/}
         <Typography
           sx={{ fontWeight: "bold", fontSize: 20 }}
-          color={"white"}
           gutterBottom
         >
           {props.title}
         </Typography>
-        <Typography sx={{ fontSize: 14 }}>
+        <Typography color='primary' sx={{ fontSize: 14 }}>
           &nbsp; Session Time:<br></br>
           &nbsp; {props.formatTime(props.templateSession)}
         </Typography>
-        <Typography sx={{ fontSize: 14 }}>
+        <Typography color='primary' sx={{ fontSize: 14 }}>
           &nbsp; Break Time: <br></br>
           &nbsp; {props.formatTime(props.templateBreak)}
         </Typography>
