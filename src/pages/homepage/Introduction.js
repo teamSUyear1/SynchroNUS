@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'center',
       alignItems: 'center',
       [theme.breakpoints.down('md')]: {
-        flexDirection: 'column',
+        flexDirection: 'row',
       },
     },
     margining: {
