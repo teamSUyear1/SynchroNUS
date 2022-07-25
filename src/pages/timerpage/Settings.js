@@ -56,7 +56,7 @@ const Settings = (props) => {
       >
         <TimeConfigUI
           title={"Session length"}
-          changeTime={settingsInfo.changeTimeHandler}
+          // changeTime={settingsInfo.changeTimeHandler}
           type={"session"}
           time={settingsInfo.sessionTime}
           formatTime={settingsInfo.formatTimeHandler}
@@ -65,7 +65,7 @@ const Settings = (props) => {
         />
         <TimeConfigUI
           title={"Break length"}
-          changeTime={settingsInfo.changeTimeHandler}
+          // changeTime={settingsInfo.changeTimeHandler}
           type={"break"}
           time={settingsInfo.breakTime}
           formatTime={settingsInfo.formatTimeHandler}

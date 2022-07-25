@@ -41,19 +41,19 @@ const StudyTimer = (props) => {
     );
   };
 
-  const changeTimeHandler = (amount, type) => {
-    if (type === "break") {
-      if (breakTime <= 0 && amount < 0) {
-        return;
-      }
-      setBreakTime((prev) => prev + amount);
-    } else {
-      if (sessionTime <= 300 && amount < 0) {
-        return;
-      }
-      setSessionTime((prev) => prev + amount);
-    }
-  };
+  // const changeTimeHandler = (amount, type) => {
+  //   if (type === "break") {
+  //     if (breakTime <= 0 && amount < 0) {
+  //       return;
+  //     }
+  //     setBreakTime((prev) => prev + amount);
+  //   } else {
+  //     if (sessionTime <= 300 && amount < 0) {
+  //       return;
+  //     }
+  //     setSessionTime((prev) => prev + amount);
+  //   }
+  // };
 
   const settingsAndTimerContext = {
     setSessionRunning,
@@ -64,7 +64,7 @@ const StudyTimer = (props) => {
     setSessionTime,
     setShowSettings,
     setBreakTime,
-    changeTimeHandler,
+    // changeTimeHandler,
     formatTimeHandler,
   };
 

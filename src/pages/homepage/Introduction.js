@@ -2,8 +2,10 @@ import ImageCard from "./ImageCard";
 import useWindowPosition from "../../hooks/useWindowPosition";
 import { makeStyles } from '@material-ui/core/styles';
 import Image from "../../components/Assets/bgimg.jpg";
-import Timer from "../../components/Assets/timer.jpg"
-import { Stack } from "@mui/material";
+import studytimer from "../../components/Assets/studytimer.jpeg";
+import asspage from "../../components/Assets/asspage.jpeg";
+import modview from "../../components/Assets/modview.jpeg";
+import meeting from "../../components/Assets/meeting.jpeg";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -19,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
       },
     },
+    margining: {
+      marginTop: '10vh',
+    },
   }));
 
 const Introduction = () => {
@@ -28,14 +33,14 @@ const Introduction = () => {
     // props to be added below, namely the description, through imports 
     return (
         <div className={classes.main} id="introduction-page">
-        <Stack direction="row">
-            <ImageCard checked={checked} title="Deadline Reminder" alt="SynchroNUS" image="" height={300} width={200}>Alleviate your stress from upcoming deadlines</ImageCard>
-            <ImageCard checked={checked} title="Meeting Scheduler" alt="SynchroNUS" image="" height={300} width={200}>Lead project meetings timely</ImageCard>
-            </Stack>
-            <Stack direction="row">
-            <ImageCard checked={checked} title="Study Timer" alt="SynchroNUS" image={Timer} height={300} width={200}>Beat procrastination</ImageCard>
-            <ImageCard checked={checked} title="Timetable Viewer" alt="SynchroNUS" image="" height={300} width={200}>Always on schedule</ImageCard>
-            </Stack>
+            <div>
+            <ImageCard checked={checked} title="Deadline Reminder" alt="SynchroNUS" image={asspage} height={200} width={100}>Alleviate your stress from upcoming deadlines</ImageCard>
+            <ImageCard checked={checked} title="Meeting Scheduler" alt="SynchroNUS" image={meeting} height={200} width={100}>Lead project meetings timely</ImageCard>
+            </div>
+            <div>
+            <ImageCard checked={checked} title="Study Timer" alt="SynchroNUS" image={studytimer} height={200} width={100}>Beat procrastination</ImageCard>
+            <ImageCard checked={checked} title="Timetable Viewer" alt="SynchroNUS" image={modview} height={200} width={100}>Always on schedule</ImageCard>
+            </div>
         </div>
       );
 }
