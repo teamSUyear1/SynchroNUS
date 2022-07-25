@@ -79,10 +79,10 @@ function useProvideAuth() {
   const signInWithGoogle = () => {
     return signInWithRedirect(firebaseAuth, googleAuthProvider);
   };
-  async function setAllUser(newUser) {
-    await setDoc(doc(db, "users", "alluser"), {users: newUser})
-    console.log("Add...")
-  }
+  // async function setAllUser(newUser) {
+  //   await setDoc(doc(db, "users", "alluser"), {users: newUser})
+  //   console.log("Add...")
+  // }
 
   /*
   async function AddAllUser(email) {

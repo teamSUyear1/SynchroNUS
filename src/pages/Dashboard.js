@@ -164,6 +164,7 @@ export default function Dashboard(props) {
                 <List
                   sx={{
                     width: "100%",
+                    maxWidth: 300,
                     bgcolor: darkMode ? "#66bb6a" : "#81c784",
                     position: "relative",
                     overflow: "auto",

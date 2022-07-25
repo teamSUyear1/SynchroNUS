@@ -125,6 +125,7 @@ function Assignment() {
                     <List
                       sx={{
                         width: "100%",
+                        maxWidth: 300,
                         bgcolor: "background.default",
                         position: "relative",
                         overflow: "auto",
