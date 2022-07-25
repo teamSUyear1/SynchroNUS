@@ -112,7 +112,7 @@ const Settings = (props) => {
           setBreak={settingsInfo.setBreakTime}
         />
       </Grid>
-      <Grid item height={"5vh"} />
+      <Grid item height={"10vh"} />
     </Fragment>
   );
 };
