@@ -41,6 +41,7 @@ function Profile() {
   const handleFileRead = (e) => {
     const content = fileReader.result;
     const parsed = ICalParser.toJSON(content);
+    console.log("parsed ical", parsed.events)
     setTimetable(parsed.events.map(allday));
   };
 
