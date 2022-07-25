@@ -41,7 +41,7 @@ const Settings = (props) => {
   return (
     <Fragment>
       <Grid container justifyContent={"center"} marginLeft={{xs: 0, md: "10vh "}}>
-        <Grid item>
+        <Grid item mr='2vh'>
           <Typography variant="h2" color="inherit" sx={{ mt: "3vh" }}>
             Pick a Time
           </Typography>

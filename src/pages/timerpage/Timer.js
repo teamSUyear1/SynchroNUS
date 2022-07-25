@@ -227,10 +227,10 @@ function Timer(props) {
   const percentage = Math.round((secondsLeft / totalSeconds) * 100);
 
   return (
-    <Grid container justifyContent="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center" ml='8vh'>
       <Grid item height={"80vh"}>
         <div className={classes.title}>
-          <Typography>Study Timer</Typography>
+          <Typography sx={{fontSize: '2rem', fontFamily: 'Nunito'}}>Study Timer</Typography>
         </div>
         <CircularProgressbar
           value={percentage}
