@@ -52,7 +52,7 @@ function SideBar(props) {
         />
       </Box>
       {/* Temporary template */}
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Typography color="primary">Level 30: 12513 EXP</Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -68,7 +68,7 @@ function SideBar(props) {
           }}
         />
         <Typography sx={{ fontSize: "10" }}>13%</Typography>
-      </Box>
+      </Box> */}
       <Box sx={{ overflow: "auto" }}>
         <List>
           <ListItem disablePadding>
